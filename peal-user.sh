@@ -41,7 +41,7 @@ mess "Clone ~/.dotfiles github repository"
 git clone https://github.com/ewancoder/dotfiles.git .dotfiles
 mess "Clone /etc/.dotfiles github repository"
 sudo git clone https://github.com/ewancoder/etc.git /etc/.dotfiles
-mess "Cd into .dotfiles & pull submodules: ohmyzsh & vundle"
+mess "Cd into .dotfiles & pull submodules: oh-my-zsh & vundle"
 cd .dotfiles && git submodule update --init --recursive .oh-my-zsh .vim/bundle/vundle
 mess "Make vim swap & backup dirs"
 mkdir .vim/{swap,backup}
@@ -59,24 +59,24 @@ mess "Link gvim config for /root user"
 sudo ln -s ~/.vim /root/.vim
 sudo ln -s ~/.vimrc /root/.vimrc
 mess "Set font cyr-sun16"
-setfont cyr-sun16
+sudo setfont cyr-sun16
 mess "Update yaourt/pacman including multilib"
 yaourt -Syy
 
 mess "Install Audio software"
 yaourt -S --noconfirm alsa-plugins alsa-utils pulseaudio pulseaudio-alsa lib32-libpulse lib32-alsa-plugins
 mess "Install A Drivers software"
-yaourt -S mesa nvidia nvidia-libgl
+yaourt -S lib32-nvidia-libgl mesa nvidia nvidia-libgl
 mess "Install Coding software"
 yaourt -S python python-matplotlib python-scipy python-sphinx tig
-mess "Install Core"
+mess "Install Core software"
 yaourt -S dunst faience-icon-theme feh fuse encfs ntfs-3g gxkb kalu p7zip preload rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg xarchiver xclip xcompmgr zsh
 mess "Install Graphics software"
 yaourt -S geeqie gimp gource scrot vlc
 mess "Install Internet software"
 yaourt -S bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox irssi openssh perl-html-parser skype
 mess "Install Office software"
-yaourt -S anki gvim libreoffice libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar xfe
+yaourt -S anki gvim libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar xfe
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
 sudo sed -i "s/dead actute/dead acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose > compose

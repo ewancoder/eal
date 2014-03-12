@@ -31,11 +31,11 @@ mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers
 mess "Move created by awk sudoers file to /etc/sudoers"
 mv lsudoers /etc/sudoers
-mess "Setup your user ($username) password"
+messpause "Setup your user ($username) password [MANUAL]"
 passwd $username
 mess "Move all scripts except peal.sh to /home/$username/ and remove peal.sh"
 rm peal.sh && mv peal* ceal.sh /home/$username/
-mess "CD into /home/$user/ folder"
+mess "CD into /home/$username/ folder"
 cd /home/$username/
 mess "Add $username NOPASSWD line to sudoers file"
 echo "$username ALL = NOPASSWD: ALL" >> /etc/sudoers

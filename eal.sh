@@ -3,6 +3,7 @@ source ceal.sh
 clear
 
 warn "Before executing script, MAKE SURE that\n\t1) You've mounted your partitions to /mnt and formatted them as needed (fdisk + mkfs.ext4 + mount)\n\t2) You've changed ALL constants in 'ceal.sh' file (Constants Ewancoder Arch Linux), especially - grub installation device"
+source ceal.sh
 
 mess "Copy all scripts to /mnt/"
 cp *eal* /mnt/
