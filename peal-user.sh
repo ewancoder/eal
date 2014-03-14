@@ -76,7 +76,7 @@ yaourt -S geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
 yaourt -S bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox irssi openssh perl-html-parser skype
 mess "Install Office software (7/7)"
-yaourt -S anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar xfe
+yaourt -S anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar
 
 #Questinable software
 #nvidia-utils, lib32-nvidia-utils bzip2
