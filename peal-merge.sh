@@ -57,14 +57,12 @@ sudo ln -fs ~/.dotfiles/scripts/ftb /usr/bin/
 #/etc folder
 mess "/etc folder links"
 
-mess "Bitlbee config - /etc/bitlbee folder"
-sudo ln -fs /etc/.dotfiles/bitlbee /etc/bitlbee
-
 mess "Grub image + resolution configuration - /etc/default folder"
 link "default"
 
 mess "Grub's grub.d scripts - /etc/grub.d folder"
 link "grub.d"
+chmod -x /etc/grub.d/10_linux
 
 mess "Keyboard layouts configuration - /etc/X11 folder"
 link "X11"
