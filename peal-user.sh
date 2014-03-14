@@ -82,6 +82,10 @@ yaourt -Syy
 
 mess "Install Audio software (1/7)"
 yaourt -S --noconfirm alsa-plugins alsa-utils pulseaudio pulseaudio-alsa lib32-libpulse lib32-alsa-plugins
+
+#Pulseaudio won't install if merged earlier
+link "pulse"
+
 mess "Install A Drivers software (2/7)"
 yaourt -S lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstreamer
 mess "Install Coding software (3/7)"

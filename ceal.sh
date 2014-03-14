@@ -56,3 +56,12 @@ warn(){
     echo -e "\n"$Bold$Red$1$Def
     pause
 }
+
+#------------------------------
+#Link function
+
+link(){
+    sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
+    sudo rm -r /etc/$1
+    sudo ln -fs /etc/.dotfiles/$1 /etc/$1
+}

@@ -60,20 +60,11 @@ mess "/etc folder links"
 mess "Bitlbee config - /etc/bitlbee folder"
 sudo ln -fs /etc/.dotfiles/bitlbee /etc/bitlbee
 
-link(){
-    sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
-    sudo rm -r /etc/$1
-    sudo ln -fs /etc/.dotfiles/$1 /etc/$1
-}
-
 mess "Grub image + resolution configuration - /etc/default folder"
 link "default"
 
 mess "Grub's grub.d scripts - /etc/grub.d folder"
 link "grub.d"
-
-mess "Pulseaudio flat volumes configuration - /etc/pulse folder"
-sudo ln -fs /etc/.dotfiles/pulse /etc/pulse
 
 mess "Keyboard layouts configuration - /etc/X11 folder"
 link "X11"
