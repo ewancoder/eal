@@ -63,20 +63,32 @@ sudo setfont cyr-sun16
 mess "Update yaourt/pacman including multilib"
 yaourt -Syy
 
-mess "Install Audio software"
+mess "Install Audio software (1/7)"
 yaourt -S --noconfirm alsa-plugins alsa-utils pulseaudio pulseaudio-alsa lib32-libpulse lib32-alsa-plugins
-mess "Install A Drivers software"
-yaourt -S lib32-nvidia-libgl mesa nvidia nvidia-libgl
-mess "Install Coding software"
-yaourt -S python python-matplotlib python-scipy python-sphinx tig
-mess "Install Core software"
-yaourt -S devilspie dunst faience-icon-theme feh fuse encfs ntfs-3g gxkb kalu p7zip preload rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg xarchiver xclip xcompmgr zsh
-mess "Install Graphics software"
-yaourt -S geeqie gimp gource scrot vlc
-mess "Install Internet software"
+mess "Install A Drivers software (2/7)"
+yaourt -S lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstreamer
+mess "Install Coding software (3/7)"
+yaourt -S python python-matplotlib python-numpy python-scipy python-sphinx tig
+mess "Install Core software (4/7)"
+yaourt -S devilspie dunst faience-icon-theme feh fuse encfs ntfs-3g gxkb kalu p7zip preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg xarchiver xclip xcompmgr zsh
+mess "Install Graphics software (5/7)"
+yaourt -S geeqie gource scrot vlc
+mess "Install Internet software (6/7)"
 yaourt -S bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox irssi openssh perl-html-parser skype
-mess "Install Office software"
-yaourt -S anki gvim libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar xfe
+mess "Install Office software (7/7)"
+yaourt -S anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar xfe
+
+#Questinable software
+#nvidia-utils, lib32-nvidia-utils bzip2
+#transmission-qt, utorrent
+#pavucontrol
+
+#Additional not-inistalled software
+#Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, wesnoth
+#Graphics - gimp, inkscape, krita, mypaint
+#Testing - gparted, smartmontools
+#Video editing - openshot
+#Wind-a - mono virtualbox wine wine_gecko wine-mono
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
 sudo sed -i "s/dead actute/dead acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose > compose
@@ -88,8 +100,9 @@ sudo chown -R bitlbee:bitlbee /var/lib/bitlbee
 mess "Activate & start bitlbee"
 sudo systemctl enable bitlbee
 sudo systemctl start bitlbee
-mess "Activate preload daemon"
+mess "Activate & start preload"
 sudo systemctl enable preload
+sudo systemctl start preload
 mess "Change shell to /bin/zsh for $username user"
 sudo chsh -s /bin/zsh $username
 mess "Activating fuse (modprobe)"
