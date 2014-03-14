@@ -70,7 +70,7 @@ yaourt -S lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstreamer
 mess "Install Coding software (3/7)"
 yaourt -S python python-matplotlib python-numpy python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
-yaourt -S devilspie dunst faience-icon-theme feh fuse encfs ntfs-3g gxkb kalu p7zip preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg xarchiver xclip xcompmgr zsh
+yaourt -S devilspie dunst faience-icon-theme feh fuse encfs ntfs-3g gxkb kalu p7zip preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg urxvt-perls xarchiver xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
 yaourt -S geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
