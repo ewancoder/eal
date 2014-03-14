@@ -18,9 +18,6 @@
     #If 1, setup netctl ethernet-static; otherwise - just run dhcpcd
     netctl=1
 
-    #If 1, setup pulseaudio standard sink & source
-    pasetup=1
-
     #Local timezone
     timezone=Europe/Minsk
 

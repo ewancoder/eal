@@ -45,5 +45,6 @@ mess "Remove $username NOPASSWD line from sudoers file"
 sed '/'$username' ALL = NOPASSWD: ALL/d' /etc/sudoers > sudoers
 mv sudoers /etc/sudoers
 
+warn "Read ~/.dotfiles/.eal/peal-user.sh for further instructions after [REBOOT] in X server"
 mess "Reboot"
 reboot

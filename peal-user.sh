@@ -1,6 +1,23 @@
 #!/bin/bash
 source ceal.sh
 
+#After-X instructions
+    #After installing all this, you need to do smth. on your own
+    #1) Setup BitlBee twitter account
+        #Run sc (open screen irssi session)
+        #Open bitlbee window, run
+            #register <passwd>
+            #account add twitter ewancoder
+            #account on
+            #<go to token link to accept>
+    #2) Unlock michrophone by using bad-way :/
+        #Install pavucontrol
+        #Unlock michrophone (rear mic buildin)
+        #Uninstall pavucontrol
+    #3) [optional] setup alsa standard sink & source
+        #pactl list
+        #pacmd set-default-{sink,source} X
+
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
 mess "UnTar package-query.tar.gz archive"
@@ -119,41 +136,6 @@ then
     cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
     mess "Update fonts cache"
     sudo fc-cache -fv
-fi
-
-if [ $pasetup -eq 1 ]
-then
-    mess "Start pulseaudio"
-    pulseaudio --start
-    mess "Show list of sources/sinks"
-    pause
-    pactl list | less
-    mess "Select default sink"
-    select num in "1" "2" "3" "4" "5" "6" "7";
-    do
-        case $num in
-            1 ) pacmd set-default-sink 1; break;;
-            2 ) pacmd set-default-sink 2; break;;
-            3 ) pacmd set-default-sink 3; break;;
-            4 ) pacmd set-default-sink 4; break;;
-            5 ) pacmd set-default-sink 5; break;;
-            6 ) pacmd set-default-sink 6; break;;
-            7 ) pacmd set-default-sink 7; break;;
-        esac
-    done
-    mess "Select default source"
-    select num in "1" "2" "3" "4" "5" "6" "7";
-    do
-        case $num in
-            1 ) pacmd set-default-source 1; break;;
-            2 ) pacmd set-default-source 2; break;;
-            3 ) pacmd set-default-source 3; break;;
-            4 ) pacmd set-default-source 4; break;;
-            5 ) pacmd set-default-source 5; break;;
-            6 ) pacmd set-default-source 6; break;;
-            7 ) pacmd set-default-source 7; break;;
-        esac
-    done
 fi
 
 messpause "Change password for irssi config freenode autocmd [MANUAL]"
