@@ -25,8 +25,6 @@ groupadd fuse
 mess "Add user $username"
 useradd -m -g users -G fuse -s /bin/bash $username
 
-mess "Install sudo"
-pacman -S --noconfirm sudo
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers
 mess "Move created by awk sudoers file to /etc/sudoers"

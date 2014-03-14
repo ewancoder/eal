@@ -61,7 +61,7 @@ mess "Bitlbee config - /etc/bitlbee folder"
 sudo ln -fs /etc/.dotfiles/bitlbee /etc/bitlbee
 
 link(){
-    sudo cp -n /etc/$1/* /etc/.dotfiles/$1/
+    sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
     sudo rm -r /etc/$1
     sudo ln -fs /etc/.dotfiles/$1 /etc/$1
 }
