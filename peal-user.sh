@@ -84,7 +84,7 @@ yaourt -S anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libre
 #pavucontrol
 
 #Additional not-inistalled software
-#Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, wesnoth
+#Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
 #Graphics - gimp, inkscape, krita, mypaint
 #Testing - gparted, smartmontools
 #Video editing - openshot
