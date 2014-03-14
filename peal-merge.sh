@@ -1,133 +1,91 @@
 source ceal.sh
 
-#Home folder (~)
-printf "Home folder (~) links\n\n"
+#Home folder
+mess "Home folder (~) links"
 
-#Files
-
-echo "Canto configuration file ~/.canto/conf.py file"
-mkdir -p ~/.canto
-ln -fs ~/.dotfiles/.canto/conf.py ~/.canto/conf.py
-echo
-
-echo "Wmii ~/.wmii-hg/wmiirc file"
-mkdir -p ~/.wmii-hg
-ln -fs ~/.dotfiles/.wmii-hg/wmiirc ~/.wmii-hg/wmiirc
-echo
-
-echo "Alsa to pulseaudio config ~/.asoundrc file"
-ln -fs ~/.dotfiles/.asoundrc ~/.asoundrc
-echo
-
-echo "GTK Bookmarks config ~/.gtk-bookmarks file"
-ln -fs ~/.dotfiles/.gtk-bookmarks ~/.gtk-bookmarks
-echo
-
-echo "GTK theme icons config ~/.gtkrc-2.0 file"
-ln -fs ~/.dotfiles/.gtkrc-2.0 ~/.gtkrc-2.0
-echo
-
-echo "Vim configuration file ~/.vimrc file"
-ln -fs ~/.dotfiles/.vimrc ~/.vimrc
-echo
-
-echo "Xinitrc config .xinitrc file"
-ln -fs ~/.dotfiles/.xinitrc ~/.xinitrc
-echo
-
-echo "Xresources config .Xresources file"
+mess "Terminal colors, fonts & urls - .Xresources"
 ln -fs ~/.dotfiles/.Xresources ~/.Xresources
-echo
 
-echo "ZSH config for autostarting X server - .zprofile file"
-ln -fs ~/.dotfiles/.zprofile ~/.zprofile
-echo
+mess "Use pulseaudio instead of alsa - .asoundrc"
+ln -fs ~/.dotfiles/.asoundrc ~/.asoundrc
 
-echo "ZSH configuration to use oh-my-zsh - .zshrc file"
-ln -fs ~/.dotfiles/.zshrc ~/.zshrc
-echo
+mess "Canto configuration - .canto folder"
+ln -fs ~/.dotfiles/.canto ~/.canto
 
-#Folders
+mess "All things configurations - .config folder"
+ln -fs ~/.dotfiles/.config ~/.config
 
-echo "Dunst, Kalu & Xfe configs ~/.config/{dunst,kalu,xfe} folders"
-mkdir -p ~/.config
-ln -fs ~/.dotfiles/.config/{dunst,kalu,xfe} ~/.config/
-echo
-
-echo "Devilspie daemon (for transparency) ~/.devilspie folder"
+mess "Devilspie config - .devilspie folder"
 ln -fs ~/.dotfiles/.devilspie ~/.devilspie
-echo
 
-echo "Irssi config + scripts ~/.irssi folder"
+mess "GTK Bookmarks config - .gtk-bookmarks"
+ln -fs ~/.dotfiles/.gtk-bookmarks ~/.gtk-bookmarks
+
+mess "GTK icons theme config - ~/.gtkrc-2.0"
+ln -fs ~/.dotfiles/.gtkrc-2.0 ~/.gtkrc-2.0
+
+mess "Irssi config - .irssi folder"
 ln -fs ~/.dotfiles/.irssi ~/.irssi
-echo
 
-echo "Oh-my-zsh ~/.oh-my-zsh folder"
-ln -fs ~/.dotfiles/.oh-my-zsh ~/.oh-my-zsh
-echo
+mess "Oh-my-zsh submodule - .oh-my-zsh folder"
+ln -fs ~/.dotfiles/oh-my-zsh ~/oh-my-zsh
 
-echo "Vim ~/.vim folder"
+mess "Vim configuration - .vim folder"
 ln -fs ~/.dotfiles/.vim ~/.vim
-echo
+
+mess "Wmii configuration - .wmii-hg folder"
+ln -fs ~/.dotfiles/.wmii-hg ~/.wmii-hg
+
+mess "Xinitrc config - .xinitrc"
+ln -fs ~/.dotfiles/.xinitrc ~/.xinitrc
+
+mess "Autostarting X server - .zprofile"
+ln -fs ~/.dotfiles/.zprofile ~/.zprofile
+
+mess "ZSH configuration to use oh-my-zsh - .zshrc"
+ln -fs ~/.dotfiles/.zshrc ~/.zshrc
 
 #Scripts
-printf "Scripts from .dotfiles/scripts to /usr/bin/\n\n"
+mess "Scripts from .dotfiles/scripts to /usr/bin/"
 
-echo "DropBox ScreenShoter - /usr/bin/dbss"
+mess "DropBox ScreenShoter - /usr/bin/dbss"
 sudo ln -fs ~/.dotfiles/scripts/dbss /usr/bin/
-echo
 
-echo "Feed the beast Minecraft - /usr/bin/ftb"
+mess "Feed the beast Minecraft - /usr/bin/ftb"
 sudo ln -fs ~/.dotfiles/scripts/ftb /usr/bin/
-echo
 
 #/etc folder
-printf "/etc folder links\n\n"
+mess "/etc folder links"
 
-#Files
+mess "Bitlbee config - /etc/bitlbee folder"
+sudo ln -fs /etc/.dotfiles/bitlbee /etc/bitlbee
 
-echo "Bitlbee config /etc/bitlbee/bitlbee.conf file"
-sudo mkdir -p /etc/bitlbee
-sudo ln -fs /etc/.dotfiles/bitlbee/bitlbee.conf /etc/bitlbee/bitlbee.conf
-echo
+link(){
+    sudo cp -n /etc/$1/* /etc/.dotfiles/$1/
+    sudo rm -r /etc/$1
+    sudo ln -fs /etc/.dotfiles/$1 /etc/$1
+}
 
-echo "Grub image + resolution configuration /etc/default/grub file"
-sudo mkdir -p /etc/default
-sudo ln -fs /etc/.dotfiles/default/grub /etc/default/grub
-echo
+mess "Grub image + resolution configuration - /etc/default folder"
+link "default"
 
-echo "Grub's grub.d scripts + uncheck execute option on 10_linux script /etc/grub.d/(10_archlinux, 30_os-prober files as links)"
-sudo mkdir -p /etc/grub.d
-sudo ln -fs /etc/.dotfiles/grub.d/10_archlinux /etc/grub.d/10_archlinux
-sudo ln -fs /etc/.dotfiles/grub.d/30_os-prober /etc/grub.d/30_os-prober
-sudo chmod -x /etc/grub.d/10_linux
-echo
+mess "Grub's grub.d scripts - /etc/grub.d folder"
+link "grub.d"
 
-echo "Pulseaudio flat volumes configuration /etc/pulse/daemon.conf file"
-sudo mkdir -p /etc/pulse
-sudo ln -fs /etc/.dotfiles/pulse/daemon.conf /etc/pulse/daemon.conf
-echo
+mess "Pulseaudio flat volumes configuration - /etc/pulse folder"
+sudo ln -fs /etc/.dotfiles/pulse /etc/pulse
 
-echo "Keyboard layouts configuration /etc/X11/xorg.conf.d/20-keyboard-layout.conf file"
-sudo mkdir -p /etc/X11/xorg.conf.d
-sudo ln -fs /etc/.dotfiles/X11/xorg.conf.d/20-keyboard-layout.conf /etc/X11/xorg.conf.d/20-keyboard-layout.conf
-echo
+mess "Keyboard layouts configuration - /etc/X11 folder"
+link "X11"
 
-echo "System standard locale /etc/locale.conf file"
+mess "System standard locale - /etc/locale.conf"
 sudo ln -fs /etc/.dotfiles/locale.conf /etc/locale.conf
-echo
 
-echo "Uncommented locales /etc/locale.gen file"
+mess "Uncommented locales - /etc/locale.gen"
 sudo ln -fs /etc/.dotfiles/locale.gen /etc/locale.gen
-echo
 
-echo "Pacman configuration - multilib support - /etc/pacman.conf file"
+mess "Pacman configuration (multilib support) - /etc/pacman.conf"
 sudo ln -fs /etc/.dotfiles/pacman.conf /etc/pacman.conf
-echo
 
-#Folders
-
-echo "Autologin config /etc/systemd/system/getty@tty1.service.d folder"
-sudo mkdir -p /etc/systemd/system
-sudo ln -fs /etc/.dotfiles/systemd/system/getty@tty1.service.d /etc/systemd/system/getty@tty1.service.d
-echo
+mess "Autologin config - systemd folder"
+link "systemd"
