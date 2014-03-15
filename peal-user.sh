@@ -1,6 +1,6 @@
 #!/bin/bash
 source ceal.sh
-warn "Before executing script, MAKE SURE that you've mounted\n\t1) Windows partition to /mnt/windows\n\t2) Dropbox partition to /home/$username/Dropbox"
+warn "Before proceeding, MAKE SURE that you've mounted\n\t1) Windows partition to /mnt/windows\n\t2) Dropbox partition to /home/$username/Dropbox (should be probably mkounted already via fstab)"
 
 #After-X instructions
     #After installing all this, you need to do smth. on your own
@@ -46,21 +46,21 @@ mess "Install git"
 sudo rm /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quickly
 yaourt -S --noconfirm git
 mess "Configure git user.name"
-git config --global user.name ewancoder
+git config --global user.name $gitname
 mess "Configure git user.email"
-git config --global user.email ewancoder@gmail.com
+git config --global user.email $gitemail
 mess "Configure git merge.tool"
-git config --global merge.tool vimdiff
+git config --global merge.tool $gittool
 mess "Configure git core.editor"
-git config --global core.editor vim
+git config --global core.editor $giteditor
 mess "Make link to .gitconfig for /root user"
 sudo ln -s ~/.gitconfig /root/
 mess "Clone ~/.dotfiles github repository"
-git clone https://github.com/ewancoder/dotfiles.git .dotfiles
+git clone https://github.com/$githome .dotfiles
 mess "Clone /etc/.dotfiles github repository"
-sudo git clone https://github.com/ewancoder/etc.git /etc/.dotfiles
+sudo git clone https://github.com/$gitetc /etc/.dotfiles
 mess "Cd into .dotfiles & pull submodules: oh-my-zsh & vundle"
-cd .dotfiles && git submodule update --init --recursive .oh-my-zsh .vim/bundle/vundle
+cd .dotfiles && git submodule update --init --recursive $gitmodules
 mess "Make vim swap & backup dirs"
 mkdir .vim/{swap,backup}
 mess "Cd into home directory"
@@ -73,9 +73,6 @@ mess "Make grub config based on new scripts + image"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 mess "Generate locales (en+ru)"
 sudo locale-gen
-mess "Link gvim config for /root user"
-sudo ln -s ~/.vim /root/.vim
-sudo ln -s ~/.vimrc /root/.vimrc
 mess "Set font cyr-sun16"
 sudo setfont cyr-sun16
 mess "Update yaourt/pacman including multilib"
@@ -88,11 +85,11 @@ yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstream
 mess "Install Coding software (3/7)"
 yaourt -S --noconfirm python python-matplotlib python-numpy python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
-yaourt -S --noconfirm devilspie dunst faience-icon-theme feh fuse encfs ntfs-3g gxkb kalu p7zip preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg urxvt-perls xarchiver xclip xcompmgr zsh
+yaourt -S --noconfirm devilspie dunst faience-icon-theme feh fuse guake encfs ntfs-3g gxkb kalu p7zip preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg urxvt-perls xarchiver xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox irssi openssh perl-html-parser skype
+yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox irssi openssh perl-html-parser python2-notify skype
 
 #These won't install if merged earlier
 mess "Pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"

@@ -5,45 +5,59 @@ mess "Home folder (~) links"
 
 mess "Terminal colors, fonts & urls - .Xresources"
 ln -fs ~/.dotfiles/.Xresources ~/.Xresources
+sudo ln -fs ~/.Xresources /root/.Xresources
 
 mess "Use pulseaudio instead of alsa - .asoundrc"
 ln -fs ~/.dotfiles/.asoundrc ~/.asoundrc
+sudo ln -fs ~/.asoundrc /root/.asoundrc
 
 mess "Canto configuration - .canto folder"
 ln -fs ~/.dotfiles/.canto ~/.canto
+sudo ln -fs ~/.canto /root/.canto
 
 mess "All things configurations - .config folder"
 ln -fs ~/.dotfiles/.config ~/.config
+sudo ln -fs ~/.config /root/.config
 
 mess "Devilspie config - .devilspie folder"
 ln -fs ~/.dotfiles/.devilspie ~/.devilspie
+sudo ln -fs ~/.devilspie /root/.devilspie
 
 mess "GTK Bookmarks config - .gtk-bookmarks"
 ln -fs ~/.dotfiles/.gtk-bookmarks ~/.gtk-bookmarks
+sudo ln -fs ~/.gtk-bookmarks /root/.gtk-bookmarks
 
 mess "GTK icons theme config - ~/.gtkrc-2.0"
 ln -fs ~/.dotfiles/.gtkrc-2.0 ~/.gtkrc-2.0
+sudo ln -fs ~/.gtkrc-2.0 /root/.gtkrc-2.0
 
 mess "Irssi config - .irssi folder"
 ln -fs ~/.dotfiles/.irssi ~/.irssi
+sudo ln -fs ~/.irssi /root/.irssi
 
 mess "Oh-my-zsh submodule - .oh-my-zsh folder"
 ln -fs ~/.dotfiles/.oh-my-zsh ~/.oh-my-zsh
+sudo ln -fs ~/.oh-my-zsh /root/.oh-my-zsh
 
 mess "Vim configuration - .vim folder"
 ln -fs ~/.dotfiles/.vim ~/.vim
+sudo ln -fs ~/.vim /root/.vim
 
 mess "Wmii configuration - .wmii-hg folder"
 ln -fs ~/.dotfiles/.wmii-hg ~/.wmii-hg
+sudo ln -fs ~/.wmii-hg /root/.wmii-hg
 
 mess "Xinitrc config - .xinitrc"
 ln -fs ~/.dotfiles/.xinitrc ~/.xinitrc
+sudo ln -fs ~/.xinitrc /root/.xinitrc
 
 mess "Autostarting X server - .zprofile"
 ln -fs ~/.dotfiles/.zprofile ~/.zprofile
+sudo ln -fs ~/.zprofile /root/.zprofile
 
 mess "ZSH configuration to use oh-my-zsh - .zshrc"
 ln -fs ~/.dotfiles/.zshrc ~/.zshrc
+sudo ln -fs ~/.zshrc /root/.zshrc
 
 #Scripts
 mess "Scripts from .dotfiles/scripts to /usr/bin/"

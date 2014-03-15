@@ -3,8 +3,8 @@
     #Automode (if 0, you will be prompted on each step)
     auto=0
 
-    #If 0, you will be prompted to edit fstab
-    clearfstab=0
+    #If 1, you will be prompted to edit fstab
+    editfstab=1
 
    #Device to install grub mbr
     device=/dev/sdb
@@ -27,6 +27,28 @@
     #If 1, copy windows fonts from mounted /mnt/windows partition (ask for mount)
     winfonts=1
 
+#Additionals constants
+    
+    #Mirrorlists
+    mirror1=Belarus
+    mirror2=United
+    mirror3=Denmark
+    mirror4=France
+    mirror5=Russia
+
+    #Git params
+    gitname=ewancoder
+    gitemail=ewancoder@gmail.com
+    gittool=vimdiff
+    giteditor=vim
+
+    #dotfiles repositories
+    githome=ewancoder/dotfiles.git
+    gitetc=ewancoder/etc.git
+
+    #git submodules to recursive update
+    gitmodules=".oh-my-zsh .vim/bundle/vundle"
+
 #------------------------------
 #Output styling
     Green=$(tput setaf 2)
@@ -35,8 +57,16 @@
     Bold=$(tput bold)
     Def=$(tput sgr0)
 
+title(){
+    echo -e $Bold$Green$1$Def
+}
+
 pause(){
     read -p $Bold$Yellow"Continue [ENTER]"$Def
+}
+
+warnpause(){
+    read -p $Bold$Yellow"Continue [ENTER] / Cancel [Ctrl+C]"$Def
 }
 
 mess(){
@@ -54,7 +84,7 @@ messpause(){
 
 warn(){
     echo -e "\n"$Bold$Red$1$Def
-    pause
+    warnpause
 }
 
 #------------------------------

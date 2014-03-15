@@ -2,22 +2,23 @@
 source ceal.sh
 clear
 
-warn "Before executing script, MAKE SURE that\n\t1) You've mounted your partitions to /mnt and formatted them as needed (fdisk + mkfs.ext4 + mount)\n\t2) You've changed ALL constants in 'ceal.sh' file (Constants Ewancoder Arch Linux), especially - grub installation device"
+title "Ewancoder Arch Linux Installation script\nVersion 1.1, 2014"
+warn "Before executing script, MAKE SURE that\n\t1) You've mounted your partitions to /mnt and formatted them as needed (fdisk + mkfs.ext4 + mount)\n\t2) You've changed ALL constants in 'ceal.sh' file, especially - grub installation device"
 source ceal.sh
 
 mess "Copy all scripts to /mnt/"
 cp *eal* /mnt/
 
-mess "Place Belarus on the first place"
-grep -B 0 -C 1 Belarus /etc/pacman.d/mirrorlist > mirrorlist
-mess "Place United States/Kingdom next"
-grep -B 0 -C 1 United /etc/pacman.d/mirrorlist >> mirrorlist
-mess "Place Denmark next"
-grep -B 0 -C 1 Denmark /etc/pacman.d/mirrorlist >> mirrorlist
-mess "Place France next"
-grep -B 0 -C 1 France /etc/pacman.d/mirrorlist >> mirrorlist
-mess "Place Russia next"
-grep -B 0 -C 1 Russia /etc/pacman.d/mirrorlist >> mirrorlist
+mess "Place $mirror1 on the first place"
+grep -B 0 -C 1 $mirror1 /etc/pacman.d/mirrorlist > mirrorlist
+mess "Place $mirror2 next"
+grep -B 0 -C 1 $mirror2 /etc/pacman.d/mirrorlist >> mirrorlist
+mess "Place $mirror3 next"
+grep -B 0 -C 1 $mirror3 /etc/pacman.d/mirrorlist >> mirrorlist
+mess "Place $mirror4 next"
+grep -B 0 -C 1 $mirror4 /etc/pacman.d/mirrorlist >> mirrorlist
+mess "Place $mirror5 next"
+grep -B 0 -C 1 $mirror5 /etc/pacman.d/mirrorlist >> mirrorlist
 mess "Cut '--' lines from mirrorlist"
 sed '/--/d' mirrorlist > templist
 mess "Move new mirrorlist to /etc/pacman.d/mirrorlist"
@@ -36,6 +37,6 @@ arch-chroot /mnt /eal-chroot.sh
 mess "Unmount all within /mnt"
 umount -R /mnt
 
-warn "After [REBOOT] run ./peal.sh to continue (post-ewancoder-arch-linux install)"
+warn "After [REBOOT] run ./peal.sh to continue"
 mess "Reboot"
 reboot

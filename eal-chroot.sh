@@ -16,12 +16,12 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-messpause "Setup root password [MANUAL]"
+messpause "Setup$Red root$Def$Bold$Yelloy password [MANUAL]"
 passwd
 
-if [ $clearfstab -eq 0 ]
+if [ $editfstab -eq 1 ]
 then
-    messpause "Edit fstab (add 'discard' for ssd, comment /boot partition [MANUAL]"
+    messpause "Edit fstab (add discard for ssd, comment /boot) [MANUAL]"
     $edit /etc/fstab
 fi
 

@@ -2,8 +2,6 @@
 source ceal.sh
 clear
 
-head -n 14 peal.txt
-
 if [ $netctl -eq 1 ]
 then
     mess "See /sys/class/net interfaces"
