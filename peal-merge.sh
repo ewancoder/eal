@@ -28,7 +28,7 @@ mess "Irssi config - .irssi folder"
 ln -fs ~/.dotfiles/.irssi ~/.irssi
 
 mess "Oh-my-zsh submodule - .oh-my-zsh folder"
-ln -fs ~/.dotfiles/oh-my-zsh ~/oh-my-zsh
+ln -fs ~/.dotfiles/.oh-my-zsh ~/.oh-my-zsh
 
 mess "Vim configuration - .vim folder"
 ln -fs ~/.dotfiles/.vim ~/.vim

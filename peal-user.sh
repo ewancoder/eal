@@ -1,5 +1,6 @@
 #!/bin/bash
 source ceal.sh
+warn "Before executing script, MAKE SURE that you've mounted\n\t1) Windows partition to /mnt/windows\n\t2) Dropbox partition to /home/$username/Dropbox"
 
 #After-X instructions
     #After installing all this, you need to do smth. on your own
@@ -100,12 +101,7 @@ mess "Bitlbee config (bitlbee won't install if merged earlier) - /etc/bitlbee fo
 link "bitlbee"
 
 mess "Install Office software (7/7)"
-yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar
-
-#Questinable software
-#nvidia-utils, lib32-nvidia-utils bzip2
-#transmission-qt, utorrent
-#pavucontrol
+yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
 
 #Additional not-inistalled software
 #Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
@@ -135,12 +131,15 @@ messpause "Generate new ssh key for my github [MANUAL]"
 ssh-keygen -t rsa -C "ewancoder@gmail.com"
 mess "Link this ssh for /root user to be able to do 'sudo git'"
 sudo ln -s ~/.ssh /root/.ssh
+mess "Change Dropbox folder owner to $username"
+sudo chown $username:users
 
 if [ $winfonts -eq 1 ]
 then
     messpause "Mount windows partition to /mnt/windows [MANUAL]"
+    warn "Do it yourself on the second terminal and then, when all done, press [ENTER]"
     mess "Copy windows fonts to /usr/share/fonts/winfonts"
-    cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
+    sudo cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
     mess "Update fonts cache"
     sudo fc-cache -fv
 fi
