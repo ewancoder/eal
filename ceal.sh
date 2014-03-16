@@ -32,6 +32,9 @@
     drfs=ext4
     drparams=rw,relatime,discard
 
+    #Windows device
+    windows=/dev/sdb1
+
 #Additionals constants
     
     #Mirrorlists
@@ -70,10 +73,6 @@ pause(){
     read -p $Bold$Yellow"Continue [ENTER]"$Def
 }
 
-warnpause(){
-    read -p $Bold$Yellow"Continue [ENTER] / Cancel [Ctrl+C]"$Def
-}
-
 mess(){
     echo -e $Bold$Green"\n-> "$Def$Bold$1$Def
     if [ $auto -eq 0 ]
@@ -89,7 +88,7 @@ messpause(){
 
 warn(){
     echo -e "\n"$Bold$Red$1$Def
-    warnpause
+    pause
 }
 
 #------------------------------

@@ -1,6 +1,5 @@
 #!/bin/bash
 source ceal.sh
-warn "Before proceeding, MAKE SURE that you've mounted\n\t1) Windows partition to /mnt/windows\n\t2) Dropbox partition to /home/$username/Dropbox (should be probably mkounted already via fstab)"
 
 #After-X instructions
     #After installing all this, you need to do smth. on your own
@@ -43,7 +42,7 @@ mess "Cd into home directory and remove all archives and dirs respectively"
 cd && rm -r package-query*
 
 mess "Install git"
-sudo rm /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quickly
+sudo rm -f /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quickly
 yaourt -S --noconfirm git
 mess "Configure git user.name"
 git config --global user.name $gitname
@@ -92,9 +91,9 @@ mess "Install Internet software (6/7)"
 yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox irssi openssh perl-html-parser python2-notify skype
 
 #These won't install if merged earlier
-mess "Pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
+mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
 link "pulse"
-mess "Bitlbee config (bitlbee won't install if merged earlier) - /etc/bitlbee folder"
+mess "Merge bitlbee config (bitlbee won't install if merged earlier) - /etc/bitlbee folder"
 link "bitlbee"
 
 mess "Install Office software (7/7)"
@@ -108,8 +107,7 @@ yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-
 #Wind-a - mono virtualbox wine wine_gecko wine-mono
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
-sudo sed -i "s/dead actute/dead acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose > compose
-sudo mv compose /usr/share/X11/locale/en_US.UTF-8/Compose
+sudo sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose
 
 mess "Change bitlbee folder owner to bitlbee:bitlbee"
 sudo mkdir -p /var/lib/bitlbee
@@ -124,22 +122,22 @@ mess "Change shell to /bin/zsh for $username user"
 sudo chsh -s /bin/zsh $username
 mess "Activate fuse (modprobe)"
 sudo modprobe fuse
-messpause "Generate new ssh key for my github [MANUAL]"
-ssh-keygen -t rsa -C "ewancoder@gmail.com"
-mess "Link this ssh for /root user to be able to do 'sudo git'"
-sudo ln -s ~/.ssh /root/.ssh
-mess "Change Dropbox folder owner to $username"
-sudo chown $username:users
 
 if [ $winfonts -eq 1 ]
 then
-    messpause "Mount windows partition to /mnt/windows [MANUAL]"
-    warn "Do it yourself on the second terminal and then, when all done, press [ENTER]"
+    mess "Mount windows partition to /mnt/windows"
+    sudo mkdir -p /mnt/windows
+    sudo mount $windows /mnt/windows
     mess "Copy windows fonts to /usr/share/fonts/winfonts"
     sudo cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
     mess "Update fonts cache"
     sudo fc-cache -fv
 fi
+
+messpause "Generate new ssh key for my github [MANUAL]"
+ssh-keygen -t rsa -C "ewancoder@gmail.com"
+mess "Link this ssh for /root user to be able to do 'sudo git'"
+sudo ln -s ~/.ssh /root/.ssh
 
 messpause "Change password for irssi config freenode autocmd [MANUAL]"
 cp ~/.irssi/config_sample ~/.irssi/config

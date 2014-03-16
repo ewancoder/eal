@@ -16,7 +16,7 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-messpause "Setup$Red root$Def$Bold$Yelloy password [MANUAL]"
+messpause "Setup ROOT password [MANUAL]"
 passwd
 
 if [ $editfstab -eq 1 ]

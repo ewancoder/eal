@@ -76,7 +76,7 @@ link "default"
 
 mess "Grub's grub.d scripts - /etc/grub.d folder"
 link "grub.d"
-chmod -x /etc/grub.d/10_linux
+sudo chmod -x /etc/grub.d/10_linux
 
 mess "Keyboard layouts configuration - /etc/X11 folder"
 link "X11"
