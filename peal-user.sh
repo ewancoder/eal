@@ -23,6 +23,7 @@ source ceal.sh
 #Additional instructions
     #MANUALLY setup guake again :(
         #Color - #D6FFAA
+    #UPDATE Canto (re-read)
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
@@ -158,4 +159,10 @@ vim
 
 mess "Remove files"
 sudo rm *eal*
+
+mess "Create regular directories (~/Downloads/*)"
+mkdir ~/Downloads ~/Downloads/Chrome\ Downloads ~/Downloads/Torrents ~/Downloads/Downloading ~/Downloads/Completed
+mess "Create regular directories (/mnt/*)"
+sudo mkdir /mnt/backup /mnt/data
+
 exit
