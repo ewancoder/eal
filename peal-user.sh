@@ -9,8 +9,10 @@ source ceal.sh
             #register <passwd>
             #account add twitter ewancoder
             #account on
+            #exit / run irssi again
             #<go to token link to accept>
     #2) Unlock michrophone by using bad-way :/
+            #OR using goodway - alsamixer -c 1
         #Install pavucontrol
         #Unlock michrophone (rear mic buildin)
         #Uninstall pavucontrol

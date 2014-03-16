@@ -92,3 +92,12 @@ sudo ln -fs /etc/.dotfiles/pacman.conf /etc/pacman.conf
 
 mess "Autologin config - systemd folder"
 link "systemd"
+
+#Dropbox folder
+mess "Dropbox folder links"
+
+mess "Deluge config directory"
+ln -fs ~/Dropbox/.sync/Arch/deluge ~/.config/deluge
+
+mess "Libreoffice config directory"
+ln -fs ~/Dropbox/.sync/Arch/libreoffice ~/.config/libreoffice
