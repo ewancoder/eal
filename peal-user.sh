@@ -20,6 +20,10 @@ source ceal.sh
         #pactl list
         #pacmd set-default-{sink,source} X
 
+#Additional instructions
+    #MANUALLY setup guake again :(
+        #Color - #D6FFAA
+
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
 mess "UnTar package-query.tar.gz archive"
