@@ -27,6 +27,11 @@
     #If 1, copy windows fonts from mounted /mnt/windows partition (ask for mount)
     winfonts=1
 
+    #Dropbox device
+    dropbox=/dev/sdb4
+    drfs=ext4
+    drparams=rw,relatime,discard
+
 #Additionals constants
     
     #Mirrorlists
