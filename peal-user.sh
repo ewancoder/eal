@@ -24,6 +24,7 @@ source ceal.sh
     #MANUALLY setup guake again :(
         #Color - #D6FFAA
     #UPDATE Canto (re-read)
+    #Sing in in chromium + setup 'Downloads' dir
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
@@ -95,7 +96,7 @@ yaourt -S --noconfirm devilspie dunst faience-icon-theme feh fuse guake encfs nt
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox-experimental irssi openssh perl-html-parser python2-notify skype
+yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox-experimental irssi perl-html-parser python2-notify skype
 
 #These won't install if merged earlier
 mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
@@ -140,11 +141,6 @@ then
     mess "Update fonts cache"
     sudo fc-cache -fv
 fi
-
-messpause "Generate new ssh key for my github [MANUAL]"
-ssh-keygen -t rsa -C "ewancoder@gmail.com"
-mess "Link this ssh for /root user to be able to do 'sudo git'"
-sudo ln -s ~/.ssh /root/.ssh
 
 messpause "Change password for irssi config freenode autocmd [MANUAL]"
 cp ~/.irssi/config_sample ~/.irssi/config
