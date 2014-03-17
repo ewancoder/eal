@@ -24,10 +24,10 @@ mess "Add user $username"
 useradd -m -g users -G fuse -s /bin/bash $username
 
 mess "Mount dropbox and add fstab entry"
-mkdir /home/$username/Dropbox
-chown $username:users /home/$username/Dropbox
-mount $dropbox /home/$username/Dropbox
-echo -e "\n# Dropbox\n$dropbox\t/home/$username/Dropbox\t$drfs\t$drparams\t0\t2" >> /etc/fstab
+mkdir /mnt/dropbox
+mount $dropbox /mnt/dropbox
+ln -fs /mnt/dropbox /home/$username/Dropbox
+echo -e "# Dropbox\n$dropbox\t/mnt/dropbox\t$drfs\t$drparams\t0\t2" >> /etc/fstab
 
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers
