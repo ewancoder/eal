@@ -93,6 +93,10 @@ sudo ln -fs /etc/.dotfiles/pacman.conf /etc/pacman.conf
 mess "Autologin config - systemd folder"
 link "systemd"
 
+mess "Encfs automount config - /etc/security/pam_mount.conf.xml & /etc/pam.d/system-auth files"
+sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
+sudo ln -fs /etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth
+
 #Dropbox folder
 mess "Dropbox folder links"
 
