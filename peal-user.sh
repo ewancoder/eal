@@ -2,6 +2,8 @@
 source ceal.sh
 
 #After-X instructions
+    #-1) Dropbox merge (make link again if not working)
+    #0) Sing in chromium + setup Downloads dir
     #After installing all this, you need to do smth. on your own
     #1) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
@@ -11,21 +13,10 @@ source ceal.sh
             #account on
             #exit / run irssi again
             #<go to token link to accept>
-    #2) Unlock michrophone by using bad-way :/
-            #OR using goodway - alsamixer -c 1
-        #Install pavucontrol
-        #Unlock michrophone (rear mic buildin)
-        #Uninstall pavucontrol
-    #3) [optional] setup alsa standard sink & source
-        #pactl list
-        #pacmd set-default-{sink,source} X
-    #4) Execute pasystray at least once (if it didn't executed itself)
-
-#Additional instructions
-    #MANUALLY setup guake again :(
+    #2) Unlock sound & microphone (pavucontrol)
+    #3) Setup guake manually again :(
         #Color - #D6FFAA
-    #UPDATE Canto (re-read)
-    #Sing in chromium + setup 'Downloads' dir
+    #4) UPDATE Canto (re-read)
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
