@@ -114,7 +114,6 @@ yaourt -S --noconfirm gimp gparted mc pasystray-git pavucontrol smartmontools
 #Additional not-inistalled software
 #Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
 #Graphics - inkscape, krita, mypaint
-#Testing - smartmontools
 #Video editing - openshot
 #Wind-a - mono virtualbox wine wine_gecko wine-mono
 
@@ -136,6 +135,20 @@ sudo chsh -s /bin/zsh $username2
 mess "Activate fuse (modprobe)"
 sudo modprobe fuse
 
+messpause "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
+curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
+sudo mv Canada.png /usr/share/gxkb/flags/ca\(fr\).png
+
+mess "Remove files"
+sudo rm *eal*
+
+mess "Create regular directories (~/Downloads/*)"
+mkdir ~/Downloads ~/Downloads/Chrome\ Downloads ~/Downloads/Torrents ~/Downloads/Downloading ~/Downloads/Completed
+mess "Create regular directories (/mnt/*)"
+sudo mkdir /mnt/backup /mnt/data
+
+warn "Installation is over :)"
+
 if [ $winfonts -eq 1 ]
 then
     mess "Mount windows partition to /mnt/windows"
@@ -151,19 +164,7 @@ messpause "Change password for irssi config freenode autocmd [MANUAL]"
 cp ~/.irssi/config_sample ~/.irssi/config
 vim ~/.irssi/config
 
-messpause "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
-curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
-sudo mv Canada.png /usr/share/gxkb/flags/ca\(fr\).png
-
 messpause "Run :BundleInstall within vim to install all plugins"
 vim
-
-mess "Remove files"
-sudo rm *eal*
-
-mess "Create regular directories (~/Downloads/*)"
-mkdir ~/Downloads ~/Downloads/Chrome\ Downloads ~/Downloads/Torrents ~/Downloads/Downloading ~/Downloads/Completed
-mess "Create regular directories (/mnt/*)"
-sudo mkdir /mnt/backup /mnt/data
 
 exit

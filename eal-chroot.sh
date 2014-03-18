@@ -16,6 +16,11 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
+mess "Move scripts to /root so you could run it right after reboot"
+rm eal* && mv peal* ceal.sh /root/
+
+warn "Installation is over :)"
+
 messpause "Setup ROOT password [MANUAL]"
 passwd
 
@@ -25,7 +30,5 @@ then
     $edit /etc/fstab
 fi
 
-mess "Move scripts to /root so you could run it right after reboot"
-rm eal* && mv peal* ceal.sh /root/
 mess "Exit chroot"
 exit

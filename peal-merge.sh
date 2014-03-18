@@ -12,7 +12,7 @@ mess "Canto configuration - .canto folder"
 link .canto
 
 mess "All things configurations - .config folder"
-ownlink .config
+link .config
 
 mess "Devilspie config - .devilspie folder"
 link .devilspie
@@ -33,7 +33,7 @@ mess "Vim configuration - .vim folder"
 link .vim
 
 mess "Wmii configuration - .wmii-hg folder"
-ownlink .wmii-hg
+link .wmii-hg
 
 mess "Xinitrc config - .xinitrc"
 link .xinitrc
@@ -87,6 +87,10 @@ sudo ln -fs /etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth
 
 mess "Deluge config directory"
 ln -fs ~/Dropbox/.sync/Arch/deluge ~/.config/deluge
+sudo cp -r ~/Dropbox/.sync/Arch/deluge /home/$username2/.config/deluge
+sudo chown -R $username2:users /home/$username2/.config/deluge
 
 mess "Libreoffice config directory"
 ln -fs ~/Dropbox/.sync/Arch/libreoffice ~/.config/libreoffice
+sudo cp -r ~/Dropbox/.sync/Arch/libreoffice /home/$username2/.config/libreoffice
+sudo chown -R $username2:users /home/$username2/.config/deluge

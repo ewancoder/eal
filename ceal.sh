@@ -6,7 +6,7 @@
     #If 1, you will be prompted to edit fstab
     editfstab=1
 
-   #Device to install grub mbr
+    #Device to install grub mbr
     device=/dev/sdb
 
     #Editor (change to nano if you don't like vi)
@@ -21,11 +21,11 @@
     #Local timezone
     timezone=Europe/Minsk
 
-    #Your username login
+    #Your username & username2 login
     username=ewancoder
     username2=lft
 
-    #If 1, copy windows fonts from mounted /mnt/windows partition (ask for mount)
+    #If 1, copy windows fonts
     winfonts=1
 
     #Dropbox device
@@ -93,7 +93,7 @@ warn(){
 }
 
 #------------------------------
-#Link function
+#Link functions
 
 foldlink(){
     sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
@@ -104,11 +104,6 @@ foldlink(){
 link(){
     ln -fs ~/.dotfiles/$1 ~/$1
     sudo ln -fs ~/$1 /root/$1
-    sudo ln -fs ~/$1 /home/$username2/$1
-}
-
-ownlink(){
-    ln -fs ~/.dotfiles/$1 ~/$1
-    sudo ln -fs ~/$1 /root/$1
     sudo cp -r ~/.dotfiles/$1 /home/$username2/$1
+    sudo chown -R $username2:users /home/$username2/$1
 }

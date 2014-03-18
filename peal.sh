@@ -2,6 +2,8 @@
 source ceal.sh
 clear
 
+title "Post- Ewancoder Arch Linux Installation script\nVersion 1.2, 2014"
+
 if [ $netctl -eq 1 ]
 then
     mess "See /sys/class/net interfaces"
@@ -47,6 +49,9 @@ messpause "Setup your user ($username) password [MANUAL]"
 passwd $username
 messpause "Setup second user ($username) password [MANUAL]"
 passwd $username2
+
+warn "Installation begins :)"
+
 mess "Move all scripts except peal.sh to /home/$username/ and remove peal.sh"
 rm peal.sh && mv peal* ceal.sh /home/$username/
 mess "CD into /home/$username/ folder"

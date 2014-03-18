@@ -6,6 +6,8 @@ title "Ewancoder Arch Linux Installation script\nVersion 1.2, 2014"
 warn "Before executing script, MAKE SURE that\n\t1) You've mounted your partitions to /mnt and formatted them as needed (fdisk + mkfs.ext4 + mount)\n\t2) You've changed ALL constants in 'ceal.sh' file, especially - grub installation device"
 source ceal.sh
 
+warn "Installation begins :)"
+
 mess "Copy all scripts to /mnt/"
 cp *eal* /mnt/
 
