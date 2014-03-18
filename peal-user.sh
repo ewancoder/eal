@@ -19,6 +19,7 @@ source ceal.sh
     #3) [optional] setup alsa standard sink & source
         #pactl list
         #pacmd set-default-{sink,source} X
+    #4) Execute pasystray at least once (if it didn't executed itself)
 
 #Additional instructions
     #MANUALLY setup guake again :(

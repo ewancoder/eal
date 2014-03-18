@@ -110,5 +110,5 @@ link(){
 ownlink(){
     ln -fs ~/.dotfiles/$1 ~/$1
     sudo ln -fs ~/$1 /root/$1
-    sudo cp -r ~/$1 /home/$username2/$1
+    sudo cp -r ~/.dotfiles/$1 /home/$username2/$1
 }

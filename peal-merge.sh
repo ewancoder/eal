@@ -12,7 +12,7 @@ mess "Canto configuration - .canto folder"
 link .canto
 
 mess "All things configurations - .config folder"
-link .config
+ownlink .config
 
 mess "Devilspie config - .devilspie folder"
 link .devilspie
