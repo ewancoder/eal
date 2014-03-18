@@ -18,7 +18,7 @@ mess "Devilspie config - .devilspie folder"
 link .devilspie
 
 mess "GTK Bookmarks config - .gtk-bookmarks"
-ownlink .gtk-bookmarks
+link .gtk-bookmarks
 
 mess "GTK icons theme config - ~/.gtkrc-2.0"
 link .gtkrc-2.0

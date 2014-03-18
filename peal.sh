@@ -27,8 +27,11 @@ chmod 750 /home/$username
 mess "Add user $username2"
 useradd -m -g users -G fuse -s /bin/bash $username2
 
-mess "Mount dropbox and add fstab entry"
+mess "Create folder /mnt/dropbox"
 mkdir /mnt/dropbox
+mess "Make dropbox owner is $username"
+chown $username:users /mnt/dropbox
+mess "Mount dropbox and add fstab entry"
 mount $dropbox /mnt/dropbox
 ln -fs /mnt/dropbox /home/$username/Dropbox
 ln -fs /mnt/dropbox /home/$username2/Dropbox
