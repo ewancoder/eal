@@ -33,6 +33,8 @@ mess "Create folder /mnt/dropbox"
 mkdir /mnt/dropbox
 mess "Make dropbox owner is $username"
 chown $username:users /mnt/dropbox
+mess "Make 770 for Dropbox (need to write from lft)"
+chmod 770 /mnt/dropbox
 mess "Mount dropbox and add fstab entry"
 mount $dropbox /mnt/dropbox
 ln -fs /mnt/dropbox /home/$username/Dropbox

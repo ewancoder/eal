@@ -71,6 +71,7 @@ mess "Cd into .dotfiles & pull submodules: oh-my-zsh & vundle"
 cd .dotfiles && git submodule update --init --recursive $gitmodules
 mess "Make vim swap & backup dirs"
 mkdir .vim/{swap,backup}
+sudo chown $username2:users /home/$username2/.vim/{swap,backup}
 mess "Cd into home directory"
 cd
 

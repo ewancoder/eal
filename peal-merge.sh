@@ -94,3 +94,7 @@ mess "Libreoffice config directory"
 ln -fs ~/Dropbox/.sync/Arch/libreoffice ~/.config/libreoffice
 sudo cp -r ~/Dropbox/.sync/Arch/libreoffice /home/$username2/.config/libreoffice
 sudo chown -R $username2:users /home/$username2/.config/deluge
+
+#LFT configuration
+
+sudo ln -fs /mnt/dropbox/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
