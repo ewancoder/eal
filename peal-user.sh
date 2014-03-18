@@ -108,7 +108,7 @@ mess "Install Office software (7/7)"
 yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
 
 mess "Install Additional software (8/7)"
-yaourt -S --noconfirm gimp gparted mc
+yaourt -S --noconfirm gimp gparted mc pasystray-git pavucontrol smartmontools
 
 #Additional not-inistalled software
 #Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
