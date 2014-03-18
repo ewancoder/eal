@@ -23,6 +23,7 @@
 
     #Your username login
     username=ewancoder
+    username2=lft
 
     #If 1, copy windows fonts from mounted /mnt/windows partition (ask for mount)
     winfonts=1
@@ -94,8 +95,20 @@ warn(){
 #------------------------------
 #Link function
 
-link(){
+foldlink(){
     sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
     sudo rm -r /etc/$1
     sudo ln -fs /etc/.dotfiles/$1 /etc/$1
+}
+
+link(){
+    ln -fs ~/.dotfiles/$1 ~/$1
+    sudo ln -fs ~/$1 /root/$1
+    sudo ln -fs ~/$1 /home/$username2/$1
+}
+
+ownlink(){
+    ln -fs ~/.dotfiles/$1 ~/$1
+    sudo ln -fs ~/$1 /root/$1
+    sudo cp -r ~/$1 /home/$username2/$1
 }

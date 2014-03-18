@@ -24,7 +24,7 @@ source ceal.sh
     #MANUALLY setup guake again :(
         #Color - #D6FFAA
     #UPDATE Canto (re-read)
-    #Sing in in chromium + setup 'Downloads' dir
+    #Sing in chromium + setup 'Downloads' dir
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
@@ -100,17 +100,20 @@ yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-fla
 
 #These won't install if merged earlier
 mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
-link "pulse"
+foldlink "pulse"
 mess "Merge bitlbee config (bitlbee won't install if merged earlier) - /etc/bitlbee folder"
-link "bitlbee"
+foldlink "bitlbee"
 
 mess "Install Office software (7/7)"
 yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
 
+mess "Install Additional software (8/7)"
+yaourt -S --noconfirm gimp gparted mc
+
 #Additional not-inistalled software
 #Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
-#Graphics - gimp, inkscape, krita, mypaint
-#Testing - gparted, smartmontools
+#Graphics - inkscape, krita, mypaint
+#Testing - smartmontools
 #Video editing - openshot
 #Wind-a - mono virtualbox wine wine_gecko wine-mono
 
@@ -126,8 +129,9 @@ sudo systemctl start bitlbee
 mess "Activate & start preload"
 sudo systemctl enable preload
 sudo systemctl start preload
-mess "Change shell to /bin/zsh for $username user"
+mess "Change shell to /bin/zsh for $username & $username2 users"
 sudo chsh -s /bin/zsh $username
+sudo chsh -s /bin/zsh $username2
 mess "Activate fuse (modprobe)"
 sudo modprobe fuse
 

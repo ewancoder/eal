@@ -22,19 +22,28 @@ mess "Add group 'fuse'"
 groupadd fuse
 mess "Add user $username"
 useradd -m -g users -G fuse -s /bin/bash $username
+mess "Set chmod to 750 for $username user to be able to read configs via another users"
+chmod 750 /home/$username
+mess "Add user $username2"
+useradd -m -g users -G fuse -s /bin/bash $username2
 
 mess "Mount dropbox and add fstab entry"
 mkdir /mnt/dropbox
 mount $dropbox /mnt/dropbox
 ln -fs /mnt/dropbox /home/$username/Dropbox
+ln -fs /mnt/dropbox /home/$username2/Dropbox
 echo -e "# Dropbox\n$dropbox\t/mnt/dropbox\t$drfs\t$drparams\t0\t2" >> /etc/fstab
 
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers
+awk '/'$username' ALL/{print;print "'$username2' ALL=(ALL) ALL";next}1' lsudoers > lsudoers2
+awk '/'$username' ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm";next}1' lsudoers2 > lsudoers3
 mess "Move created by awk sudoers file to /etc/sudoers"
-mv lsudoers /etc/sudoers
+mv lsudoers3 /etc/sudoers && rm lsudoers*
 messpause "Setup your user ($username) password [MANUAL]"
 passwd $username
+messpause "Setup second user ($username) password [MANUAL]"
+passwd $username2
 mess "Move all scripts except peal.sh to /home/$username/ and remove peal.sh"
 rm peal.sh && mv peal* ceal.sh /home/$username/
 mess "CD into /home/$username/ folder"
