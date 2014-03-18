@@ -16,7 +16,8 @@ source ceal.sh
     #2) Unlock sound & microphone (pavucontrol)
     #3) Setup guake manually again :(
         #Color - #D6FFAA
-    #4) UPDATE Canto (re-read)
+    #4) Kalu read news
+    #5) UPDATE Canto (re-read)
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
