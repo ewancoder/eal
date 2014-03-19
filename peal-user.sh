@@ -18,6 +18,7 @@ source ceal.sh
         #Color - #D6FFAA
     #4) Kalu read news
     #5) UPDATE Canto (re-read)
+    #6) Login into anki & sync
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
