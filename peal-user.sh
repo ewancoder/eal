@@ -2,10 +2,9 @@
 source ceal.sh
 
 #After-X instructions
-    #-1) Dropbox merge (make link again if not working)
-    #0) Sing in chromium + setup Downloads dir
-    #After installing all this, you need to do smth. on your own
-    #1) Setup BitlBee twitter account
+    #1) Dropbox merge (make link again if not working)
+    #2) Sing in chromium + setup Downloads dir
+    #3) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
         #Open bitlbee window, run
             #register <passwd>
@@ -13,12 +12,15 @@ source ceal.sh
             #account on
             #exit / run irssi again
             #<go to token link to accept>
-    #2) Unlock sound & microphone (pavucontrol)
-    #3) Setup guake manually again :(
+    #4) Unlock sound & microphone (pavucontrol)
+    #5) Setup guake manually again :(
         #Color - #D6FFAA
-    #4) Kalu read news
-    #5) UPDATE Canto (re-read)
-    #6) Login into anki & sync
+
+#Just logging/updating actions
+    #1) Kalu read news
+    #2) UPDATE Canto (re-read)
+    #3) Login into anki & sync
+    #4) Login into skype
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
