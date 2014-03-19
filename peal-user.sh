@@ -89,7 +89,7 @@ yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstream
 mess "Install Coding software (3/7)"
 yaourt -S --noconfirm python python-matplotlib python-numpy python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
-yaourt -S --noconfirm devilspie dunst faience-icon-theme feh fuse guake encfs ntfs-3g gxkb kalu p7zip pam_mount preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg urxvt-perls xarchiver xclip xcompmgr zsh
+yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh fuse guake encfs ntfs-3g gxkb kalu lm_sensors p7zip pam_mount preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu xorg-server xorg-server-utils xorg-xinit wmii-hg urxvt-perls xarchiver xboomx xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
@@ -130,6 +130,8 @@ sudo chsh -s /bin/zsh $username
 sudo chsh -s /bin/zsh $username2
 mess "Activate fuse (modprobe)"
 sudo modprobe fuse
+mess "Detect sensors (lm_sensors)"
+sudo sensors-detect --auto
 
 messpause "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
 curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
