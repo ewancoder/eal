@@ -108,7 +108,7 @@ mess "Install Additional software (8/7)"
 yaourt -S --noconfirm gimp gksu gparted mc pasystray-git pavucontrol smartmontools
 
 #Additional not-inistalled software
-#Games - extremetuxracer, kdegames-kolf, kdegames-konquest, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
+#Games - extremetuxracer, foobillard++, kdegames-kolf, kdegames-konquest, lbreakout2, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
 #Graphics - inkscape, krita, mypaint
 #Video editing - openshot
 #Wind-a - mono virtualbox wine wine_gecko wine-mono
