@@ -55,6 +55,10 @@ sudo ln -fs ~/.dotfiles/scripts/ftb /usr/bin/
 mess "Wallpaper changer - /usr/bin/pic"
 sudo ln -fs ~/.dotfiles/scripts/pic /usr/bin/
 
+mess "Reboot & poweroff scripts"
+sudo ln -fs ~/.dotfiles/scripts/reboot /usr/bin/
+sudo ln -fs ~/.dotfiles/scripts/poweroff /usr/bin
+
 #/etc folder
 
 mess "Grub image + resolution configuration - /etc/default folder"
