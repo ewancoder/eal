@@ -101,6 +101,10 @@ ln -fs ~/Dropbox/.sync/Arch/.xboomx ~/.xboomx
 mess ".local/share/applications all mimetypes directory"
 ln -fs ~/Dropbox/.sync/Arch/applications ~/.local/share/applications
 
+mess "Thunar folders: xfce4 & Thunar itself"
+ln -fs ~/Dropbox/.sync/Arch/Thunar ~/.config/Thunar
+ln -fs ~/Dropbox/.sync/Arch/xfce4 ~/.config/xfce4
+
 #LFT configuration
 
 sudo ln -fs /mnt/dropbox/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
