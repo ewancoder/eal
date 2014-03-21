@@ -1,6 +1,13 @@
 #!/bin/bash
 source ceal.sh
 
+#ERRORS
+    #1) First after-X instruction - Dropbox creates new dir instead of merging with link
+    #2) pam_mount.conf.xml is not working as link, need to link AFTER pam_installation OR just COPY (at least, try, because even a copy could be replaced)
+
+#NEED-TO-ADD FEATURES
+    #1) change transset-df transparency on +/- keys / numpad / term-menu (any window, any transparency): bash don't apply float values | even current window!
+
 #After-X instructions
     #1) Dropbox merge (make link again if not working)
     #2) Sing in chromium + setup Downloads dir
@@ -133,7 +140,7 @@ sudo modprobe fuse
 mess "Detect sensors (lm_sensors)"
 sudo sensors-detect --auto
 
-messpause "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
+mess "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
 curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
 sudo mv Canada.png /usr/share/gxkb/flags/ca\(fr\).png
 
@@ -145,8 +152,6 @@ mkdir ~/Downloads ~/Downloads/Chrome\ Downloads ~/Downloads/Torrents ~/Downloads
 mess "Create regular directories (/mnt/*)"
 sudo mkdir /mnt/backup /mnt/data
 
-warn "Installation is over :)"
-
 if [ $winfonts -eq 1 ]
 then
     mess "Mount windows partition to /mnt/windows"
@@ -157,6 +162,8 @@ then
     mess "Update fonts cache"
     sudo fc-cache -fv
 fi
+
+warn "Installation is over :)"
 
 messpause "Change password for irssi config freenode autocmd [MANUAL]"
 cp ~/.irssi/config_sample ~/.irssi/config
