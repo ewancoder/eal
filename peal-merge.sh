@@ -98,6 +98,9 @@ sudo chown -R $username2:users /home/$username2/.config/deluge
 mess ".xboomx database directory"
 ln -fs ~/Dropbox/.sync/Arch/.xboomx ~/.xboomx
 
+mess ".local/share/applications all mimetypes directory"
+ln -fs ~/Dropbox/.sync/Arch/applications ~/.local/share/applications
+
 #LFT configuration
 
 sudo ln -fs /mnt/dropbox/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
