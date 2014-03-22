@@ -97,7 +97,7 @@ sudo chown -R $username2:users /home/$username2/.config/deluge
 mess "Libreoffice config directory"
 ln -fs ~/Dropbox/.sync/Arch/libreoffice ~/.config/libreoffice
 sudo cp -r ~/Dropbox/.sync/Arch/libreoffice /home/$username2/.config/libreoffice
-sudo chown -R $username2:users /home/$username2/.config/deluge
+sudo chown -R $username2:users /home/$username2/.config/libreoffice
 
 mess ".xboomx database directory"
 ln -fs ~/Dropbox/.sync/Arch/.xboomx ~/.xboomx
