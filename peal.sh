@@ -29,17 +29,17 @@ chmod 750 /home/$username
 mess "Add user $username2"
 useradd -m -g users -G fuse -s /bin/bash $username2
 
-mess "Create folder /mnt/dropbox"
-mkdir /mnt/dropbox
-mess "Make dropbox owner is $username"
-chown $username:users /mnt/dropbox
-mess "Make 770 for Dropbox (need to write from lft)"
-chmod 770 /mnt/dropbox
-mess "Mount dropbox and add fstab entry"
-mount $dropbox /mnt/dropbox
-ln -fs /mnt/dropbox /home/$username/Dropbox
-ln -fs /mnt/dropbox /home/$username2/Dropbox
-echo -e "# Dropbox\n$dropbox\t/mnt/dropbox\t$drfs\t$drparams\t0\t2" >> /etc/fstab
+mess "Create folder /mnt/cloud"
+mkdir /mnt/cloud
+mess "Mount cloud and add fstab entry"
+mount $cloud /mnt/cloud
+mess "Make cloud owner is $username"
+chown $username:users /mnt/cloud
+mess "Make 770 for cloud (need to write from lft)"
+chmod 770 /mnt/copy
+ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
+ln -fs /mnt/cloud/Copy /home/$username2/Copy
+echo -e "# Cloud partition\n$cloud\t/mnt/copy\t$clfs\t$clparams\t0\t2" >> /etc/fstab
 
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers

@@ -29,9 +29,9 @@
     winfonts=1
 
     #Dropbox device
-    dropbox=/dev/sdb4
-    drfs=ext4
-    drparams=rw,relatime,discard
+    cloud=/dev/sdb4
+    clfs=ext4
+    clparams=rw,relatime,discard
 
     #Windows device
     windows=/dev/sdb1

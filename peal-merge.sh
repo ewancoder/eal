@@ -88,27 +88,39 @@ sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.
 sudo ln -fs /etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth
 
 #Dropbox folder
+#Copy folder for now
 
 mess "Deluge config directory"
-ln -fs ~/Dropbox/.sync/Arch/deluge ~/.config/deluge
-sudo cp -r ~/Dropbox/.sync/Arch/deluge /home/$username2/.config/deluge
+#ln -fs ~/Dropbox/.sync/Arch/deluge ~/.config/deluge
+#sudo cp -r ~/Dropbox/.sync/Arch/deluge /home/$username2/.config/deluge
+#sudo chown -R $username2:users /home/$username2/.config/deluge
+ln -fs ~/Copy/.sync/Arch/deluge ~/.config/deluge
+sudo cp -r ~/Copy/.sync/Arch/deluge /home/$username2/.config/deluge
 sudo chown -R $username2:users /home/$username2/.config/deluge
 
 mess "Libreoffice config directory"
-ln -fs ~/Dropbox/.sync/Arch/libreoffice ~/.config/libreoffice
-sudo cp -r ~/Dropbox/.sync/Arch/libreoffice /home/$username2/.config/libreoffice
+#ln -fs ~/Dropbox/.sync/Arch/libreoffice ~/.config/libreoffice
+#sudo cp -r ~/Dropbox/.sync/Arch/libreoffice /home/$username2/.config/libreoffice
+#sudo chown -R $username2:users /home/$username2/.config/libreoffice
+ln -fs ~/Copy/.sync/Arch/libreoffice ~/.config/libreoffice
+sudo cp -r ~/Copy/.sync/Arch/libreoffice /home/$username2/.config/libreoffice
 sudo chown -R $username2:users /home/$username2/.config/libreoffice
 
 mess ".xboomx database directory"
-ln -fs ~/Dropbox/.sync/Arch/.xboomx ~/.xboomx
+#ln -fs ~/Dropbox/.sync/Arch/.xboomx ~/.xboomx
+ln -fs ~/Copy/.sync/Arch/.xboomx ~/.xboomx
 
 mess ".local/share/applications all mimetypes directory"
-ln -fs ~/Dropbox/.sync/Arch/applications ~/.local/share/applications
+#ln -fs ~/Dropbox/.sync/Arch/applications ~/.local/share/applications
+ln -fs ~/Copy/.sync/Arch/applications ~/.local/share/applications
 
 mess "Thunar folders: xfce4 & Thunar itself"
-ln -fs ~/Dropbox/.sync/Arch/Thunar ~/.config/Thunar
-ln -fs ~/Dropbox/.sync/Arch/xfce4 ~/.config/xfce4
+#ln -fs ~/Dropbox/.sync/Arch/Thunar ~/.config/Thunar
+#ln -fs ~/Dropbox/.sync/Arch/xfce4 ~/.config/xfce4
+ln -fs ~/Copy/.sync/Arch/Thunar ~/.config/Thunar
+ln -fs ~/Copy/.sync/Arch/xfce4 ~/.config/xfce4
 
 #LFT configuration
 
-sudo ln -fs /mnt/dropbox/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
+#sudo ln -fs /mnt/dropbox/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
+sudo ln -fs /mnt/cloud/Copy/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
