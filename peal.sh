@@ -36,10 +36,12 @@ mount $cloud /mnt/cloud
 mess "Make cloud owner is $username"
 chown $username:users /mnt/cloud
 mess "Make 770 for cloud (need to write from lft)"
-chmod 770 /mnt/copy
+chmod 770 /mnt/cloud
 ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
+ln -fs /mnt/cloud/Copy /home/$username/Copy
+ln -fs /mnt/cloud/Dropbox /home/$username2/Dropbox
 ln -fs /mnt/cloud/Copy /home/$username2/Copy
-echo -e "# Cloud partition\n$cloud\t/mnt/copy\t$clfs\t$clparams\t0\t2" >> /etc/fstab
+echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2" >> /etc/fstab
 
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers

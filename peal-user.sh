@@ -2,11 +2,12 @@
 source ceal.sh
 
 #ERRORS
-    #1) First after-X instruction - Dropbox creates new dir instead of merging with link
-    #2) pam_mount.conf.xml is not working as link, need to link AFTER pam_installation OR just COPY (at least, try, because even a copy could be replaced)
+    #1) First after-X instruction - Dropbox creates new dir instead of merging with link [WITH COPY - NEW RULES]
+    #2) pam_mount.conf.xml is not working as link, need to link AFTER pam_installation OR just COPY (at least, try, because even a copy could be replaced) [TIME NOT WORKING]
 
 #NEED-TO-ADD FEATURES
     #1) change transset-df transparency on +/- keys / numpad / term-menu (any window, any transparency): bash don't apply float values | even current window!
+    #2) maybe store whole copy agent in dropbox
 
 #After-X instructions
     #1) Dropbox merge (make link again if not working)
@@ -73,7 +74,6 @@ mess "Cd into .dotfiles & pull submodules: oh-my-zsh & vundle"
 cd .dotfiles && git submodule update --init --recursive $gitmodules
 mess "Make vim swap & backup dirs"
 mkdir .vim/{swap,backup}
-sudo chown $username2:users /home/$username2/.vim/{swap,backup}
 mess "Cd into home directory"
 cd
 
@@ -139,6 +139,15 @@ mess "Activate fuse (modprobe)"
 sudo modprobe fuse
 mess "Detect sensors (lm_sensors)"
 sudo sensors-detect --auto
+
+mess "Install Copy Agent"
+curl -O https://copy.com/install/linux/Copy.tgz
+tar xvf copy_agent*
+mv copy ctemp
+rm *.tgz
+mv ctemp/x86_64 .copy
+rm -r ctemp
+sudo ln -fs ~/.copy/CopyAgent /usr/bin/copy
 
 mess "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
 curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
