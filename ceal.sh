@@ -33,6 +33,11 @@
     clfs=ext4
     clparams=rw,relatime,discard
 
+    #Backup device
+    backup=/dev/sda5
+    bafs=ext4
+    baparams=rw,relatime
+
     #Windows device
     windows=/dev/sdb1
 

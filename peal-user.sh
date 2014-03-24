@@ -10,8 +10,9 @@ source ceal.sh
     #2) maybe store whole copy agent in dropbox
 
 #After-X instructions
+    #0) Check "/etc/security" folder, files may be not linked :( [error, need to fix]
     #1) Dropbox merge (make link again if not working)
-    #2) Sing in chromium + setup Downloads dir
+    #2) Sing in chromium + change downloads directory
     #3) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
         #Open bitlbee window, run
@@ -132,6 +133,9 @@ sudo systemctl start bitlbee
 mess "Activate & start preload"
 sudo systemctl enable preload
 sudo systemctl start preload
+mess "Activate & start cronie"
+sudo systemctl enable cronie
+sudo systemctl start cronie
 mess "Change shell to /bin/zsh for $username & $username2 users"
 sudo chsh -s /bin/zsh $username
 sudo chsh -s /bin/zsh $username2
@@ -157,9 +161,12 @@ mess "Remove files"
 sudo rm *eal*
 
 mess "Create regular directories (~/Downloads/*)"
-mkdir ~/Downloads ~/Downloads/Chrome\ Downloads ~/Downloads/Torrents ~/Downloads/Downloading ~/Downloads/Completed
-mess "Create regular directories (/mnt/*)"
-sudo mkdir /mnt/backup /mnt/data
+mkdir -p ~/Downloads/Chrome\ Downloads
+ln -fs /mnt/backup/Downloads/Torrents ~/Downloads/Torrents
+ln -fs /mnt/backup/Downloads/Downloading ~/Downloads/Downloading
+ln -fs /mnt/backup/Downloads/Completed ~/Downloads/Completed
+mess "Create /mnt/data folder"
+sudo mkdir /mnt/data
 
 if [ $winfonts -eq 1 ]
 then
