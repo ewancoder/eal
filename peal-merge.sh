@@ -116,5 +116,11 @@ cp -r /mnt/backup/Arch/xfce4 ~/.config/xfce4
 
 #LFT configuration
 
-sudo cp -r /mnt/backup/Arch/lft-wmiirc /home/$username2/.wmii-hg/wmiirc
-sudo ln -fs /mnt/cloud/Copy/.sync/Arch/lft/wmiirc /home/$username2/.wmii-hg/wmiirc
+mess "LFT configuration"
+sudo cp /mnt/backup/Arch/lft-wmiirc /home/$username2/.wmii-hg/wmiirc
+sudo chown $username2:users /home/$username2/.wmii-hg/wmiirc
+
+#EXTERNAL PLACES
+
+mess "/var/spool/cron/ewancoder crontab jobs"
+sudo ln -fs ~/.dotfiles/\;var\;spool\;cron\;ewancoder /var/spool/cron/ewancoder
