@@ -2,32 +2,36 @@
 source ceal.sh
 clear
 
-title "Post- Ewancoder Arch Linux Installation script\nVersion 1.2, 2014"
-
-if [ $netctl -eq 1 ]
-then
-    mess "See /sys/class/net interfaces"
-    ls -la /sys/class/net
-    mess "Copy ethernet-static template"
-    cp /etc/netctl/examples/ethernet-static /etc/netctl/
-    messpause "Configure network (edit ethernet-static file) [MANUAL]"
-    $edit /etc/netctl/ethernet-static
-    mess "Enable and start netctl ethernet-static"
-    netctl enable ethernet-static
-    netctl start ethernet-static
-else
-    mess "Temporary start DHCPCD"
-    dhcpcd
-fi
+title "Post- Ewancoder Arch Linux Installation script\nVersion 1.5, 2014"
 
 mess "Add group 'fuse'"
 groupadd fuse
 mess "Add user $username"
 useradd -m -g users -G fuse -s /bin/bash $username
-mess "Set chmod to 750 for $username user to be able to read configs via another users"
-chmod 750 /home/$username
 mess "Add user $username2"
 useradd -m -g users -G fuse -s /bin/bash $username2
+
+messpause "Setup your user ($username) password [MANUAL]"
+passwd $username
+messpause "Setup second user ($username) password [MANUAL]"
+passwd $username2
+
+if [ $netctl -eq 1 ]
+then
+    mess "Copy ethernet-static template"
+    cp /etc/netctl/examples/ethernet-static /etc/netctl/
+    mess "Configure network by using sed"
+    sed -i "s/eth0/$interface/" /etc/netctl/ethernet-static
+    sed -i "s/^Address=.*/Address=('$ip\/24')/" /etc/netctl/ethernet-static
+    sed -i "s/192.168.1.1/192.168.100.1/" /etc/netctl/ethernet-static
+    mess "Enable and start netctl ethernet-static"
+    netctl enable ethernet-static
+    netctl start ethernet-static
+else
+    mess "Activate DHCPCD"
+    systemctl enable dhcpcd
+    systemctl start dhcpcd
+fi
 
 mess "Create folder /mnt/cloud"
 mkdir /mnt/cloud
@@ -46,7 +50,6 @@ chmod 770 /mnt/cloud
 ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
 ln -fs /mnt/cloud/Copy /home/$username/Copy
 ln -fs /mnt/cloud/Dropbox /home/$username2/Dropbox
-ln -fs /mnt/cloud/Copy /home/$username2/Copy
 mess "Write cloud & backup partitions into fstab"
 echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2\n\n# Backup partition\n$backup\t/mnt/backup\t$bafs\t$baparams\t0\t2" >> /etc/fstab
 
@@ -56,12 +59,6 @@ awk '/'$username' ALL/{print;print "'$username2' ALL=(ALL) ALL";next}1' lsudoers
 awk '/'$username' ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm";next}1' lsudoers2 > lsudoers3
 mess "Move created by awk sudoers file to /etc/sudoers"
 mv lsudoers3 /etc/sudoers && rm lsudoers*
-messpause "Setup your user ($username) password [MANUAL]"
-passwd $username
-messpause "Setup second user ($username) password [MANUAL]"
-passwd $username2
-
-warn "Installation begins :)"
 
 mess "Move all scripts except peal.sh to /home/$username/ and remove peal.sh"
 rm peal.sh && mv peal* ceal.sh /home/$username/

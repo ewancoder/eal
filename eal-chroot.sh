@@ -19,16 +19,14 @@ grub-mkconfig -o /boot/grub/grub.cfg
 mess "Move scripts to /root so you could run it right after reboot"
 rm eal* && mv peal* ceal.sh /root/
 
-warn "Installation is over :)"
+if [ $ssd -eq 1 ]
+then
+    mess "Set discard option for ssd in fstab"
+    sed -i 's/relatime/relatime,discard/g' /etc/fstab
+fi
 
 messpause "Setup ROOT password [MANUAL]"
 passwd
-
-if [ $editfstab -eq 1 ]
-then
-    messpause "Edit fstab (add discard for ssd, comment /boot) [MANUAL]"
-    $edit /etc/fstab
-fi
 
 mess "Exit chroot"
 exit

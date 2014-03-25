@@ -2,12 +2,10 @@
 source ceal.sh
 
 #ERRORS
-    #1) First after-X instruction - Dropbox creates new dir instead of merging with link [WITH COPY - NEW RULES]
     #2) pam_mount.conf.xml is not working as link, need to link AFTER pam_installation OR just COPY (at least, try, because even a copy could be replaced) [TIME NOT WORKING]
 
 #NEED-TO-ADD FEATURES
     #1) change transset-df transparency on +/- keys / numpad / term-menu (any window, any transparency): bash don't apply float values | even current window!
-    #2) maybe store whole copy agent in dropbox
 
 #After-X instructions
     #0) Check "/etc/security" folder, files may be not linked :( [error, need to fix]
@@ -165,8 +163,6 @@ mkdir -p ~/Downloads/Chrome\ Downloads
 ln -fs /mnt/backup/Downloads/Torrents ~/Downloads/Torrents
 ln -fs /mnt/backup/Downloads/Downloading ~/Downloads/Downloading
 ln -fs /mnt/backup/Downloads/Completed ~/Downloads/Completed
-mess "Create /mnt/data folder"
-sudo mkdir /mnt/data
 
 if [ $winfonts -eq 1 ]
 then
@@ -179,13 +175,11 @@ then
     sudo fc-cache -fv
 fi
 
-warn "Installation is over :)"
+mess "BundleInstall - vim installing plugins"
+vim +BundleInstall +qall
 
 messpause "Change password for irssi config freenode autocmd [MANUAL]"
 cp ~/.irssi/config_sample ~/.irssi/config
 vim ~/.irssi/config
-
-messpause "Run :BundleInstall within vim to install all plugins"
-vim
 
 exit

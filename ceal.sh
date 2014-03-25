@@ -1,47 +1,56 @@
-#Constants to change
+#Switches
 
     #Automode (if 0, you will be prompted on each step)
-    auto=0
-
-    #If 1, you will be prompted to edit fstab
-    editfstab=1
-
-    #Device to install grub mbr
-    device=/dev/sdb
-
-    #Editor (change to nano if you don't like vi)
-    edit=vi
-
-    #Your hostname
-    hostname=ewanhost
+    auto=1
 
     #If 1, setup netctl ethernet-static; otherwise - just run dhcpcd
     netctl=1
 
-    #Local timezone
-    timezone=Europe/Minsk
-
-    #Your username & username2 login
-    username=ewancoder
-    username2=lft
+    #If 1, your fstab's / & /home will be set to 'discard'
+    ssd=1
 
     #If 1, copy windows fonts
     winfonts=1
 
-    #Dropbox device
-    cloud=/dev/sdb4
-    clfs=ext4
-    clparams=rw,relatime,discard
+#Constants
+
+    #Editor (change to nano if you don't like vi)
+    edit=vi
+
+    #Hostname
+    hostname=ewanhost
+
+    #Local timezone
+    timezone=Europe/Minsk
+
+    #NetCtl settings
+    interface=enp2s0
+    ip=192.168.100.22
+    dns=192.168.100.1
+
+    #Username & username2 login
+    username=ewancoder
+    username2=lft
+
+#Devices information
 
     #Backup device
     backup=/dev/sda5
     bafs=ext4
     baparams=rw,relatime
 
+    #Dropbox device
+    cloud=/dev/sdb4
+    clfs=ext4
+    clparams=rw,relatime,discard
+
+    #Grub MBR device
+    device=/dev/sdb
+
     #Windows device
     windows=/dev/sdb1
 
-#Additionals constants
+#Additionals constants (non-changeable)
     
     #Mirrorlists
     mirror1=Belarus
@@ -99,6 +108,13 @@ warn(){
 
 #------------------------------
 #Link functions
+
+balink(){
+    cp -r /mnt/backup/Arch/$1 ~/$2
+    sudo ln -fs ~/$2 /root/$2
+    sudo cp -r /mnt/backup/Arch/$1 /home/$username2/$2
+    sudo chown -R $username2:users /home/$username2/$2
+}
 
 foldlink(){
     sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
