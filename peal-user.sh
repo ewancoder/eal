@@ -142,7 +142,7 @@ sudo sensors-detect --auto
 
 mess "Install Copy Agent"
 curl -O https://copy.com/install/linux/Copy.tgz
-tar xvf copy_agent*
+tar xvf Copy.tgz
 mv copy ctemp
 rm *.tgz
 mv ctemp/x86_64 .copy

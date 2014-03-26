@@ -41,12 +41,12 @@ mess "Mount cloud"
 mount $cloud /mnt/cloud
 mess "Mount backup"
 mount $backup /mnt/backup
-mess "Make cloud owner is $username"
-chown $username:users /mnt/cloud
-mess "Make backup owner is $username"
-chown $username:users /mnt/backup
-mess "Make 770 for cloud (need to write from lft)"
-chmod 770 /mnt/cloud
+#mess "Make cloud owner is $username"
+#chown $username:users /mnt/cloud
+#mess "Make backup owner is $username"
+#chown $username:users /mnt/backup
+#mess "Make 770 for cloud (need to write from lft)"
+#chmod 770 /mnt/cloud
 ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
 ln -fs /mnt/cloud/Copy /home/$username/Copy
 ln -fs /mnt/cloud/Dropbox /home/$username2/Dropbox

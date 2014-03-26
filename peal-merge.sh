@@ -111,10 +111,23 @@ balink xfce4 .config/xfce4
 
 mess ".local/share/applications all mimetypes directory"
 mkdir -p ~/.local/share
+sudo mkdir -p /home/$username2/.local/share
+sudo chown -R $username2:users /home/$username2/.local
 balink applications .local/share/applications
 
 mess ".xboomx database directory"
 balink .xboomx .xboomx
+
+
+mess "chromium folder"
+balink chromium .config/chromium
+
+mess "Anki folder"
+balink Anki Anki
+
+mess "Crontab"
+sudo rm -r /var/spool/cron
+cp -r /mnt/backup/Arch/cron /var/spool/cron
 
 #LFT configuration
 
