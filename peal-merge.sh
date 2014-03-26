@@ -62,6 +62,9 @@ mess "Reboot & poweroff scripts"
 sudo ln -fs ~/.dotfiles/scripts/reboot /usr/bin/
 sudo ln -fs ~/.dotfiles/scripts/poweroff /usr/bin/
 
+mess "gpart"
+sudo ln -fs ~/.dotfiles/scripts/gpart /usr/bin/
+
 #/etc folder
 
 #Bitlbee - later
