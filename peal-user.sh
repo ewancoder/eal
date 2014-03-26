@@ -1,26 +1,24 @@
 #!/bin/bash
 source ceal.sh
 
-#ERRORS
-    #2) pam_mount.conf.xml is not working as link, need to link AFTER pam_installation OR just COPY (at least, try, because even a copy could be replaced) [TIME NOT WORKING]
-
 #NEED-TO-ADD FEATURES
     #1) change transset-df transparency on +/- keys / numpad / term-menu (any window, any transparency): bash don't apply float values | even current window!
 
 #After-X instructions
-    #0) Check "/etc/security" folder, files may be not linked :( [error, need to fix]
-    #1) Dropbox merge (make link again if not working)
-    #2) Sing in chromium + change downloads directory
-    #3) Setup BitlBee twitter account
+    #1) Just login into Copy
+    #2) Login into Dropbox and set directory to /mnt/cloud
+    #3) sudo mv /etc/security/pam_mount.conf.xml.pacorig /etc/security/pam_mount.conf.xml
+    #4) Login into chromium + change downloads directory
+    #5) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
         #Open bitlbee window, run
             #register <passwd>
             #account add twitter ewancoder
             #account on
-            #exit / run irssi again
+            #/exit / run irssi again
             #<go to token link to accept>
-    #4) Unlock sound & microphone (pavucontrol)
-    #5) Setup guake manually again :(
+    #6) Unlock sound & microphone (pavucontrol)
+    #7) Setup guake manually again :(
         #Color - #D6FFAA
 
 #Just logging/updating actions
