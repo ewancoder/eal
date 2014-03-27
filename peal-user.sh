@@ -8,8 +8,7 @@ source ceal.sh
     #1) Just login into Copy
     #2) Login into Dropbox and set directory to /mnt/cloud
     #3) sudo mv /etc/security/pam_mount.conf.xml.pacorig /etc/security/pam_mount.conf.xml
-    #4) Login into chromium + change downloads directory
-    #5) Setup BitlBee twitter account
+    #4) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
         #Open bitlbee window, run
             #register <passwd>
@@ -24,8 +23,6 @@ source ceal.sh
 #Just logging/updating actions
     #1) Kalu read news
     #2) UPDATE Canto (re-read)
-    #3) Login into anki & sync
-    #4) Login into skype
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
