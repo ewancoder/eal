@@ -13,7 +13,7 @@ useradd -m -g users -G fuse -s /bin/bash $username2
 
 messpause "Setup your user ($username) password [MANUAL]"
 passwd $username
-messpause "Setup second user ($username) password [MANUAL]"
+messpause "Setup second user ($username2) password [MANUAL]"
 passwd $username2
 
 if [ $netctl -eq 1 ]
@@ -73,5 +73,4 @@ sed '/'$username' ALL = NOPASSWD: ALL/d' /etc/sudoers > sudoers
 mv sudoers /etc/sudoers
 
 warn "Read ~/.dotfiles/.eal/peal-user.sh for further instructions after [REBOOT] in X server"
-mess "Reboot"
 reboot

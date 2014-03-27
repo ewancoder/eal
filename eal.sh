@@ -38,5 +38,4 @@ mess "Unmount all within /mnt"
 umount -R /mnt
 
 warn "After [REBOOT] run ./peal.sh to continue"
-mess "Reboot"
 reboot

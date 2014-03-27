@@ -130,15 +130,10 @@ balink Anki Anki
 
 mess "Crontab"
 sudo rm -r /var/spool/cron
-cp -r /mnt/backup/Arch/cron /var/spool/cron
+sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 
 #LFT configuration
 
 mess "LFT wmiirc configuration"
 sudo cp /mnt/backup/Arch/lft-wmiirc /home/$username2/.wmii-hg/wmiirc
 sudo chown $username2:users /home/$username2/.wmii-hg/wmiirc
-
-#EXTERNAL PLACES
-
-mess "/var/spool/cron/ewancoder crontab jobs"
-sudo ln -fs ~/.dotfiles/\;var\;spool\;cron\;ewancoder /var/spool/cron/ewancoder
