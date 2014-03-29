@@ -123,7 +123,8 @@ balink .xboomx .xboomx
 
 
 mess "chromium folder"
-balink chromium .config/chromium
+cp -r /mnt/backup/Arch/chromium ~/.config/chromium
+sudo ln -fs ~/.config/chromium /root/.config/chromium
 
 mess "Anki folder"
 balink Anki Anki
