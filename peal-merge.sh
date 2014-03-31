@@ -54,6 +54,8 @@ sudo ln -fs ~/.dotfiles/scripts/dbss /usr/bin/
 
 mess "Feed the beast Minecraft - /usr/bin/ftb"
 sudo ln -fs ~/.dotfiles/scripts/ftb /usr/bin/
+mess ".ftblauncher folder link"
+ln -fs ~/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher ~/.ftblauncher
 
 mess "Wallpaper changer - /usr/bin/pic"
 sudo ln -fs ~/.dotfiles/scripts/pic /usr/bin/
