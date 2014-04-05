@@ -67,6 +67,9 @@ sudo ln -fs ~/.dotfiles/scripts/poweroff /usr/bin/
 mess "gpart"
 sudo ln -fs ~/.dotfiles/scripts/gpart /usr/bin/
 
+mess "torr.py"
+sudo ln -fs ~/.dotfiles/scripts/torr.py /usr/bin/torr
+
 #/etc folder
 
 #Bitlbee - later
