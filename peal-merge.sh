@@ -138,6 +138,9 @@ mess "Crontab"
 sudo rm -r /var/spool/cron
 sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 
+mess ".canto folder"
+cp -r /mnt/backup/Arch/feeds ~/.canto/feeds
+
 #LFT configuration
 
 mess "LFT wmiirc configuration"

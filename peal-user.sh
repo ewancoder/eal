@@ -1,9 +1,6 @@
 #!/bin/bash
 source ceal.sh
 
-#NEED-TO-ADD FEATURES
-    #1) change transset-df transparency on +/- keys / numpad / term-menu (any window, any transparency): bash don't apply float values | even current window!
-
 #After-X instructions
     #1) Just login into Copy
     #2) Login into Dropbox and set directory to /mnt/cloud
@@ -11,7 +8,7 @@ source ceal.sh
     #4) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
         #Open bitlbee window, run
-            #register <passwd>
+            #register && /oper <passwd>
             #account add twitter ewancoder
             #account on
             #/exit / run irssi again
