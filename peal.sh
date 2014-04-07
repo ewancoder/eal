@@ -49,7 +49,7 @@ mount $backup /mnt/backup
 #chmod 770 /mnt/cloud
 ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
 ln -fs /mnt/cloud/Copy /home/$username/Copy
-ln -fs /mnt/cloud/Dropbox /home/$username2/Dropbox
+ln -fs /mnt/cloud/Copy /home/$username2/Copy
 mess "Write cloud & backup partitions into fstab"
 echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2\n\n# Backup partition\n$backup\t/mnt/backup\t$bafs\t$baparams\t0\t2" >> /etc/fstab
 
