@@ -3,7 +3,7 @@ source ceal.sh
 #Home folder
 
 mess "Canto configuration - .canto folder"
-link .canto
+link .canto-ng
 
 mess "All things configurations - .config folder"
 link .config
@@ -139,7 +139,7 @@ sudo rm -r /var/spool/cron
 sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 
 mess ".canto folder"
-cp -r /mnt/backup/Arch/feeds ~/.canto/feeds
+cp -r /mnt/backup/Arch/.canto-ng/* ~/.canto-ng/
 
 #LFT configuration
 

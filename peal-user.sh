@@ -91,7 +91,7 @@ yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh ffmpegthumbna
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox-experimental irssi perl-html-parser python2-notify skype
+yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox-experimental irssi perl-html-parser python2-notify skype
 
 #These won't install if merged earlier
 mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
