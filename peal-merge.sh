@@ -134,6 +134,9 @@ sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 mess ".canto folder"
 cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
 
+mess "kalu history"
+cp -r /mnt/backup/Arch/kalu-news.conf ~/.config/kalu/news.conf
+
 #LFT configuration
 
 mess "LFT wmiirc configuration"

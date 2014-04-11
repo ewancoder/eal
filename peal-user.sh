@@ -13,10 +13,6 @@ source ceal.sh
             #<go to token link to accept>
     #3) Unlock sound & microphone (pavucontrol)
 
-#Just logging/updating actions
-    #1) Kalu read news
-    #2) UPDATE Canto (re-read)
-
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
 mess "UnTar package-query.tar.gz archive"
