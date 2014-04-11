@@ -2,9 +2,6 @@ source ceal.sh
 
 #Home folder
 
-mess "Canto configuration - .canto folder"
-link .canto-ng
-
 mess "All things configurations - .config folder"
 link .config
 
@@ -97,7 +94,6 @@ sudo ln -fs /etc/.dotfiles/pacman.conf /etc/pacman.conf
 
 mess "Encfs automount config - /etc/security/pam_mount.conf.xml & /etc/pam.d/system-auth files"
 sudo ln -fs /etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth
-sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
 sudo ln -fs /etc/.dotfiles/security\;time.conf /etc/security/time.conf
 
 #BACONF folders
@@ -136,7 +132,7 @@ sudo rm -r /var/spool/cron
 sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 
 mess ".canto folder"
-cp -r /mnt/backup/Arch/.canto-ng/* ~/.canto-ng/
+cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
 
 #LFT configuration
 

@@ -2,10 +2,8 @@
 source ceal.sh
 
 #After-X instructions
-    #1) Just login into Copy
-    #2) Login into Dropbox and set directory to /mnt/cloud
-    #3) sudo mv /etc/security/pam_mount.conf.xml.pacorig /etc/security/pam_mount.conf.xml
-    #4) Setup BitlBee twitter account
+    #1) Just login into Copy & Dropbox (/mnt/cloud folder)
+    #2) Setup BitlBee twitter account
         #Run sc (open screen irssi session)
         #Open bitlbee window, run
             #register && /oper <passwd>
@@ -13,9 +11,7 @@ source ceal.sh
             #account on
             #/exit / run irssi again
             #<go to token link to accept>
-    #6) Unlock sound & microphone (pavucontrol)
-    #7) Setup guake manually again :(
-        #Color - #D6FFAA
+    #3) Unlock sound & microphone (pavucontrol)
 
 #Just logging/updating actions
     #1) Kalu read news
@@ -98,6 +94,9 @@ mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earli
 foldlink "pulse"
 mess "Merge bitlbee config (bitlbee won't install if merged earlier) - /etc/bitlbee folder"
 foldlink "bitlbee"
+#If merged earlier, pam_mount moves config and creates default one
+mess "Merge pam_mount.conf.xml"
+sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
 
 mess "Install Office software (7/7)"
 yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
