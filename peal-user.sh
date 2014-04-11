@@ -78,11 +78,12 @@ yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstream
 mess "Install Coding software (3/7)"
 yaourt -S --noconfirm python python-matplotlib python-numpy python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
-yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard guake encfs ntfs-3g gxkb kalu lm_sensors p7zip pam_mount preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xarchiver xboomx xclip xcompmgr zsh
+yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard guake encfs ntfs-3g gxkb jre kalu lm_sensors p7zip pam_mount preload rsync rxvt-unicode screen terminus-font transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xarchiver xboomx xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 icedtea-web-java7 deluge dropbox-experimental irssi perl-html-parser python2-notify skype
+yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dropbox-experimental irssi perl-html-parser python2-notify skype
+#Now I'm using jre instead of icedtea-web-java7
 
 #These won't install if merged earlier
 mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
