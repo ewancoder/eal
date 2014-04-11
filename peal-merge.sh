@@ -64,6 +64,9 @@ mess "Reboot & poweroff scripts"
 sudo ln -fs ~/.dotfiles/scripts/reboot /usr/bin/
 sudo ln -fs ~/.dotfiles/scripts/poweroff /usr/bin/
 
+mess "RunOnce script for pulseaudio"
+cp ~/.dotfiles/scripts/runonce.sh ~/
+
 #/etc folder
 
 #Bitlbee - later

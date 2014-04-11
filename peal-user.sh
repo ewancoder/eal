@@ -11,7 +11,6 @@ source ceal.sh
             #account on
             #/exit / run irssi again
             #<go to token link to accept>
-    #3) Unlock sound & microphone (pavucontrol)
 
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
