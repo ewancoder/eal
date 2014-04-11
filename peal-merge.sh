@@ -139,9 +139,3 @@ cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
 
 mess "kalu history"
 cp -r /mnt/backup/Arch/kalu-news.conf ~/.config/kalu/news.conf
-
-#LFT configuration
-
-mess "LFT wmiirc configuration"
-sudo cp /mnt/backup/Arch/lft-wmiirc /home/$username2/.wmii-hg/wmiirc
-sudo chown $username2:users /home/$username2/.wmii-hg/wmiirc
