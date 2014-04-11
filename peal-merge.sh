@@ -57,18 +57,15 @@ sudo ln -fs ~/.dotfiles/scripts/ftb /usr/bin/
 mess ".ftblauncher folder link"
 ln -fs ~/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher ~/.ftblauncher
 
-mess "Wallpaper changer - /usr/bin/pic"
+mess "gpart"
+sudo ln -fs ~/.dotfiles/scripts/gpart /usr/bin/
+
+mess "Pic - wallpaper changer - /usr/bin/pic"
 sudo ln -fs ~/.dotfiles/scripts/pic /usr/bin/
 
 mess "Reboot & poweroff scripts"
 sudo ln -fs ~/.dotfiles/scripts/reboot /usr/bin/
 sudo ln -fs ~/.dotfiles/scripts/poweroff /usr/bin/
-
-mess "gpart"
-sudo ln -fs ~/.dotfiles/scripts/gpart /usr/bin/
-
-mess "torr.py"
-sudo ln -fs ~/.dotfiles/scripts/torr.py /usr/bin/torr
 
 #/etc folder
 
