@@ -16,14 +16,14 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-mess "Move scripts to /root so you could run it right after reboot"
-rm eal* && mv peal* ceal.sh /root/
-
 if [ $ssd -eq 1 ]
 then
     mess "Set discard option for ssd in fstab"
     sed -i 's/relatime/relatime,discard/g' /etc/fstab
 fi
+
+mess "Move scripts to /root so you could run it right after reboot"
+rm eal* && mv peal* ceal.sh /root/
 
 messpause "Setup ROOT password [MANUAL]"
 passwd
