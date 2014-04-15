@@ -69,6 +69,8 @@ sudo ln -fs ~/.dotfiles/scripts/poweroff /usr/bin/
 
 mess "RunOnce script for pulseaudio"
 cp ~/.dotfiles/scripts/runonce.sh ~/
+sudo cp ~/.dotfiles/scripts/runonce.sh /home/$username2/runonce.sh
+sudo chown $username2:users /home/$username2/runonce.sh
 
 #/etc folder
 
@@ -100,12 +102,13 @@ sudo ln -fs /etc/.dotfiles/pacman.conf /etc/pacman.conf
 
 mess "Encfs automount config - /etc/security/pam_mount.conf.xml & /etc/pam.d/system-auth files"
 sudo ln -fs /etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth
-sudo ln -fs /etc/.dotfiles/security\;time.conf /etc/security/time.conf
 
 #BACONF folders
 
 mess ".canto folder"
 cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
+sudo cp -r /mnt/backup/Arch/.canto-ng /home/$username2/.canto-ng
+sudo chown -R $username2:users /home/$username2/.canto-ng
 
 mess "chromium folder"
 cp -r /mnt/backup/Arch/chromium ~/.config/chromium
@@ -119,6 +122,8 @@ balink libreoffice .config/libreoffice
 
 mess "MC panels config"
 cp /mnt/backup/Arch/panels.ini ~/.config/mc/panels.ini
+sudo cp /mnt/backup/Arch/panels.ini /home/$username2/.config/mc/panels.ini
+sudo chown $username2:users /home/$username2/.config/mc/panels.ini
 
 mess "Thunar config directory"
 balink Thunar .config/Thunar
@@ -128,6 +133,8 @@ balink xfce4 .config/xfce4
 
 mess "kalu history"
 cp -r /mnt/backup/Arch/kalu-news.conf ~/.config/kalu/news.conf
+sudo cp /mnt/backup/Arch/kalu-news.conf /home/$username2/.config/kalu/news.conf
+sudo chown $username2:users /home/$username2/.config/kalu/news.conf
 
 mess ".local/share/applications all mimetypes directory"
 mkdir -p ~/.local/share
