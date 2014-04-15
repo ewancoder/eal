@@ -104,17 +104,30 @@ sudo ln -fs /etc/.dotfiles/security\;time.conf /etc/security/time.conf
 
 #BACONF folders
 
+mess ".canto folder"
+cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
+
+mess "chromium folder"
+cp -r /mnt/backup/Arch/chromium ~/.config/chromium
+sudo ln -fs ~/.config/chromium /root/.config/chromium
+
 mess "Deluge config directory"
 balink deluge .config/deluge
 
 mess "Libreoffice config directory"
 balink libreoffice .config/libreoffice
 
+mess "MC panels config"
+cp /mnt/backup/Arch/panels.ini ~/.config/mc/panels.ini
+
 mess "Thunar config directory"
 balink Thunar .config/Thunar
 
 mess "xfce4 (thunar) config directory"
 balink xfce4 .config/xfce4
+
+mess "kalu history"
+cp -r /mnt/backup/Arch/kalu-news.conf ~/.config/kalu/news.conf
 
 mess ".local/share/applications all mimetypes directory"
 mkdir -p ~/.local/share
@@ -125,10 +138,8 @@ balink applications .local/share/applications
 mess ".xboomx database directory"
 balink .xboomx .xboomx
 
-
-mess "chromium folder"
-cp -r /mnt/backup/Arch/chromium ~/.config/chromium
-sudo ln -fs ~/.config/chromium /root/.config/chromium
+mess ".zsh_history history file"
+cp -r /mnt/backup/Arch/.zsh_history ~/.zsh_history
 
 mess "Anki folder"
 balink Anki Anki
@@ -137,9 +148,3 @@ mess "Crontab"
 sudo rm -r /var/spool/cron
 sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 sudo chown ewancoder:users /var/spool/cron/ewancoder
-
-mess ".canto folder"
-cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
-
-mess "kalu history"
-cp -r /mnt/backup/Arch/kalu-news.conf ~/.config/kalu/news.conf
