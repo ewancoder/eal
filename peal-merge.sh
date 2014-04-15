@@ -46,6 +46,9 @@ link .zshrc
 mess "Baconf script"
 sudo ln -fs ~/.dotfiles/scripts/baconf /usr/bin/
 
+mess "Clconf script"
+sudo ln -fs ~/.dotfiles/scripts/clconf /usr/bin/
+
 mess "DropBox ScreenShoter - /usr/bin/dbss"
 sudo ln -fs ~/.dotfiles/scripts/dbss /usr/bin/
 
@@ -133,6 +136,7 @@ balink Anki Anki
 mess "Crontab"
 sudo rm -r /var/spool/cron
 sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
+sudo chown ewancoder:users /var/spool/cron/ewancoder
 
 mess ".canto folder"
 cp -r /mnt/backup/Arch/.canto-ng ~/.canto-ng
