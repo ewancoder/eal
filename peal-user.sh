@@ -93,6 +93,12 @@ foldlink "bitlbee"
 #If merged earlier, pam_mount moves config and creates default one
 mess "Merge pam_mount.conf.xml"
 sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
+#This is managed after actual canto installation :)
+temp='os.system("touch /tmp/rssitems")'
+filename=/usr/lib/python3.4/site-packages/canto_curses/tag.py
+sudo sed -i "/import curses/aimport os" $filename
+sudo sed -i "/call_hook(\"items_added/aplacefortabs$temp" $filename
+sudo sed -i 's/placefortabs/        /g' $filename
 
 mess "Install Office software (7/7)"
 yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
