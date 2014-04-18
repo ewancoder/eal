@@ -127,6 +127,8 @@ sudo systemctl start preload
 mess "Activate & start cronie"
 sudo systemctl enable cronie
 sudo systemctl start cronie
+mess "Activate my irssi :)"
+sudo systemctl enable irssiscreen@($username).service
 mess "Change shell to /bin/zsh for $username & $username2 users"
 sudo chsh -s /bin/zsh $username
 sudo chsh -s /bin/zsh $username2
