@@ -82,7 +82,7 @@ yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh ffmpegthumbna
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dropbox-experimental irssi perl-html-parser python2-notify skype
+yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dropbox-experimental irssi perl-html-parser python2-mako skype
 #Now I'm using jre instead of icedtea-web-java7
 
 #These won't install if merged earlier
@@ -129,6 +129,9 @@ sudo systemctl enable cronie
 sudo systemctl start cronie
 mess "Activate my irssi :)"
 sudo systemctl enable irssiscreen@($username).service
+mess "Deluge stuff"
+sudo systemctl enable deluged
+sudo systemctl enable deluge-web
 mess "Change shell to /bin/zsh for $username & $username2 users"
 sudo chsh -s /bin/zsh $username
 sudo chsh -s /bin/zsh $username2
