@@ -127,8 +127,6 @@ sudo systemctl start preload
 mess "Activate & start cronie"
 sudo systemctl enable cronie
 sudo systemctl start cronie
-mess "Activate my irssi :)"
-sudo systemctl enable irssiscreen@($username).service
 mess "Deluge stuff"
 sudo systemctl enable deluged
 sudo systemctl enable deluge-web
