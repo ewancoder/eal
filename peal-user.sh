@@ -76,7 +76,7 @@ yaourt -S --noconfirm alsa-plugins alsa-utils pulseaudio pulseaudio-alsa lib32-l
 mess "Install A Drivers software (2/7)"
 yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstreamer
 mess "Install Coding software (3/7)"
-yaourt -S --noconfirm python python-matplotlib python-numpy python-scipy python-sphinx tig
+yaourt -S --noconfirm python python-matplotlib python-numpy python2-pygame python-pygame-hg python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
 yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard encfs ntfs-3g gxkb jre kalu lm_sensors p7zip pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xboomx xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
