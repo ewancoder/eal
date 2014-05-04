@@ -74,11 +74,11 @@ yaourt -Syy
 mess "Install Audio software (1/7)"
 yaourt -S --noconfirm alsa-plugins alsa-utils pulseaudio pulseaudio-alsa lib32-libpulse lib32-alsa-plugins
 mess "Install A Drivers software (2/7)"
-yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-gstreamer
+yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer
 mess "Install Coding software (3/7)"
 yaourt -S --noconfirm python python-matplotlib python-numpy python2-pygame python-pygame-hg python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
-yaourt -S --noconfirm devilspie dmenu dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard encfs ntfs-3g gxkb jre kalu lm_sensors p7zip unzip pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xboomx xclip xcompmgr zsh
+yaourt -S --noconfirm cron devilspie dmenu dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard encfs ntfs-3g gxkb jre kalu lm_sensors p7zip unzip pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xboomx xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
@@ -115,6 +115,10 @@ yaourt -S --noconfirm gimp gksu gparted mc pasystray-git pavucontrol smartmontoo
 mess "Install Art Production software (9/7)"
 yaourt -S --noconfirm lmms calligra-krita smplayer
 
+mess "FINALLY cleaning mess - remove orphans (needed twice)"
+pacman -Qdt | awk '{print $1}' | xargs sudo pacman -R --noconfirm
+pacman -Qdt | awk '{print $1}' | xargs sudo pacman -R --noconfirm
+
 mess "CLONE current workaround repositories (currently only btp.git)"
 git clone https://github.com/ewancoder/btp.git
 
@@ -126,13 +130,13 @@ sudo mkdir -p /var/lib/bitlbee
 sudo chown -R bitlbee:bitlbee /var/lib/bitlbee
 mess "Activate & start bitlbee"
 sudo systemctl enable bitlbee
-sudo systemctl start bitlbee
+#sudo systemctl start bitlbee
 mess "Activate & start preload"
 sudo systemctl enable preload
-sudo systemctl start preload
+#sudo systemctl start preload
 mess "Activate & start cronie"
 sudo systemctl enable cronie
-sudo systemctl start cronie
+#sudo systemctl start cronie
 mess "Deluge stuff"
 sudo systemctl enable deluged
 sudo systemctl enable deluge-web

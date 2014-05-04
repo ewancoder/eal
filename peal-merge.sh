@@ -152,6 +152,6 @@ mess "Anki folder"
 balink Anki Anki
 
 mess "Crontab"
-sudo rm -r /var/spool/cron
+sudo rm -rf /var/spool/cron
 sudo cp -r /mnt/backup/Arch/cron /var/spool/cron
 sudo chown ewancoder:users /var/spool/cron/ewancoder
