@@ -108,9 +108,15 @@ yaourt -S --noconfirm gimp gksu gparted mc pasystray-git pavucontrol smartmontoo
 
 #Additional not-inistalled software
 #Games - extremetuxracer, foobillard++, kdegames-kolf, kdegames-konquest, lbreakout2, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
-#Graphics - inkscape, krita, mypaint
+#Graphics - inkscape, mypaint
 #Video editing - openshot
 #Wind-a - mono virtualbox wine wine_gecko wine-mono
+
+mess "Install Art Production software (9/7)"
+yaourt -S --noconfirm lmms calligra-krita smplayer
+
+mess "CLONE current workaround repositories (currently only btp.git)"
+git clone https://github.com/ewancoder/btp.git
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
 sudo sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose
