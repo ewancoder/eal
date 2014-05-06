@@ -78,7 +78,7 @@ yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gst
 mess "Install Coding software (3/7)"
 yaourt -S --noconfirm python python-matplotlib python-numpy python2-pygame python-pygame-hg python-scipy python-sphinx tig
 mess "Install Core software (4/7)"
-yaourt -S --noconfirm cron devilspie dmenu dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard encfs ntfs-3g gxkb jre kalu lm_sensors p7zip unzip pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xboomx xclip xcompmgr zsh
+yaourt -S --noconfirm cron devilspie dmenu dosfstools dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard encfs jmtpfs ntfs-3g gxkb jre kalu lm_sensors p7zip unzip pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xboomx xclip xcompmgr zsh
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
@@ -174,6 +174,8 @@ if [ $winfonts -eq 1 ]
 then
     mess "Mount windows partition to /mnt/windows"
     sudo mkdir -p /mnt/windows
+    mess "Make regular dirs: /mnt/{usb, usb0, data, mtp}"
+    sudo mkdir -p /mnt/{usb,usb0,data,mtp}
     sudo mount $windows /mnt/windows
     mess "Copy windows fonts to /usr/share/fonts/winfonts"
     sudo cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
