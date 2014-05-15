@@ -95,10 +95,14 @@ mess "Merge pam_mount.conf.xml"
 sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
 #This is managed after actual canto installation :)
 temp='os.system("touch /tmp/rssitems")'
-filename=/usr/lib/python3.4/site-packages/canto_curses/tag.py
-sudo sed -i "/import curses/aimport os" $filename
-sudo sed -i "/call_hook(\"items_added/aplacefortabs$temp" $filename
-sudo sed -i 's/placefortabs/        /g' $filename
+filename=/usr/lib/python3.4/site-packages/canto_next/feed.py
+sudo sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename
+sudo sed -i "/item\[key\] = olditem/aplaceforbreak$temp" $filename
+sudo sed -i "/placeforbreak/aplaceforelse$temp" $filename
+sudo sed -i "/placeforelse/aplaceforcall$temp" $filename
+sudo sed -i 's/placeforbreak/                    break/g' $filename
+sudo sed -i 's/placeforelse/            else:/g' $filename
+sudo sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename
 
 mess "Install Office software (7/7)"
 yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
