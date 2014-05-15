@@ -82,7 +82,7 @@ yaourt -S --noconfirm cron devilspie dmenu dosfstools dunst faience-icon-theme f
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dropbox-experimental irssi perl-html-parser python2-mako skype
+yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dropbox-experimental irssi net-tools perl-html-parser python2-mako skype
 #Now I'm using jre instead of icedtea-web-java7
 
 #These won't install if merged earlier
@@ -108,7 +108,7 @@ mess "Install Office software (7/7)"
 yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
 
 mess "Install Additional software (8/7)"
-yaourt -S --noconfirm gimp gksu gparted mc pasystray-git pavucontrol smartmontools
+yaourt -S --noconfirm gksu gparted mc pasystray-git pavucontrol smartmontools
 
 #Additional not-inistalled software
 #Games - extremetuxracer, foobillard++, kdegames-kolf, kdegames-konquest, lbreakout2, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
@@ -132,16 +132,16 @@ sudo sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compo
 mess "Change bitlbee folder owner to bitlbee:bitlbee"
 sudo mkdir -p /var/lib/bitlbee
 sudo chown -R bitlbee:bitlbee /var/lib/bitlbee
-mess "Activate & start bitlbee"
+mess "Enable bitlbee"
 sudo systemctl enable bitlbee
 #sudo systemctl start bitlbee
-mess "Activate & start preload"
+mess "Enable preload"
 sudo systemctl enable preload
 #sudo systemctl start preload
-mess "Activate & start cronie"
+mess "Enable cronie"
 sudo systemctl enable cronie
 #sudo systemctl start cronie
-mess "Deluge stuff"
+mess "Enable deluged & deluge-web"
 sudo systemctl enable deluged
 sudo systemctl enable deluge-web
 mess "Change shell to /bin/zsh for $username & $username2 users"

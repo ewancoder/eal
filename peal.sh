@@ -30,7 +30,7 @@ then
 else
     mess "Activate DHCPCD"
     systemctl enable dhcpcd
-    systemctl start dhcpcd
+    dhcpcd
 fi
 
 mess "Create folder /mnt/cloud"
