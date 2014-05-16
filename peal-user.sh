@@ -82,7 +82,7 @@ yaourt -S --noconfirm cron devilspie dmenu dosfstools dunst faience-icon-theme f
 mess "Install Graphics software (5/7)"
 yaourt -S --noconfirm geeqie gource scrot vlc
 mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dropbox-experimental irssi net-tools perl-html-parser python2-mako skype
+yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dnsmasq dropbox-experimental hostapd irssi net-tools perl-html-parser python2-mako skype
 #Now I'm using jre instead of icedtea-web-java7
 
 #These won't install if merged earlier
@@ -94,12 +94,11 @@ foldlink "bitlbee"
 mess "Merge pam_mount.conf.xml"
 sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
 #This is managed after actual canto installation :)
-temp='os.system("touch /tmp/rssitems")'
 filename=/usr/lib/python3.4/site-packages/canto_next/feed.py
 sudo sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename
-sudo sed -i "/item\[key\] = olditem/aplaceforbreak$temp" $filename
-sudo sed -i "/placeforbreak/aplaceforelse$temp" $filename
-sudo sed -i "/placeforelse/aplaceforcall$temp" $filename
+sudo sed -i "/item\[key\] = olditem/aplaceforbreak" $filename
+sudo sed -i "/placeforbreak/aplaceforelse" $filename
+sudo sed -i "/placeforelse/aplaceforcall" $filename
 sudo sed -i 's/placeforbreak/                    break/g' $filename
 sudo sed -i 's/placeforelse/            else:/g' $filename
 sudo sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename
@@ -144,6 +143,10 @@ sudo systemctl enable cronie
 mess "Enable deluged & deluge-web"
 sudo systemctl enable deluged
 sudo systemctl enable deluge-web
+mess "Enable hostapd"
+sudo systemctl enable hostapd.service
+mess "Enable dnsmasq"
+sudo systemctl enable dnsmasq.service
 mess "Change shell to /bin/zsh for $username & $username2 users"
 sudo chsh -s /bin/zsh $username
 sudo chsh -s /bin/zsh $username2
