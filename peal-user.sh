@@ -93,6 +93,10 @@ foldlink "bitlbee"
 #If merged earlier, pam_mount moves config and creates default one
 mess "Merge pam_mount.conf.xml"
 sudo ln -fs /etc/.dotfiles/security\;pam_mount.conf.xml /etc/security/pam_mount.conf.xml
+mess "Merge dnsmasq.conf"
+sudo ln -fs /etc/.dotfiles/dnsmasq.conf /etc/dnsmasq.conf
+mess "Merge /etc/hostapd folder"
+foldlink "hostapd"
 #This is managed after actual canto installation :)
 filename=/usr/lib/python3.4/site-packages/canto_next/feed.py
 sudo sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename

@@ -77,9 +77,6 @@ sudo chown $username2:users /home/$username2/runonce.sh
 mess "/etc/udev folder"
 foldlink "udev"
 
-mess "/etc/hostapd folder"
-foldlink "hostapd"
-
 #Bitlbee - later
 
 mess "Grub image + resolution configuration - /etc/default folder"
@@ -108,9 +105,6 @@ sudo ln -fs /etc/.dotfiles/pacman.conf /etc/pacman.conf
 
 mess "Encfs automount config - /etc/security/pam_mount.conf.xml & /etc/pam.d/system-auth files"
 sudo ln -fs /etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth
-
-mess "dnsmasq.conf"
-sudo ln -fs /etc/.dotfiles/dnsmasq.conf /etc/dnsmasq.conf
 
 #BACONF folders
 
