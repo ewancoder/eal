@@ -55,11 +55,11 @@ echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2\n\n# Back
 
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers
-awk '/root ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0";next}1' /etc/sudoers > lsudoers
-awk '/'$username' ALL/{print;print "'$username2' ALL=(ALL) ALL";next}1' lsudoers > lsudoers2
-awk '/'$username' ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm";next}1' lsudoers2 > lsudoers3
+awk '/root ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0";next}1' lsudoers > lsudoers2
+awk '/'$username' ALL/{print;print "'$username2' ALL=(ALL) ALL";next}1' lsudoers > lsudoers3
+awk '/'$username' ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm";next}1' lsudoers3 > lsudoers4
 mess "Move created by awk sudoers file to /etc/sudoers"
-mv lsudoers3 /etc/sudoers && rm lsudoers*
+mv lsudoers4 /etc/sudoers && rm lsudoers*
 
 mess "Move all scripts except peal.sh to /home/$username/ and remove peal.sh"
 rm peal.sh && mv peal* ceal.sh /home/$username/
