@@ -1,12 +1,27 @@
+#Current version of script
+version="1.6 Pre-Cleaned, 2014"
+
+#DANGEROUS - Formatting
+
+    #Auto formatting + mounting switch
+    fauto=0
+
+    #Devices to format
+    fdevices=( /dev/sdb5 /dev/sdb6 )
+    #File system
+    ffs=( mkfs.ext4 mkfs.ext4 )
+    #Mount point
+    fmount=( /mnt /mnt/home )
+
 #Switches
 
     #Automode (if 0, you will be prompted on each step)
-    auto=1
+    auto=0
 
-    #If 1, setup netctl ethernet-static; otherwise - just run dhcpcd
+    #If 1, setup netctl ethernet-static; otherwise setup dhcpcd
     netctl=1
 
-    #If 1, your fstab's / & /home will be set to 'discard'
+    #If 1, your fstab's partitions mounted under /mnt will be set to 'discard'
     ssd=1
 
     #If 1, copy windows fonts
@@ -39,7 +54,7 @@
     bafs=ext4
     baparams=rw,relatime
 
-    #Dropbox device
+    #Cloud device
     cloud=/dev/sdb4
     clfs=ext4
     clparams=rw,relatime,discard
@@ -50,14 +65,10 @@
     #Windows device
     windows=/dev/sdb1
 
-#Additionals constants (non-changeable)
+#Additionals constants
     
     #Mirrorlists
-    mirror1=Belarus
-    mirror2=United
-    mirror3=Denmark
-    mirror4=France
-    mirror5=Russia
+    mirrors=( Belarus United Denmark France Russia )
 
     #Git params
     gitname=ewancoder

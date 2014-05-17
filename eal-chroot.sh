@@ -1,7 +1,7 @@
 #!/bin/bash
 source ceal.sh
 
-mess "Make link to local timezone ($timezone)"
+mess "Set local timezone ($timezone)"
 ln -s /usr/share/zoneinfo/$timezone /etc/localtime
 
 mess "Set hostname ($hostname)"
