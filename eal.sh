@@ -11,10 +11,10 @@ echo "# /etc/fstab: static file system information" > fstab
 for (( i = 0; i < ${#devices[@]}; i++ )); do
     mess "Create folder /mnt${mounts[$i]}"
     mkdir -p /mnt${mounts[$i]}
-    mess "Mount ${devices[$i]} to ${mounts[$i]}"
+    mess "Mount ${devices[$i]} to /mnt${mounts[$i]}"
     mount ${devices[$i]} /mnt${mounts[$i]}
     mess "Add fstab ${descriptions[$i]} partition entry '${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}'"
-    echo "\n#${descriptions[$i]} partition\n${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}" >> fstab
+    echo -e "\n#${descriptions[$i]} partition\n${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}" >> fstab
 done
 
 mess "Forming mirrorlist"
