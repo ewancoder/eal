@@ -2,23 +2,43 @@
 source ceal.sh
 clear
 
-title "Post- Ewancoder Arch Linux Installation script\nVersion $version"
+title "Ewancoder Arch Linux POST-Installation script\nVersion $version"
 
-mess "Add group 'fuse'"
-groupadd fuse
-for i in "${users[@]}"
+for i in "${groups[@]}"
 do
-    mess "Add user $i"
-    useradd -m -g users -G fuse -s /bin/bash $i
-    messpause "Setup user ($i) password [MANUAL]"
-    passwd $i
+    IFS=',' read -a gr <<< "$i"
+    for j in "${gr[@]}"
+    do
+        if [ "(grep $j /etc/group)" == "" ]; then
+            mess "Add group '$j'"
+            groupadd $j
+        fi
+    done
+done
+mess "Prepare sudoers file for pasting entries"
+echo "\n## Users configuration" >> /etc/sudoers
+for (( i = 0; i < ${#users[@]}; i++ )); do
+    mess "Add user ${users[$i]} with groups: 'users,${groups[$i]}'"
+    useradd -m -g users -G ${groups[$i]} -s /bin/bash ${users[$i]}
+    mess "Add user ${$users[$i]} entry into /etc/sudoers"
+    echo "${$users[$i]} ALL=(ALL) ALL" >> /etc/sudoers
+    messpause "Setup user (${users[$i]}) password [MANUAL]"
+    passwd ${$users[$i]}
+done
+
+mess "Add additional entries into /etc/sudoers"
+echo "\n## Additional configuration" >> /etc/sudoers
+for i in "${$sudoers[@]}"
+do
+    mess "Add '$i' entry"
+    echo $i >> /etc/sudoers
 done
 
 if [ $netctl -eq 1 ]
 then
     mess "Copy ethernet-static template"
     cp /etc/netctl/examples/ethernet-static /etc/netctl/
-    mess "Configure network by using sed"
+    mess "Configure network at $interface device with $ip static ip address and $dns dns address"
     sed -i "s/eth0/$interface/" /etc/netctl/ethernet-static
     sed -i "s/^Address=.*/Address=('$ip\/24')/" /etc/netctl/ethernet-static
     sed -i "s/192.168.1.1/$dns/" /etc/netctl/ethernet-static
@@ -32,38 +52,16 @@ else
     warn "Wait several seconds and try to ping something at another tty, then if network is ready, press [RETURN]"
 fi
 
-mess "Create mount folders /mnt/cloud & /mnt/backup"
-mkdir /mnt/cloud
-mkdir /mnt/backup
-mess "Mount folders /mnt/cloud & /mnt/backup"
-mount $cloud /mnt/cloud
-mount $backup /mnt/backup
-mess "Make Dropbox & Copy links to home folder"
-ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
-ln -fs /mnt/cloud/Copy /home/$username/Copy
-ln -fs /mnt/cloud/Copy /home/$username2/Copy
-mess "Write cloud & backup partitions into fstab"
-echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2\n\n# Backup partition\n$backup\t/mnt/backup\t$bafs\t$baparams\t0\t2\n\n" >> /etc/fstab
+mess "Move all scripts except peal.sh to /home/${$users[0]}/ and remove peal.sh"
+rm peal.sh && mv *.sh /home/${$users[0]}/
+mess "CD into /home/${$users[0]}/ folder"
+cd /home/${$users[0]}/
+mess "Add ${$users[0]} NOPASSWD line to sudoers file"
+echo "${$users[0]} ALL = NOPASSWD: ALL" >> /etc/sudoers
+mess "Run peal-user.sh as ${$users[0]} user"
+su - ${$users[0]} -c ./peal-user.sh
+mess "Remove ${$users[0]} NOPASSWD line from sudoers file"
+sed -i '/'${$users[0]}' ALL = NOPASSWD: ALL/d' /etc/sudoers
 
-mess "Edit (visudo) sudoers file via awk"
-awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers
-awk '/root ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0";next}1' lsudoers > lsudoers2
-awk '/'$username' ALL/{print;print "'$username2' ALL=(ALL) ALL";next}1' lsudoers > lsudoers3
-awk '/'$username' ALL/{print;print "'$username' ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm";next}1' lsudoers3 > lsudoers4
-mess "Move created by awk sudoers file to /etc/sudoers"
-mv lsudoers4 /etc/sudoers && rm lsudoers*
-
-mess "Move all scripts except peal.sh to /home/$username/ and remove peal.sh"
-rm peal.sh && mv peal* ceal.sh /home/$username/
-mess "CD into /home/$username/ folder"
-cd /home/$username/
-mess "Add $username NOPASSWD line to sudoers file"
-echo "$username ALL = NOPASSWD: ALL" >> /etc/sudoers
-mess "Run peal-user.sh as $username user"
-su - $username -c ./peal-user.sh
-mess "Remove $username NOPASSWD line from sudoers file"
-sed '/'$username' ALL = NOPASSWD: ALL/d' /etc/sudoers > sudoers
-mv sudoers /etc/sudoers
-
-warn "Read ~/.dotfiles/.eal/peal-user.sh for further instructions after [REBOOT] in X server"
+warn "Installation is complete! [REBOOT]"
 reboot

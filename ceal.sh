@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Current version of script
 version="1.6 Pre-Cleaned, 2014"
 
@@ -43,6 +45,10 @@ version="1.6 Pre-Cleaned, 2014"
 
     #Username & username2 login
     users=( ewancoder lft )
+    groups=( fuse fuse )
+
+    #Sudoers additional entries
+    sudoers=( "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0" "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
 
     username=ewancoder
     username2=lft
@@ -81,12 +87,10 @@ version="1.6 Pre-Cleaned, 2014"
     gittool=vimdiff
     giteditor=vim
 
-    #dotfiles repositories
-    githome=ewancoder/dotfiles.git
-    gitetc=ewancoder/etc.git
-
-    #git submodules to recursive update
-    gitmodules=".oh-my-zsh .vim/bundle/vundle"
+    #Dotfiles repositories
+    gitrepos=( ewancoder/dotfiles ewancoder/etc )
+    gitfolders=( ~/.dotfiles /etc/.dotfiles )
+    gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
 
 #------------------------------
 #Output styling

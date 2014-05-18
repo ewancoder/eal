@@ -1,4 +1,11 @@
+#!/bin/bash
 source ceal.sh
+
+#TEMPORARY HERE
+mess "Make Dropbox & Copy links to home folder"
+ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
+ln -fs /mnt/cloud/Copy /home/$username/Copy
+ln -fs /mnt/cloud/Copy /home/$username2/Copy
 
 #Home folder
 

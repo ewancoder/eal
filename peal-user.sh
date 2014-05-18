@@ -1,17 +1,6 @@
 #!/bin/bash
 source ceal.sh
 
-#After-X instructions
-    #1) Just login into Copy & Dropbox (/mnt/cloud folder)
-    #2) Setup BitlBee twitter account
-        #Run sc (open screen irssi session)
-        #Open bitlbee window, run
-            #register && /oper <passwd>
-            #account add twitter ewancoder
-            #account on
-            #/exit / run irssi again
-            #<go to token link to accept>
-
 mess "Download package-query.tar.gz file"
 curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
 mess "UnTar package-query.tar.gz archive"
@@ -48,21 +37,24 @@ mess "Configure git core.editor"
 git config --global core.editor $giteditor
 mess "Make link to .gitconfig for /root user"
 sudo ln -s ~/.gitconfig /root/
-mess "Clone ~/.dotfiles github repository"
-git clone https://github.com/$githome .dotfiles
-mess "Clone /etc/.dotfiles github repository"
-sudo git clone https://github.com/$gitetc /etc/.dotfiles
-mess "Cd into .dotfiles & pull submodules: oh-my-zsh & vundle"
-cd .dotfiles && git submodule update --init --recursive $gitmodules
+mess "Clone github repositories"
+for (( i = 0; i < ${#gitrepos[@]}; i++ )); do
+    mess "Clone ${gitrepos[$i]} repo"
+    git clone https://github.com/${gitrepos[$i]}.git ${gitfolders[$i]}
+    if ! [ "${gitmodules[$i]}" == "" ]; then
+        mess "Pull submodules ${gitmodules[$i]}"
+        cd ${gitfolders[$i]} && git submodule update --init --recursive ${gitmodules[$i]}
+    fi
+done
 mess "Make vim swap & backup dirs"
 mkdir .vim/{swap,backup}
 mess "Cd into home directory"
 cd
 
-mess "Merge all git links: Now will be executed script that will merge all git links from ~/.dotfiles & from /etc/.dotfiles"
+mess "Merge all git links: Now will be executed script that will merge all git links"
 ./peal-merge.sh
 
-mess "Make grub config based on new scripts + image"
+mess "Make grub config based on new scripts"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 mess "Generate locales (en+ru)"
 sudo locale-gen
