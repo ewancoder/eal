@@ -1,17 +1,15 @@
 #Current version of script
 version="1.6 Pre-Cleaned, 2014"
 
-#DANGEROUS - Formatting
+#ALL DEVICES
 
-    #Auto formatting + mounting switch
-    fauto=0
-
-    #Devices to format
-    fdevices=( /dev/sdb5 /dev/sdb6 )
-    #File system
-    ffs=( mkfs.ext4 mkfs.ext4 )
-    #Mount point
-    fmount=( /mnt /mnt/home )
+    descriptions=( 'Root' 'Home' 'Cloud partition' 'Backup partition' )
+    devices=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
+    mounts=( / /home /mnt/cloud /mnt/backup )
+    types=( ext4 ext4 ext4 ext4 )
+    options=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime )
+    dumps=( 0 0 0 0 )
+    passes=( 1 2 2 2 )
 
 #Switches
 
@@ -44,10 +42,17 @@ version="1.6 Pre-Cleaned, 2014"
     dns=192.168.100.1
 
     #Username & username2 login
+    users=( ewancoder lft )
+
     username=ewancoder
     username2=lft
 
 #Devices information
+
+    #Backup & Cloud devices
+    edevices=( /dev/sda5 /dev/sdb4 )
+    efs=( ext4 ext4 )
+    eparams=( rw,relatime rw,relatime,discard )
 
     #Backup device
     backup=/dev/sda5
@@ -60,7 +65,7 @@ version="1.6 Pre-Cleaned, 2014"
     clparams=rw,relatime,discard
 
     #Grub MBR device
-    device=/dev/sdb
+    mbr=/dev/sdb
 
     #Windows device
     windows=/dev/sdb1

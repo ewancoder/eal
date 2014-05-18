@@ -2,19 +2,17 @@
 source ceal.sh
 clear
 
-title "Post- Ewancoder Arch Linux Installation script\nVersion 1.5, 2014"
+title "Post- Ewancoder Arch Linux Installation script\nVersion $version"
 
 mess "Add group 'fuse'"
 groupadd fuse
-mess "Add user $username"
-useradd -m -g users -G fuse -s /bin/bash $username
-mess "Add user $username2"
-useradd -m -g users -G fuse -s /bin/bash $username2
-
-messpause "Setup your user ($username) password [MANUAL]"
-passwd $username
-messpause "Setup second user ($username2) password [MANUAL]"
-passwd $username2
+for i in "${users[@]}"
+do
+    mess "Add user $i"
+    useradd -m -g users -G fuse -s /bin/bash $i
+    messpause "Setup user ($i) password [MANUAL]"
+    passwd $i
+done
 
 if [ $netctl -eq 1 ]
 then
@@ -23,35 +21,29 @@ then
     mess "Configure network by using sed"
     sed -i "s/eth0/$interface/" /etc/netctl/ethernet-static
     sed -i "s/^Address=.*/Address=('$ip\/24')/" /etc/netctl/ethernet-static
-    sed -i "s/192.168.1.1/192.168.100.1/" /etc/netctl/ethernet-static
+    sed -i "s/192.168.1.1/$dns/" /etc/netctl/ethernet-static
     mess "Enable and start netctl ethernet-static"
     netctl enable ethernet-static
     netctl start ethernet-static
 else
-    mess "Activate DHCPCD"
+    mess "Enable and start dhcpcd"
     systemctl enable dhcpcd
     dhcpcd
+    warn "Wait several seconds and try to ping something at another tty, then if network is ready, press [RETURN]"
 fi
 
-mess "Create folder /mnt/cloud"
+mess "Create mount folders /mnt/cloud & /mnt/backup"
 mkdir /mnt/cloud
-mess "Create folder /mnt/backup"
 mkdir /mnt/backup
-mess "Mount cloud"
+mess "Mount folders /mnt/cloud & /mnt/backup"
 mount $cloud /mnt/cloud
-mess "Mount backup"
 mount $backup /mnt/backup
-#mess "Make cloud owner is $username"
-#chown $username:users /mnt/cloud
-#mess "Make backup owner is $username"
-#chown $username:users /mnt/backup
-#mess "Make 770 for cloud (need to write from lft)"
-#chmod 770 /mnt/cloud
+mess "Make Dropbox & Copy links to home folder"
 ln -fs /mnt/cloud/Dropbox /home/$username/Dropbox
 ln -fs /mnt/cloud/Copy /home/$username/Copy
 ln -fs /mnt/cloud/Copy /home/$username2/Copy
 mess "Write cloud & backup partitions into fstab"
-echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2\n\n# Backup partition\n$backup\t/mnt/backup\t$bafs\t$baparams\t0\t2" >> /etc/fstab
+echo -e "# Cloud partition\n$cloud\t/mnt/cloud\t$clfs\t$clparams\t0\t2\n\n# Backup partition\n$backup\t/mnt/backup\t$bafs\t$baparams\t0\t2\n\n" >> /etc/fstab
 
 mess "Edit (visudo) sudoers file via awk"
 awk '/root ALL/{print;print "'$username' ALL=(ALL) ALL";next}1' /etc/sudoers > lsudoers

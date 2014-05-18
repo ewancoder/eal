@@ -3,25 +3,19 @@ source ceal.sh
 clear
 
 title "Ewancoder Arch Linux Installation script\nVersion $version"
-warn "Before executing script, MAKE SURE that\n\t1) You've mounted your partitions to /mnt and formatted them as needed (fdisk + mkfs.ext4 + mount)\n\t2) You've changed all constants in 'ceal.sh' file"
+warn "Before executing script, MAKE SURE that\n\t1) You've FORMATTED your partitions as needed (fdisk + mkfs.ext4). The partitions will be mounted automatically\n\t2) You've changed all constants in 'ceal.sh' file"
 source ceal.sh
 
-if [ $fauto -eq 1 ]
-then
-    warn "Now will be performed formatting of $devices devices and then automounting to /mnt. Is that right? [CONTINUE]"
-    for (( i = 0; i < ${#fdevices[@]}; i++ )); do
-        mess "Format ${fdevices[$i]} in ${ffs[$i]}"
-        ${ffs[$i]} ${fdevices[$i]}
-        mess "Mount ${fdevices[$i]} to ${fmount[$i]}"
-        mkdir -p ${fmount[$i]}
-        mount ${fdevices[$i]} ${fmount[$i]}
-        mess "Delete lost+found folder"
-        rm -r ${fmount[$i]}/lost*
-    done
-fi
-
-mess "Copy all scripts to /mnt/"
-cp *eal* /mnt/
+mess "Automount all partitions and form fstab"
+echo "# /etc/fstab: static file system information" > fstab
+for (( i = 0; i < ${#devices[@]}; i++ )); do
+    mess "Create folder /mnt${mounts[$i]}"
+    mkdir -p /mnt${mounts[$i]}
+    mess "Mount ${devices[$i]} to ${mounts[$i]}"
+    mount ${devices[$i]} /mnt${mounts[$i]}
+    mess "Add fstab ${descriptions[$i]} entry '${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}'"
+    echo "\n\n#${descriptions[$i]}\n${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}" >> fstab
+done
 
 mess "Forming mirrorlist"
 for i in "${mirrors[@]}"
@@ -37,9 +31,11 @@ pacman -Syy
 mess "Install base-system"
 pacstrap /mnt base base-devel
 
-mess "Generate fstab"
-genfstab -U -p /mnt >> /mnt/etc/fstab
+mess "Move fstab to /mnt/etc/fstab (form final fstab)"
+mv fstab /mnt/etc/fstab
 
+mess "Copy all scripts to /mnt/"
+cp *eal* /mnt/
 mess "Go to chroot"
 arch-chroot /mnt /eal-chroot.sh
 mess "Unmount all within /mnt"
