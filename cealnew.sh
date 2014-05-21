@@ -1,10 +1,8 @@
 #!/bin/bash
-
 #Current version of script
 version="1.6 HARDCORE-Messy, 2014"
 
-#All devices
-
+#All devices to mount
 descriptions=( Root Home Cloud Backup )
 devices=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
 mounts=( / /home /mnt/cloud /mnt/backup )
@@ -13,18 +11,42 @@ options=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatim
 dumps=( 0 0 0 0 )
 passes=( 1 2 2 2 )
 
-#Mirrorlist
-mirrors=( Belarus United Denmark France Russia )
-
-#Local timezone
-timezone=Europe/Minsk
+#Grub MBR device
+mbr=/dev/sdb
 
 #Hostname
 hostname=ewanhost
 
-#Grub MBR device
-mbr=/dev/sdb
+#Local timezone
+timezone=Europe/Minsk
 
+#Mirrorlist
+mirrors=( Belarus United Denmark France Russia )
+
+#User configuration
+users=( ewancoder lft )
+groups=( fuse fuse,testing )
+
+#Sudoers additional entries
+sudoers=( "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0" "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
+
+#Internet configuration
+netctl=1
+interface=enp2s0
+ip=192.168.100.22
+dns=192.168.100.1
+
+#Git configuration
+gitname=ewancoder
+gitemail=ewancoder@gmail.com
+gittool=vimdiff
+giteditor=vim
+
+gitrepos=( ewancoder/dotfiles ewancoder/etc ewancoder/btp )
+gitfolders=( ~/.dotfiles /etc/.dotfiles ~/btp )
+gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
+
+mkdirs=( "~/.vim/{swap,backup}" )
 
 
 

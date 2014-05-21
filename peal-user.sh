@@ -46,10 +46,15 @@ for (( i = 0; i < ${#gitrepos[@]}; i++ )); do
         cd ${gitfolders[$i]} && git submodule update --init --recursive ${gitmodules[$i]}
     fi
 done
-mess "Make vim swap & backup dirs"
-mkdir .vim/{swap,backup}
 mess "Cd into home directory"
 cd
+
+mess "Make empty directories where needed"
+for i in ${$mkdirs[@]}
+do
+    mess "Make $i directory"
+    mkdir -p $i
+done
 
 mess "Merge all git links: Now will be executed script that will merge all git links"
 ./peal-merge.sh
