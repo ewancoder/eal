@@ -2,7 +2,8 @@
 #Current version of script
 version="1.6 HARDCORE-Messy, 2014"
 
-#All devices to mount
+#All devices to mount - in the order of mounting (/mnt goes before /mnt/data, / goes before everything else)
+#At least one should be set (/)
 descriptions=( Root Home Cloud Backup )
 devices=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
 mounts=( / /home /mnt/cloud /mnt/backup )
@@ -20,14 +21,17 @@ hostname=ewanhost
 #Local timezone
 timezone=Europe/Minsk
 
-#Mirrorlist
-mirrors=( Belarus United Denmark France Russia )
+#Mirrorlist - list of countries
+#At least one should be set
+mirrors=( Belarus Denmark United France Russia )
 
 #User configuration
+#At least one should be set - all software installation and configuration are being performed as user
 users=( ewancoder lft )
 groups=( fuse fuse,testing )
 
 #Sudoers additional entries
+#If not needed, set it to sudoers=""
 sudoers=( "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0" "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
 
 #Internet configuration
@@ -47,6 +51,7 @@ gitfolders=( ~/.dotfiles /etc/.dotfiles ~/btp )
 gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
 
 mkdirs=( "~/.vim/{swap,backup}" )
+
 
 
 

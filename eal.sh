@@ -2,8 +2,8 @@
 source ceal.sh
 clear
 
-title "Ewancoder Arch Linux Installation script\nVersion $version"
-warn "Before proceeding, MAKE SURE that\n\t1) You've FORMATTED your partitions as needed (fdisk + mkfs.ext4), optional. All partitions will be mounted automatically\n\t2) You've changed all constants in 'ceal.sh' file"
+title "Ewancoder Arch Linux installation script\nVersion $version"
+warn "Before proceeding, MAKE SURE that\n\t1) You've FORMATTED your partitions as needed (fdisk + mkfs.ext4)\n\t2) You've changed all constants in 'ceal.sh' file"
 source ceal.sh
 
 mess "Automount all partitions and create fstab"

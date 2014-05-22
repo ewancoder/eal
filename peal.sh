@@ -4,6 +4,9 @@ clear
 
 title "Ewancoder Arch Linux POST-Installation script\nVersion $version"
 
+mess "Remove peal.sh before begin"
+rm peal.sh
+
 for i in "${groups[@]}"
 do
     IFS=',' read -a gr <<< "$i"
@@ -18,21 +21,26 @@ done
 mess "Prepare sudoers file for pasting entries"
 echo "\n## Users configuration" >> /etc/sudoers
 for (( i = 0; i < ${#users[@]}; i++ )); do
-    mess "Add user ${users[$i]} with groups: 'users,${groups[$i]}'"
+    mess "Add user ${$users[$i]} with groups: 'users,${groups[$i]}'"
     useradd -m -g users -G ${groups[$i]} -s /bin/bash ${users[$i]}
     mess "Add user ${$users[$i]} entry into /etc/sudoers"
     echo "${$users[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     messpause "Setup user (${users[$i]}) password [MANUAL]"
     passwd ${$users[$i]}
+    mess "Copy *.sh scripts to /home/${$users[$i]} folder"
+    cp *.sh /home/${$users[$i]}/
 done
 
 mess "Add additional entries into /etc/sudoers"
 echo "\n## Additional configuration" >> /etc/sudoers
-for i in "${$sudoers[@]}"
-do
-    mess "Add '$i' entry"
-    echo $i >> /etc/sudoers
-done
+
+if ! [ "$sudoers" == "" ]; then
+    for i in "${$sudoers[@]}"
+    do
+        mess "Add '$i' entry"
+        echo $i >> /etc/sudoers
+    done
+fi
 
 if [ $netctl -eq 1 ]
 then
@@ -52,16 +60,24 @@ else
     warn "Wait several seconds and try to ping something at another tty, then if network is ready, press [RETURN]"
 fi
 
-mess "Move all scripts except peal.sh to /home/${$users[0]}/ and remove peal.sh"
-rm peal.sh && mv *.sh /home/${$users[0]}/
-mess "CD into /home/${$users[0]}/ folder"
-cd /home/${$users[0]}/
-mess "Add ${$users[0]} NOPASSWD line to sudoers file"
-echo "${$users[0]} ALL = NOPASSWD: ALL" >> /etc/sudoers
-mess "Run peal-user.sh as ${$users[0]} user"
-su - ${$users[0]} -c ./peal-user.sh
-mess "Remove ${$users[0]} NOPASSWD line from sudoers file"
-sed -i '/'${$users[0]}' ALL = NOPASSWD: ALL/d' /etc/sudoers
+mess "Setup all users configuration"
+
+for (( i = 0; i < ${#users[@]}; i++ )); do
+    if [ -f /home/${$users[$i]}/peal-user${$i}.sh ];
+    then
+        mess "Setup ${$users[$i]} first"
+        mess "CD into /home/${$users[$i]}/ folder"
+        de /home/${$users[$i]}/
+        mess "Add ${$users[0]} NOPASSWD line to sudoers file"
+        echo "${$users[$i]} ALL = NOPASSWD: ALL" >> /etc/sudoers
+        mess "Run peal-user.sh as ${$users[0]} user"
+        su - ${$users[$i]} -c ./${$users[$i]}.sh
+        mess "Remove ${$users[0]} NOPASSWD line from sudoers file"
+        sed -i '/'${$users[0]}' ALL = NOPASSWD: ALL/d' /etc/sudoers
+    else
+        mess "File /home/${$users[$i]}/peal-user${$i}.sh is not exist. Nothing to configure"
+    fi
+done
 
 warn "Installation is complete! [REBOOT]"
 reboot

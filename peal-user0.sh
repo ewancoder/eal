@@ -1,28 +1,8 @@
 #!/bin/bash
 source ceal.sh
 
-mess "Download package-query.tar.gz file"
-curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz
-mess "UnTar package-query.tar.gz archive"
-tar xvf package-query.tar.gz
-mess "Cd into package-query directory"
-cd package-query
-mess "Makepkg here"
-makepkg -s --noconfirm
-mess "Install .xz package using pacman"
-sudo pacman -U --noconfirm *.xz
-mess "Download yaourt.tar.gz file"
-curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz
-mess "UnTar yaourt.tar.gz archive"
-tar xvf yaourt.tar.gz
-mess "Cd into yaourt directory"
-cd yaourt
-mess "Makepkg here"
-makepkg --noconfirm
-mess "Install .xz package using pacman"
-sudo pacman -U --noconfirm *.xz
-mess "Cd into home directory and remove all archives and dirs respectively"
-cd && rm -r package-query*
+mess "Install yaourt"
+bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
 
 mess "Install git"
 sudo rm -f /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quickly
