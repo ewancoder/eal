@@ -1,18 +1,28 @@
 #!/bin/bash
-#Current version of script
+#Current version of the script. Shows in title of 'eal.sh' and 'peal.sh'. Should be set for properly showing the version in the titles
 version="1.6 HARDCORE-Messy, 2014"
+
+#Editor which will edit all the files (need only for user-based 'peal-user.sh', irssi passwords). Should be set for properly showing it in the title of 'eal.sh'
+edit=vi
 
 #All devices to mount - in the order of mounting (/mnt goes before /mnt/data, / goes before everything else)
 #At least one should be set (/)
+
+#Description is just some text which shows up during mounting
 descriptions=( Root Home Cloud Backup )
+#Devices is actual device points in the system
 devices=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
+#Mounts is mount points to where should these devices be mounted. They all should begin with '/' (root sign)
 mounts=( / /home /mnt/cloud /mnt/backup )
+#Types if filesystem types of devices written in the fstab file
 types=( ext4 ext4 ext4 ext4 )
+#Options is options which should be written in the fstab file
 options=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime )
+#Dumps & passes = fstab parameters
 dumps=( 0 0 0 0 )
 passes=( 1 2 2 2 )
 
-#Grub MBR device
+#Grub MBR device - here is grub installed
 mbr=/dev/sdb
 
 #Hostname

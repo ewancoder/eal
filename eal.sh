@@ -3,7 +3,7 @@ source ceal.sh
 clear
 
 title "Ewancoder Arch Linux installation script\nVersion $version"
-warn "Before proceeding, MAKE SURE that\n\t1) You've FORMATTED your partitions as needed (fdisk + mkfs.ext4)\n\t2) You've changed all constants in 'ceal.sh' file"
+warn "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t1) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
 mess "Automount all partitions and create fstab"
