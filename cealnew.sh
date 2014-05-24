@@ -40,9 +40,9 @@ mirrors=( Belarus Denmark United France Russia )
 users=( ewancoder lft )
 groups=( fuse fuse,testing )
 
-#Sudoers additional entries
+#Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${users[0]} for first user and ${users[1]} for the second (count begins with zero)
 #If not needed, set it to sudoers=""
-sudoers=( "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0" "${$users[0]} ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
+sudoers=( "${users[0]} ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0" "${users[0]} ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
 
 #Internet configuration
 netctl=1
@@ -56,11 +56,17 @@ gitemail=ewancoder@gmail.com
 gittool=vimdiff
 giteditor=vim
 
+#Git variables - set gitrepos="" if you don't want to clone any
 gitrepos=( ewancoder/dotfiles ewancoder/etc ewancoder/btp )
+#WITHOUT last slash
 gitfolders=( ~/.dotfiles /etc/.dotfiles ~/btp )
+#Set gitmodules="" if you don't want to pull any
 gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
+gitlinks=( ~/ )
+gitfilter=( "{.*,bin}" )
 
-mkdirs=( "~/.vim/{swap,backup}" )
+#Make these empty directories automatically. Set mkdirs="" if you don't want any
+mkdirs=( ~/.vim/{swap,backup} )
 
 
 

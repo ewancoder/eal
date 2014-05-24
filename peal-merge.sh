@@ -9,44 +9,44 @@ ln -fs /mnt/cloud/Copy /home/$username2/Copy
 
 #Home folder
 
-mess "All things configurations - .config folder"
-link .config
+#mess "All things configurations - .config folder"
+#link .config
 
-mess "Devilspie config - .devilspie folder"
-link .devilspie
+#mess "Devilspie config - .devilspie folder"
+#link .devilspie
 
-mess "Irssi config - .irssi folder"
-link .irssi
+#mess "Irssi config - .irssi folder"
+#link .irssi
 
-mess "Oh-my-zsh submodule - .oh-my-zsh folder"
-link .oh-my-zsh
+#mess "Oh-my-zsh submodule - .oh-my-zsh folder"
+#link .oh-my-zsh
 
-mess "Vim configuration - .vim folder"
-link .vim
+#mess "Vim configuration - .vim folder"
+#link .vim
 
-mess "Wmii configuration - .wmii-hg folder"
-link .wmii-hg
+#mess "Wmii configuration - .wmii-hg folder"
+#link .wmii-hg
 
-mess "Use pulseaudio instead of alsa - .asoundrc"
-link .asoundrc
+#mess "Use pulseaudio instead of alsa - .asoundrc"
+#link .asoundrc
 
-mess "GTK Bookmarks config - .gtk-bookmarks"
-link .gtk-bookmarks
+#mess "GTK Bookmarks config - .gtk-bookmarks"
+#link .gtk-bookmarks
 
-mess "GTK icons theme config - ~/.gtkrc-2.0"
-link .gtkrc-2.0
+#mess "GTK icons theme config - ~/.gtkrc-2.0"
+#link .gtkrc-2.0
 
-mess "Xinitrc config - .xinitrc"
-link .xinitrc
+#mess "Xinitrc config - .xinitrc"
+#link .xinitrc
 
-mess "Terminal colors, fonts & urls - .Xresources"
-link .Xresources
+#mess "Terminal colors, fonts & urls - .Xresources"
+#link .Xresources
 
-mess "Autostarting X server - .zprofile"
-link .zprofile
+#mess "Autostarting X server - .zprofile"
+#link .zprofile
 
-mess "ZSH configuration to use oh-my-zsh - .zshrc"
-link .zshrc
+#mess "ZSH configuration to use oh-my-zsh - .zshrc"
+#link .zshrc
 
 #Scripts
 
