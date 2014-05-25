@@ -25,8 +25,10 @@ for (( i = 0; i < ${#users[@]}; i++ )); do
     echo "${users[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     messpause "Setup user (${users[$i]}) password [MANUAL]"
     passwd ${users[$i]}
-    mess "Copy *.sh scripts to /home/${users[$i]} folder"
-    cp *.sh /home/${users[$i]}/
+    if [ -f ${users[$i]}.sh ];
+        mess "Copy ceal.sh & ${users[$i]}.sh scripts to /home/${users[$i]} folder"
+        cp ceal.sh ${users[$i]}.sh /home/${users[$i]}/
+    fi
 done
 
 mess "Add additional entries into /etc/sudoers"
@@ -58,8 +60,73 @@ else
     warn "Wait several seconds and try to ping something at another tty, then if network is ready, press [RETURN]"
 fi
 
-mess "Setup all users configuration"
+#INSTALL ESSENTIAL SOFTWARE
+mess "Install yaourt"
+bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
 
+mess "Install git"
+yaourt -S --noconfirm --asroot git
+
+mess "Add multilib via sed"
+sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
+mess "Update yaourt/pacman including multilib"
+yaourt -Syy
+
+#INSTALL ALL SOFTWARE
+for (( i = 0; i < ${#software[@]}; i++ )); do
+    mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
+    yaourt -S --noconfirm --asroot ${software[$i]}
+done
+mess "FINALLY cleaning mess - remove orphans recursively"
+pacman -Rns $(pacman -Qtdq) --noconfirm
+
+mess "Clone github repositories"
+if ! [ "$gitrepos" == "" ]; then
+    for (( i = 0; i < ${#gitrepos[@]}; i++ )); do
+        mess "Clone ${gitrepos[$i]} repo"
+        git clone https://github.com/${gitrepos[$i]}.git ${gitfolders[$i]}
+        if ! [ "${gitrules[$i]}" == "" ]; then
+            mess "SET rule '${gitrules[$i]}'"
+            chown -R ${gitrules[$i]} ${gitfolders[$i]}
+        fi
+        if ! [ "${gitmodules[$i]}" == "" ]; then
+            mess "Pull submodules ${gitmodules[$i]}"
+            cd ${gitfolders[$i]} && git submodule update --init --recursive ${gitmodules[$i]}
+        fi
+        if ! [ "${gitlinks[$i]}" == "" ]; then
+            mess "MERGE all LINKS"
+            for f in ${gitfolders[$i]}/${gitfilter[$i]}; do
+                if [ -d ${gitlinks[$i]}/$(basename $f) ]; then
+                    mess "Move $(basename $f) folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
+                    cp -nr ${gitlinks[$i]}/$(basename $f)/* $f/ && rm -r ${gitlinks[$i]}/$(basename $f)
+                fi
+                mess "MERGE ${gitfolders[$i]}/${gitfilter[$i]} to ${gitlinks[$i]}"
+                ln -fs ${gitfolders[$i]}/${gitfilter[$i]} ${gitlinks[$i]}/
+            done
+        fi
+        mess "Cd into home directory"
+        cd
+    done
+fi
+
+#NEED AFTER GIT FOR VIM SWAP DIRECTORIES
+mess "Make empty directories where needed"
+if ! [ "$mkdirs" == "" ]; then
+    for i in ${$mkdirs[@]}
+    do
+        mess "Make $i directory"
+        mkdir -p $i
+    done
+fi
+
+mess "Make grub config based on new scripts"
+grub-mkconfig -o /boot/grub/grub.cfg
+mess "Generate locales (en+ru)"
+locale-gen
+mess "Set font cyr-sun16"
+setfont cyr-sun16
+
+mess "Setup all users configuration"
 for (( i = 0; i < ${#users[@]}; i++ )); do
     if [ -f /home/${users[$i]}/${users[$i]}.sh ];
     then
@@ -76,6 +143,19 @@ for (( i = 0; i < ${#users[@]}; i++ )); do
         mess "File /home/${users[$i]}/${users[$i]}.sh is not exist. Nothing to configure"
     fi
 done
+
+if [ $winfonts -eq 1 ]
+then
+    mess "Mount windows partition to /mnt/windows"
+    sudo mkdir -p /mnt/windows
+    mess "Make regular dirs: /mnt/{usb, usb0, data, mtp}"
+    sudo mkdir -p /mnt/{usb,usb0,data,mtp}
+    sudo mount $windows /mnt/windows
+    mess "Copy windows fonts to /usr/share/fonts/winfonts"
+    sudo cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
+    mess "Update fonts cache"
+    sudo fc-cache -fv
+fi
 
 warn "Installation is complete! [REBOOT]"
 reboot

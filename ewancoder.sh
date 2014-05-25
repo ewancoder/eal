@@ -1,12 +1,6 @@
 #!/bin/bash
 source ceal.sh
 
-mess "Install yaourt"
-bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
-
-mess "Install git"
-sudo rm -f /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quickly
-yaourt -S --noconfirm git
 mess "Configure git user.name"
 git config --global user.name $gitname
 mess "Configure git user.email"
@@ -15,60 +9,9 @@ mess "Configure git merge.tool"
 git config --global merge.tool $gittool
 mess "Configure git core.editor"
 git config --global core.editor $giteditor
+#NEED FOR RUNNING GIT FROM ROOT
 mess "Make link to .gitconfig for /root user"
 sudo ln -s ~/.gitconfig /root/
-mess "Clone github repositories"
-if ! [ "$gitrepos" == "" ]; then
-    for (( i = 0; i < ${#gitrepos[@]}; i++ )); do
-        mess "Clone ${gitrepos[$i]} repo"
-        git clone https://github.com/${gitrepos[$i]}.git ${gitfolders[$i]}
-        if ! [ "${gitmodules[$i]}" == "" ]; then
-            mess "Pull submodules ${gitmodules[$i]}"
-            cd ${gitfolders[$i]} && git submodule update --init --recursive ${gitmodules[$i]}
-        fi
-        if ! [ "${gitlinks[$i]}" == "" ]; then
-            mess "MERGE all LINKS"
-            ln -fs ${gitfolders[$i]}/${gitfilter[$i]} ${gitlinks[$i]}
-        fi
-    done
-fi
-mess "Cd into home directory"
-cd
-
-mess "Make empty directories where needed"
-if ! [ "$mkdirs" == "" ]; then
-    for i in ${$mkdirs[@]}
-    do
-        mess "Make $i directory"
-        mkdir -p $i
-    done
-fi
-
-#mess "Merge all git links: Now will be executed script that will merge all git links"
-#./peal-merge.sh
-
-mess "Make grub config based on new scripts"
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-mess "Generate locales (en+ru)"
-sudo locale-gen
-mess "Set font cyr-sun16"
-sudo setfont cyr-sun16
-mess "Update yaourt/pacman including multilib"
-yaourt -Syy
-
-mess "Install Audio software (1/7)"
-yaourt -S --noconfirm alsa-plugins alsa-utils pulseaudio pulseaudio-alsa lib32-libpulse lib32-alsa-plugins
-mess "Install A Drivers software (2/7)"
-yaourt -S --noconfirm lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer
-mess "Install Coding software (3/7)"
-yaourt -S --noconfirm python python-matplotlib python-mock python-numpy python2-pygame python-pygame-hg python-scipy python-sphinx tig
-mess "Install Core software (4/7)"
-yaourt -S --noconfirm cron devilspie dmenu dosfstools dunst faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard encfs jmtpfs ntfs-3g gxkb jre kalu lm_sensors p7zip unzip pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar urxvt-perls xboomx xclip xcompmgr zsh
-mess "Install Graphics software (5/7)"
-yaourt -S --noconfirm geeqie gource scrot vlc
-mess "Install Internet software (6/7)"
-yaourt -S --noconfirm bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash djview4 deluge dnsmasq dropbox-experimental hostapd irssi net-tools perl-html-parser python2-mako skype
-#Now I'm using jre instead of icedtea-web-java7
 
 #These won't install if merged earlier
 mess "Merge pulseaudio instead of alsa (pulseaudio won't install if merged earlier) - /etc/pulse folder"
@@ -91,28 +34,6 @@ sudo sed -i "/placeforelse/aplaceforcall" $filename
 sudo sed -i 's/placeforbreak/                    break/g' $filename
 sudo sed -i 's/placeforelse/            else:/g' $filename
 sudo sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename
-
-mess "Install Office software (7/7)"
-yaourt -S --noconfirm anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru thunar thunar-dropbox
-
-mess "Install Additional software (8/7)"
-yaourt -S --noconfirm gksu gparted mc pasystray-git pavucontrol smartmontools
-
-#Additional not-inistalled software
-#Games - extremetuxracer, foobillard++, kdegames-kolf, kdegames-konquest, lbreakout2, openbve, pingus, rocksndiamonds, steam, supertux, supertuxcart, warmux, wesnoth
-#Graphics - inkscape, mypaint
-#Video editing - openshot
-#Wind-a - mono virtualbox wine wine_gecko wine-mono
-
-mess "Install Art Production software (9/7)"
-yaourt -S --noconfirm lmms calligra-krita smplayer
-
-mess "FINALLY cleaning mess - remove orphans (needed twice)"
-pacman -Qdt | awk '{print $1}' | xargs sudo pacman -R --noconfirm
-pacman -Qdt | awk '{print $1}' | xargs sudo pacman -R --noconfirm
-
-mess "CLONE current workaround repositories (currently only btp.git)"
-git clone https://github.com/ewancoder/btp.git
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
 sudo sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose
@@ -154,30 +75,19 @@ rm -r ctemp
 sudo ln -fs ~/.copy/CopyAgent /usr/bin/copy
 
 mess "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
-curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
-sudo mv Canada.png /usr/share/gxkb/flags/ca\(fr\).png
+curl -o /usr/share/gxkb/flags/ca\(fr\).png http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
+#curl -O http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
+#sudo mv Canada.png /usr/share/gxkb/flags/ca\(fr\).png
 
 mess "Remove files"
-sudo rm *eal*
+#WARNING IT WILL DELETE ANY LOCAL SCRIPTS I HAVE IN A SYSTEM. NEED TO RENAME ALL EXTENSIONS TO *.eal
+sudo rm *.sh
 
 mess "Create regular directories (~/Downloads/*)"
 mkdir -p ~/Downloads/Chrome\ Downloads
 ln -fs /mnt/backup/Downloads/Torrents ~/Downloads/Torrents
 ln -fs /mnt/backup/Downloads/Downloading ~/Downloads/Downloading
 ln -fs /mnt/backup/Downloads/Completed ~/Downloads/Completed
-
-if [ $winfonts -eq 1 ]
-then
-    mess "Mount windows partition to /mnt/windows"
-    sudo mkdir -p /mnt/windows
-    mess "Make regular dirs: /mnt/{usb, usb0, data, mtp}"
-    sudo mkdir -p /mnt/{usb,usb0,data,mtp}
-    sudo mount $windows /mnt/windows
-    mess "Copy windows fonts to /usr/share/fonts/winfonts"
-    sudo cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
-    mess "Update fonts cache"
-    sudo fc-cache -fv
-fi
 
 mess "BundleInstall - vim installing plugins"
 vim +BundleInstall +qall
