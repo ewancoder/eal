@@ -1,11 +1,11 @@
 #!/bin/bash
 source ceal.sh
 
-mess "Set local timezone ($timezone)"
-ln -s /usr/share/zoneinfo/$timezone /etc/localtime
-
 mess "Set hostname ($hostname)"
 echo $hostname > /etc/hostname
+
+mess "Set local timezone ($timezone)"
+ln -s /usr/share/zoneinfo/$timezone /etc/localtime
 
 mess "Install grub to /boot"
 pacman -S --noconfirm grub

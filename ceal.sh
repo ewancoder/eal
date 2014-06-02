@@ -1,127 +1,126 @@
 #!/bin/bash
+version="1.7 Pre-Cleaned, 2014"
 
+#AutoInstall (0 - pause on each step, 1 - pause only when needed)
+auto=0
 
-
-
-
-winfonts=1
-
-windows=/dev/sdb1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Current version of the script. Shows in title of 'eal.sh' and 'peal.sh'. Should be set for properly showing the version in the titles
-version="1.6 HARDCORE-Messy, 2014"
-
-#Editor which will edit all the files (need only for user-based 'peal-user.sh', irssi passwords). Should be set for properly showing it in the title of 'eal.sh' AND editing in some cases
+#Editor to edit files (vi, nano)
 edit=vi
 
-#All devices to mount - in the order of mounting (/mnt goes before /mnt/data, / goes before everything else)
-#At least one should be set (/)
+#All devices - in the order of mounting ('/' goes before '/home'). At least one should be set (/). No slash in the end ('/home', not '/home/')
 
-#Description is just some text which shows up during mounting
-descriptions=( Root Home Cloud Backup )
-#Devices is actual device points in the system
-devices=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
-#Mounts is mount points to where should these devices be mounted. They all should begin with '/' (root sign)
-mounts=( / /home /mnt/cloud /mnt/backup )
-#Types if filesystem types of devices written in the fstab file
-types=( ext4 ext4 ext4 ext4 )
-#Options is options which should be written in the fstab file
-options=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime )
-#Dumps & passes = fstab parameters
-dumps=( 0 0 0 0 )
-passes=( 1 2 2 2 )
+    #Just text info
+    descriptions=( Root Home Cloud Backup )
+    #Devices which is to mount
+    devices=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
+    #Mount points starting from '/'
+    mounts=( / /home /mnt/cloud /mnt/backup )
+    #Filesystem, options, dumps&passes (fstab entries)
+    #'discard' option - for SSD
+    types=( ext4 ext4 ext4 ext4 )
+    options=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime )
+    dumps=( 0 0 0 0 )
+    passes=( 1 2 2 2 )
 
-#Grub MBR device - here is grub installed
-#Should be set and exist in /dev (devices).
-mbr=/dev/sdb
+#Additional devices
+
+    #Grub MBR device (where to install bootloader)
+    mbr=/dev/sdb
+    #Windows device for copying fonts
+    #Leave as '' if you don't want to copy windows fonts
+    windows=/dev/sdb1
+
+#Mirrorlist - at least one should be set
+mirrors=( Belarus Denmark United France Russia )
 
 #Hostname
-#Should be set
 hostname=ewanhost
 
 #Local timezone
-#Should be set and esist in /usr/share/zoneinfo/$timezone
 timezone=Europe/Minsk
 
-#Mirrorlist - list of countries
-#At least one (which is exists within /etc/pacman.d/mirrorlist) should be set
-mirrors=( Belarus Denmark United France Russia )
+#User configuration - at least one should be set
 
-#User configuration
-#At least one should be set - all software installation and configuration are being performed as user
-users=( ewancoder lft )
-#Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here).
-groups=( fuse fuse,testing )
-#Main user
-user=${users[0]}
+    #User login
+    users=( ewancoder lft )
+    #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
+    #Leave it as '' if you don't need one
+    groups=( fuse fuse,testing )
+    #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script. You can set your "main" user as your second user doing so: 'user=${users[1]}'
+    user=${users[0]} #I am setting this as 'ewancoder'
 
 #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${users[0]} for first user and ${users[1]} for the second (count begins with zero)
-#If not needed, set it to sudoers=""
-sudoers=( "$user ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0" "$user ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
+#If not needed, set it to sudoers=''
+sudoers=(
+    "$user ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0"
+    "$user ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
+) #I need these lines for using some commands without a need for password typing
 
 #Internet configuration
-netctl=1
-interface=enp2s0
-ip=192.168.100.22
-dns=192.168.100.1
+
+    #Use netctl (0 - use dhcpcd, 1 - use netctl)
+    netctl=1
+    #Interface in your computer which is used for internet connection
+    interface=enp2s0
+    #Static IP address to use
+    ip=192.168.100.22
+    #DNS to use (usually, your router address)
+    dns=192.168.100.1
 
 #Git configuration
-gitname=$user
-gitemail=$user@gmail.com
-gittool=vimdiff
-giteditor=vim
 
-#Git variables - set gitrepos="" if you don't want to clone any
-gitrepos=( $user/dotfiles $user/etc $user/btp )
-#WITHOUT last slash
-gitfolders=( /home/$user/.dotfiles /etc/.dotfiles /home/$user/btp )
-#RULES to rule git folders (chown) (leave "" for default 'root' rule)
-gitrules=( $user:users "" $user:users )
-#Set gitmodules="" if you don't want to pull any
-gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
-#Without backslash
-gitlinks=( ~ /etc )
-gitfilter=( "{.*,bin}" "*" )
+    #Your git user name
+    gitname=$user
+    #Git email
+    gitemail=$user@gmail.com
+    #Tool to use ad diff
+    gittool=vimdiff
+    #Editor to use
+    giteditor=vim
+
+    #Set gitrepos='' if you don't need any
+    gitrepos=( $user/dotfiles $user/etc $user/btp )
+    #Where to clone current gitrepo - without slash at the end
+    gitfolders=( /home/$user/.dotfiles /etc/.dotfiles /home/$user/btp )
+    #Chown rule to apply to current gitrepo (set as '' to just leave as 'root')
+    gitrules=( $user:users '' $user:users )
+    #Sumbodules to pull - set to '' if you don't need any
+    gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
+    #Where to link ALL content (merging) from current repo (set '' if nowhere)
+    gitlinks=( ~ /etc )
+    #What to link (merge) from current repo to link above (filter)
+    gitfilter=( "{.*,bin}" "*" )
+
+#Software configuration
+
+    #Just titles of the installed software - shows during install
+    softtitle=(
+        Audio
+        Drivers
+        Coding
+        Core
+        Graphics
+        Internet
+        Office
+        Additional
+        Art
+    )
+
+    #Software itself
+    software=(
+        "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
+        "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
+        "python python-matplotlib python-mock python-numpy python-pygame-hg python-scipy python-sphinx tig"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
+        "geeqie gource scrot vlc"
+        "bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dnsmasq dropbox-experimental hostapd irssi net-tools perl-html-parser python2-mako skype"
+        "anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru"
+        "gksu gparted mc pasystray-git pavucontrol smartmontools thunar"
+        "lmms calligra-krita smplayer"
+    )
 
 #Make these empty directories automatically. Set mkdirs="" if you don't want any
 mkdirs=( ~/.vim/{swap,backup} )
-
-softtitle=(
-    Audio
-    Drivers
-    Coding
-    Core
-    Graphics
-    Internet
-    Office
-    Additional
-    Art
-)
-
-software=(
-    "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
-    "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
-    "python python-matplotlib python-mock python-numpy python-pygame-hg python-scipy python-sphinx tig"
-    "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
-    "geeqie gource scrot vlc"
-    "bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dnsmasq dropbox-experimental hostapd irssi net-tools perl-html-parser python2-mako skype"
-    "anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru"
-    "gksu gparted mc pasystray-git pavucontrol smartmontools"
-    "lmms calligra-krita smplayer"
-)
 
 
 links=(
@@ -141,11 +140,18 @@ execs=(
 
 
 
-#INTERFACE
 
-auto=0
+winfonts=1
 
-#------------------------------
+
+
+
+
+
+
+
+#===== INTERFACE =====
+
 #Output styling
     Green=$(tput setaf 2)
     Yellow=$(tput setaf 3)
@@ -153,17 +159,20 @@ auto=0
     Bold=$(tput bold)
     Def=$(tput sgr0)
 
+#Shows title in green color
 title(){
     echo -e $Bold$Green$1$Def
 }
 
+#Pause process
 pause(){
     read -p $Bold$Yellow"Continue [ENTER]"$Def
 }
 
+#Message function - shows a message and pauses process if 'auto=0'
 mess(){
     if [ -f /var/lib/pacman/db.lck ];
-        sudo rm -f /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quicklky (move to mess function)
+        sudo rm -f /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quicklky
     fi
     echo -e $Bold$Green"\n-> "$Def$Bold$1$Def
     if [ $auto -eq 0 ]
@@ -172,35 +181,14 @@ mess(){
     fi
 }
 
+#Shows a message in yellow color and pauses process
 messpause(){
     echo -e $Bold$Yellow"\n-> "$1$Def
     pause
 }
 
+#Shows red warning and pauses process
 warn(){
     echo -e "\n"$Bold$Red$1$Def
     pause
-}
-
-#------------------------------
-#Link functions
-
-balink(){
-    cp -r /mnt/backup/Arch/$1 ~/$2
-    sudo ln -fs ~/$2 /root/$2
-    sudo cp -r /mnt/backup/Arch/$1 /home/$username2/$2
-    sudo chown -R $username2:users /home/$username2/$2
-}
-
-foldlink(){
-    sudo cp -nr /etc/$1/* /etc/.dotfiles/$1/
-    sudo rm -r /etc/$1
-    sudo ln -fs /etc/.dotfiles/$1 /etc/$1
-}
-
-link(){
-    ln -fs ~/.dotfiles/$1 ~/$1
-    sudo ln -fs ~/$1 /root/$1
-    sudo cp -r ~/.dotfiles/$1 /home/$username2/$1
-    sudo chown -R $username2:users /home/$username2/$1
 }

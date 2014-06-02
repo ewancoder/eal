@@ -4,6 +4,7 @@ clear
 
 title "Ewancoder Arch Linux POST-Installation script\nVersion $version"
 
+mess "Create all non-existing groups"
 for i in "${groups[@]}"
 do
     IFS=',' read -a gr <<< "$i"
@@ -18,6 +19,8 @@ done
 
 mess "Prepare sudoers file for pasting entries"
 echo "\n## Users configuration" >> /etc/sudoers
+
+mess "Create all users"
 for (( i = 0; i < ${#users[@]}; i++ )); do
     mess "Add user ${users[$i]} with groups: 'users,${groups[$i]}'"
     useradd -m -g users -G ${groups[$i]} -s /bin/bash ${users[$i]}
@@ -42,6 +45,7 @@ if ! [ "$sudoers" == "" ]; then
     done
 fi
 
+mess "Activate and setup network connection"
 if [ $netctl -eq 1 ]
 then
     mess "Copy ethernet-static template"
@@ -60,7 +64,7 @@ else
     warn "Wait several seconds and try to ping something at another tty, then if network is ready, press [RETURN]"
 fi
 
-#INSTALL ESSENTIAL SOFTWARE
+mess "Install essential software"
 mess "Install yaourt"
 bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
 
@@ -72,7 +76,7 @@ sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update yaourt/pacman including multilib"
 yaourt -Syy
 
-#INSTALL ALL SOFTWARE
+mess "Install all software"
 for (( i = 0; i < ${#software[@]}; i++ )); do
     mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
     yaourt -S --noconfirm --asroot ${software[$i]}
@@ -109,35 +113,7 @@ if ! [ "$gitrepos" == "" ]; then
     done
 fi
 
-#TEMPORARY HERE
-mess "Link all I need to link"
-for l in "${links[@]}"
-do
-    ln -fs $l
-done
-mess "Copy all I need to copy"
-for c in "${cps[@]}"
-do
-    cp $c
-done
-#DO AFTER ACTUAL MERGING ALL STUFF FROM DOTFILES
-mess "Exec what I need to exec"
-for e in "${execs[@]}"
-do
-    $e
-done
-
-#NEED AFTER GIT FOR VIM SWAP DIRECTORIES
-mess "Make empty directories where needed"
-if ! [ "$mkdirs" == "" ]; then
-    for i in ${$mkdirs[@]}
-    do
-        mess "Make $i directory"
-        mkdir -p $i
-    done
-fi
-
-mess "Make grub config based on new scripts"
+mess "Make grub config based on new scripts (from git)"
 grub-mkconfig -o /boot/grub/grub.cfg
 mess "Generate locales (en+ru)"
 locale-gen
@@ -214,6 +190,43 @@ sensors-detect --auto
 
 mess "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
 curl -o /usr/share/gxkb/flags/ca\(fr\).png http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
+
+
+
+#TEMPORARY HERE
+mess "Link all I need to link"
+for l in "${links[@]}"
+do
+    ln -fs $l
+done
+mess "Copy all I need to copy"
+for c in "${cps[@]}"
+do
+    cp $c
+done
+#DO AFTER ACTUAL MERGING ALL STUFF FROM DOTFILES
+mess "Exec what I need to exec"
+for e in "${execs[@]}"
+do
+    $e
+done
+
+#NEED AFTER GIT FOR VIM SWAP DIRECTORIES
+mess "Make empty directories where needed"
+if ! [ "$mkdirs" == "" ]; then
+    for i in ${$mkdirs[@]}
+    do
+        mess "Make $i directory"
+        mkdir -p $i
+    done
+fi
+
+
+
+
+
+
+
 
 warn "Installation is complete! [REBOOT]"
 reboot
