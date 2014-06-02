@@ -151,15 +151,19 @@ then
     sudo fc-cache -fv
 fi
 
-#These won't install if merged earlier
+#FIX ISSUES AND BUGS
+
 filename=/usr/lib/python3.4/site-packages/canto_next/feed.py
-sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename
-sed -i "/item\[key\] = olditem/aplaceforbreak" $filename
-sed -i "/placeforbreak/aplaceforelse" $filename
-sed -i "/placeforelse/aplaceforcall" $filename
-sed -i 's/placeforbreak/                    break/g' $filename
-sed -i 's/placeforelse/            else:/g' $filename
-sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename
+if [ -f $filename ]; then
+    mess "Add canto-next daemon_new_item hook"
+    sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename
+    sed -i "/item\[key\] = olditem/aplaceforbreak" $filename
+    sed -i "/placeforbreak/aplaceforelse" $filename
+    sed -i "/placeforelse/aplaceforcall" $filename
+    sed -i 's/placeforbreak/                    break/g' $filename
+    sed -i 's/placeforelse/            else:/g' $filename
+    sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename
+fi
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
 sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose
