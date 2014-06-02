@@ -109,6 +109,24 @@ if ! [ "$gitrepos" == "" ]; then
     done
 fi
 
+#TEMPORARY HERE
+mess "Link all I need to link"
+for l in "${links[@]}"
+do
+    ln -fs $l
+done
+mess "Copy all I need to copy"
+for c in "${cps[@]}"
+do
+    cp $c
+done
+#DO AFTER ACTUAL MERGING ALL STUFF FROM DOTFILES
+mess "Exec what I need to exec"
+for e in "${execs[@]}"
+do
+    $e
+done
+
 #NEED AFTER GIT FOR VIM SWAP DIRECTORIES
 mess "Make empty directories where needed"
 if ! [ "$mkdirs" == "" ]; then
@@ -156,6 +174,46 @@ then
     mess "Update fonts cache"
     sudo fc-cache -fv
 fi
+
+#These won't install if merged earlier
+filename=/usr/lib/python3.4/site-packages/canto_next/feed.py
+sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename
+sed -i "/item\[key\] = olditem/aplaceforbreak" $filename
+sed -i "/placeforbreak/aplaceforelse" $filename
+sed -i "/placeforelse/aplaceforcall" $filename
+sed -i 's/placeforbreak/                    break/g' $filename
+sed -i 's/placeforelse/            else:/g' $filename
+sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename
+
+mess "Fix dead acute error in Compose-keys X11 file :)"
+sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose
+
+mess "Change bitlbee folder owner to bitlbee:bitlbee"
+mkdir -p /var/lib/bitlbee
+chown -R bitlbee:bitlbee /var/lib/bitlbee
+mess "Enable bitlbee"
+systemctl enable bitlbee
+#sudo systemctl start bitlbee
+mess "Enable preload"
+systemctl enable preload
+#sudo systemctl start preload
+mess "Enable cronie"
+systemctl enable cronie
+#sudo systemctl start cronie
+mess "Enable deluged & deluge-web"
+systemctl enable deluged
+systemctl enable deluge-web
+mess "Enable hostapd"
+systemctl enable hostapd.service
+mess "Enable dnsmasq"
+systemctl enable dnsmasq.service
+mess "Activate fuse (modprobe)"
+modprobe fuse
+mess "Detect sensors (lm_sensors)"
+sensors-detect --auto
+
+mess "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
+curl -o /usr/share/gxkb/flags/ca\(fr\).png http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
 
 warn "Installation is complete! [REBOOT]"
 reboot

@@ -17,7 +17,7 @@ mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
 mess "Move scripts to /root so you could run it right after reboot"
-rm eal* && mv *.sh /root/
+mv *.sh /root/
 
 messpause "Setup ROOT password [MANUAL]"
 passwd
