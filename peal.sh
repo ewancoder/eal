@@ -110,13 +110,13 @@ if ! [ "$gitrepos" == "" ]; then
         if ! [ "${gitlinks[$i]}" == "" ]; then
             mess "MERGE all LINKS"
             shopt -s dotglob #Setting dotglob (temporary solution instead of filter)
-            for f in ${gitfolders[$i]}/*; do
-                if [ -d ${gitlinks[$i]}/$(basename $f) ]; then
-                    mess "Move $(basename $f) folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
-                    cp -nr ${gitlinks[$i]}/$(basename $f)/* $f/ && rm -r ${gitlinks[$i]}/$(basename $f)
+            for f in $(ls -A ${gitfolders[$i]}/ | grep -v .git); do
+                if [ -d ${gitlinks[$i]}/$f ]; then
+                    mess "Move $f folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
+                    cp -nr ${gitlinks[$i]}/$f/* ${gitfolders[$i]}/$f/ && rm -r ${gitlinks[$i]}/$f
                 fi
                 mess "MERGE $f to ${gitlinks[$i]}"
-                ln -fs $f ${gitlinks[$i]}/
+                ln -fs ${gitfolders[$i]}/$f ${gitlinks[$i]}/
             done
             shopt -u dotglob #Unsetting dotglob
         fi
@@ -132,7 +132,6 @@ for (( i = 0; i < ${#users[@]}; i++ )); do
     fi
 done
 
-if [ $winfonts -eq 1 ]
 if ! [ "$windows" == "" ]; then
     mess "Mount windows partition to /mnt/windows"
     sudo mkdir -p /mnt/windows

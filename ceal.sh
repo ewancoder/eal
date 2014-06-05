@@ -94,9 +94,6 @@ mirrors=( Belarus Denmark United France Russia )
     gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merging) from current repo (set '' if nowhere)
     gitlinks=( /home/$user /etc )
-    #What to link (merge) from current repo to link above (filter)
-    #This feature is under DEVELOPMENT and is NOT working properly. Do not use it
-    #gitfilter=( * * )
 
 #Software configuration
 
