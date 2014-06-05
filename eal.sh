@@ -34,9 +34,15 @@ pacstrap /mnt base base-devel
 mess "Move fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
 
+mess "Set hostname ($hostname)"
+echo $hostname > /mnt/etc/hostname
+
 mess "Prepare chroot-script for installing grub and setting root password"
 echo '
 source /root/ceal.sh
+
+mess "Set local timezone ($timezone)"
+ln -s /usr/share/zoneinfo/$timezone /etc/localtime
 
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
