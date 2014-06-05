@@ -47,19 +47,19 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-mess "Move scripts to /root so you could run it right after reboot"
-mv {ceal,peal}.sh /root/
+mess "Remove script finally"
+rm /root/eal-chroot.sh
 
 messpause "Setup ROOT password [MANUAL]"
 passwd
 
 mess "Exit chroot"
 exit
-' > /mnt/eal-chroot.sh
+' > /mnt/root/eal-chroot.sh
 mess "Set executable flag"
-chmod +x /mnt/eal-chroot.sh
-mess "Copy *.sh there"
-cp {ceal,peal}.sh /mnt
+chmod +x /mnt/root/eal-chroot.sh
+mess "Copy {ceal,peal}.sh to /mnt/root"
+cp {ceal,peal}.sh /mnt/root/
 
 mess "Go to chroot"
 arch-chroot /mnt /eal-chroot.sh
