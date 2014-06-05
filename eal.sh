@@ -34,8 +34,26 @@ pacstrap /mnt base base-devel
 mess "Move fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
 
-mess "Copy all scripts to /mnt/"
-cp *.sh /mnt/
+echo '
+mess "Install grub to /boot"
+pacman -S --noconfirm grub
+mess "Install grub to $mbr mbr"
+grub-install --target=i386-pc --recheck $mbr
+mess "Install os-prober"
+pacman -S --noconfirm os-prober
+mess "Make grub config"
+grub-mkconfig -o /boot/grub/grub.cfg
+
+mess "Move scripts to /root so you could run it right after reboot"
+mv *.sh /root/
+
+messpause "Setup ROOT password [MANUAL]"
+passwd
+
+mess "Exit chroot"
+exit
+' > /mnt/eal-chroot.sh
+
 mess "Go to chroot"
 arch-chroot /mnt /eal-chroot.sh
 mess "Unmount all within /mnt"

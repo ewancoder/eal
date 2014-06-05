@@ -191,6 +191,7 @@ pause(){
 #Message function - shows a message and pauses process if 'auto=0'
 mess(){
     if [ -f /var/lib/pacman/db.lck ];
+    then
         sudo rm -f /var/lib/pacman/db.lck #Need this cause pacman is still locked when installing on ssd very quicklky
     fi
     echo -e $Bold$Green"\n-> "$Def$Bold$1$Def
