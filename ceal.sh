@@ -138,34 +138,35 @@ services=(
 links=(
     "/mnt/cloud/Dropbox /home/$user/Dropbox"
     "/mnt/cloud/Copy /home/$user/Copy"
-    "~/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher ~/.ftblauncher"
+    "/home/$user/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$user/.ftblauncher"
     "/etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth"
     "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
-    "~/bin/runonce.sh ~/"
-    "/mnt/backup/Downloads/* ~/Downloads/"
+    "/home/$user/bin/runonce.sh /home/$user/"
+    "/mnt/backup/Downloads/* /home/$user/Downloads/"
 )
 
 #Execs to exec
 execs=(
-    'grub-mkconfig -o /boot/grub/grub.cfg'
-    'locale-gen'
-    'setfont $font'
+    "grub-mkconfig -o /boot/grub/grub.cfg"
+    "locale-gen"
+    "setfont $font"
     "mkdir -p /var/lib/bitlbee && chown -R bitlbee:bitlbee /var/lib/bitlbee"
-    "chmod -x /etc/grub.d/10-linux"
+    "chmod -x /etc/grub.d/10_linux"
     "modprobe fuse"
     "sensors-detect --auto"
-    "mkdir -p /home/$user/.vim/{swap,backup}"
+    "mkdir -p /home/$user/.vim/swap"
+    "mkdir -p /home/$user/.vim/backup"
     "rsync -a /mnt/backup/Arch/* /home/$user/"
     "mv /home/$user/spool/cron/$user /var/spool/cron/$user"
-    "vim +BundleInstall +qall"
-    "cp ~/.irssi/config_sample ~/.irssi/config"
+    "runuser -l $user -c 'vim +BundleInstall +qall'"
+    "cp /home/$user/.irssi/config_sample /home/$user/.irssi/config"
 )
 #NEED TO FIX CRON FILE
 #NEED TO RUN AS USER SOME COMMANDS
 
 #Need this separately from execs array because I need to warn user before doing it
 edits=(
-    "~/.irssi/config"
+    "/home/$user/.irssi/config"
 )
 
 #===== INTERFACE =====
