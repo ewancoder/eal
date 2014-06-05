@@ -1,11 +1,23 @@
 #!/bin/bash
-version="1.7 Pre-Cleaned, 2014"
+version="1.7.9 Pre-Clean, 2014"
 
 #AutoInstall (0 - pause on each step, 1 - pause only when needed)
 auto=0
 
 #Editor to edit files (vi, nano)
 edit=vi
+
+#Console font (cyr-sun16 for russian symbols)
+font=cyr-sun16
+
+#Hostname
+hostname=ewanhost
+
+#Local timezone
+timezone=Europe/Minsk
+
+#Mirrorlist - at least one should be set
+mirrors=( Belarus Denmark United France Russia )
 
 #All devices - in the order of mounting ('/' goes before '/home'). At least one should be set (/). No slash in the end ('/home', not '/home/')
 
@@ -30,36 +42,29 @@ edit=vi
     #Leave as '' if you don't want to copy windows fonts
     windows=/dev/sdb1
 
-#Mirrorlist - at least one should be set
-mirrors=( Belarus Denmark United France Russia )
-
-#Hostname
-hostname=ewanhost
-
-#Local timezone
-timezone=Europe/Minsk
-
 #User configuration - at least one should be set
 
     #User login
     users=( ewancoder lft )
+    #Shells for users (leave as '' for standard)
+    shells=( zsh '' )
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
     groups=( fuse fuse,testing )
-    #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script. You can set your "main" user as your second user doing so: 'user=${users[1]}'
+    #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script (so I should write 'ewancoder' only ONCE). You can set your "main" user as your second user doing so: 'user=${users[1]}'
     user=${users[0]} #I am setting this as 'ewancoder'
 
-#Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${users[0]} for first user and ${users[1]} for the second (count begins with zero)
-#If not needed, set it to sudoers=''
-sudoers=(
-    "$user ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0"
-    "$user ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
-) #I need these lines for using some commands without a need for password typing
+    #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${users[0]} for first user and ${users[1]} for the second (count begins with zero)
+    #If not needed, set it to sudoers=''
+    sudoers=(
+        "$user ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0"
+        "$user ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
+    ) #I need these lines for using some commands without a need for password typing
 
 #Internet configuration
 
     #Use netctl (0 - use dhcpcd, 1 - use netctl)
-    netctl=1
+    netctl=1 #If you set it 0, you can leave all other settings as '' because dhcpcd doesn't need any parameters
     #Interface in your computer which is used for internet connection
     interface=enp2s0
     #Static IP address to use
@@ -119,36 +124,50 @@ sudoers=(
         "lmms calligra-krita smplayer"
     )
 
-#Make these empty directories automatically. Set mkdirs="" if you don't want any
-mkdirs=( ~/.vim/{swap,backup} )
+#Services to enable
+services=(
+    bitlbee
+    preload
+    cronie
+    deluged
+    deluge-web
+    hostapd
+    dnsmasq
+)
 
-
+#Links to link
 links=(
     "/mnt/cloud/Dropbox /home/$user/Dropbox"
     "/mnt/cloud/Copy /home/$user/Copy"
     "~/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher ~/.ftblauncher"
     "/etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth"
+    "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
+    "~/bin/runonce.sh ~/"
+    "/mnt/backup/Downloads/* ~/Downloads/"
 )
 
-cps=(
-    "~/.dotfiles/scripts/runonce.sh ~/"
-)
-
+#Execs to exec
 execs=(
+    "grub-mkconfig -o /boot/grub/grub.cfg"
+    "locale-gen"
+    "setfont $font"
+    "mkdir -p /var/lib/bitlbee && chown -R bitlbee:bitlbee /var/lib/bitlbee"
     "chmod -x /etc/grub.d/10-linux"
+    "modprobe fuse"
+    "sensors-detect --auto"
+    "mkdir -p /home/$user/.vim/{swap,backup}"
+    "rsync -a /mnt/backup/Arch/* /home/$user/"
+    "mv /home/$user/spool/cron/ewancoder /var/spool/cron/ewancoder"
+    "vim +BundleInstall +qall"
+    "cp ~/.irssi/config_sample ~/.irssi/config"
 )
+#NEED TO FIX CRON FILE
+#NEED TO RUN AS USER SOME COMMANDS
 
-
-
-
-winfonts=1
-
-
-
-
-
-
-
+#Need this separately from execs array because I need to warn user before doing it
+edits=(
+    "~/.irssi/config"
+)
 
 #===== INTERFACE =====
 

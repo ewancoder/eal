@@ -6,7 +6,7 @@ title "Ewancoder Arch Linux installation script\nVersion $version"
 warn "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t1) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
-mess "Automount all partitions and create fstab"
+mess "Mount all partitions and create fstab"
 echo "# /etc/fstab: static file system information" > fstab
 for (( i = 0; i < ${#devices[@]}; i++ )); do
     mess "Create folder /mnt${mounts[$i]}"
@@ -35,7 +35,7 @@ mess "Move fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
 
 mess "Copy all scripts to /mnt/"
-cp *eal* /mnt/
+cp *.sh /mnt/
 mess "Go to chroot"
 arch-chroot /mnt /eal-chroot.sh
 mess "Unmount all within /mnt"

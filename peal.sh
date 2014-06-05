@@ -10,7 +10,7 @@ do
     IFS=',' read -a gr <<< "$i"
     for j in "${gr[@]}"
     do
-        if [ "(grep $j /etc/group)" == "" ]; then
+        if [ "$(grep $j /etc/group)" == "" ]; then
             mess "Add group '$j'"
             groupadd $j
         fi
@@ -31,13 +31,13 @@ for (( i = 0; i < ${#users[@]}; i++ )); do
     if [ -f ${users[$i]}.sh ];
         mess "Copy ceal.sh & ${users[$i]}.sh scripts to /home/${users[$i]} folder"
         cp ceal.sh ${users[$i]}.sh /home/${users[$i]}/
+        rm ${users[$i]}.sh #Need for gradually deleting all the files
     fi
 done
 
-mess "Add additional entries into /etc/sudoers"
-echo "\n## Additional configuration" >> /etc/sudoers
-
 if ! [ "$sudoers" == "" ]; then
+    mess "Add additional entries into /etc/sudoers"
+    echo "\n## Additional configuration" >> /etc/sudoers
     for i in "${sudoers[@]}"
     do
         mess "Add '$i' entry"
@@ -67,9 +67,19 @@ fi
 mess "Install essential software"
 mess "Install yaourt"
 bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
-
 mess "Install git"
 yaourt -S --noconfirm --asroot git
+mess "Configure git for root AND main user ($user)"
+mess "Configure git user.name as $gitname"
+git config --global user.name $gitname
+mess "Configure git user.email as $gitemail"
+git config --global user.email $gitemail
+mess "Configure git merge.tool as $gittool"
+git config --global merge.tool $gittool
+mess "Configure git core.editor as $giteditor"
+git config --global core.editor $giteditor
+mess "Link this config to $user - main user"
+ln -fs ~/.gitconfig /home/$user/
 
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
@@ -81,7 +91,7 @@ for (( i = 0; i < ${#software[@]}; i++ )); do
     mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
     yaourt -S --noconfirm --asroot ${software[$i]}
 done
-mess "FINALLY cleaning mess - remove orphans recursively"
+mess "Finally cleaning mess - remove orphans recursively"
 pacman -Rns $(pacman -Qtdq) --noconfirm
 
 mess "Clone github repositories"
@@ -113,32 +123,15 @@ if ! [ "$gitrepos" == "" ]; then
     done
 fi
 
-mess "Make grub config based on new scripts (from git)"
-grub-mkconfig -o /boot/grub/grub.cfg
-mess "Generate locales (en+ru)"
-locale-gen
-mess "Set font cyr-sun16"
-setfont cyr-sun16
-
-mess "Setup all users configuration"
+mess "Setup all users shells"
 for (( i = 0; i < ${#users[@]}; i++ )); do
-    if [ -f /home/${users[$i]}/${users[$i]}.sh ];
-    then
-        mess "Setup ${users[$i]} first"
-        mess "CD into /home/${users[$i]}/ folder"
-        de /home/${users[$i]}/
-        mess "Add ${users[0]} NOPASSWD line to sudoers file"
-        echo "${users[$i]} ALL = NOPASSWD: ALL" >> /etc/sudoers
-        mess "Run peal-user.sh as ${users[0]} user"
-        su - ${users[$i]} -c ./${users[$i]}.sh
-        mess "Remove ${users[0]} NOPASSWD line from sudoers file"
-        sed -i '/'${users[0]}' ALL = NOPASSWD: ALL/d' /etc/sudoers
-    else
-        mess "File /home/${users[$i]}/${users[$i]}.sh is not exist. Nothing to configure"
+    if ! [ "${shells[$i]}" == "" ]; then
+        chsh -s ${shells[$i]} ${users[$i]}
     fi
 done
 
 if [ $winfonts -eq 1 ]
+if ! [ "$windows" == "" ]; then
 then
     mess "Mount windows partition to /mnt/windows"
     sudo mkdir -p /mnt/windows
@@ -166,71 +159,37 @@ if [ -f $filename ]; then
 fi
 
 mess "Fix dead acute error in Compose-keys X11 file :)"
-sed -i "s/dead_actute/dead_acute/g" /usr/share/X11/locale/en_US.UTF-8/Compose
+filename=/usr/share/X11/locale/en_US.UTF-8/Compose
+if [ -f $filename ]; then
+    sed -i "s/dead_actute/dead_acute/g" $filename
+fi
 
-mess "Change bitlbee folder owner to bitlbee:bitlbee"
-mkdir -p /var/lib/bitlbee
-chown -R bitlbee:bitlbee /var/lib/bitlbee
-mess "Enable bitlbee"
-systemctl enable bitlbee
-#sudo systemctl start bitlbee
-mess "Enable preload"
-systemctl enable preload
-#sudo systemctl start preload
-mess "Enable cronie"
-systemctl enable cronie
-#sudo systemctl start cronie
-mess "Enable deluged & deluge-web"
-systemctl enable deluged
-systemctl enable deluge-web
-mess "Enable hostapd"
-systemctl enable hostapd.service
-mess "Enable dnsmasq"
-systemctl enable dnsmasq.service
-mess "Activate fuse (modprobe)"
-modprobe fuse
-mess "Detect sensors (lm_sensors)"
-sensors-detect --auto
+mess "Enable all services"
+for s in "${services[@]}"
+do
+    mess "Enable $l service"
+    systemctl enable $l
+done
 
-mess "Download and place canadian icon into /usr/share/gxkb/flags/ca(fr).png"
-curl -o /usr/share/gxkb/flags/ca\(fr\).png http://files.softicons.com/download/web-icons/flags-icons-by-gosquared/png/24x24/Canada.png
-
-
-
-#TEMPORARY HERE
 mess "Link all I need to link"
 for l in "${links[@]}"
 do
     ln -fs $l
 done
-mess "Copy all I need to copy"
-for c in "${cps[@]}"
-do
-    cp $c
-done
-#DO AFTER ACTUAL MERGING ALL STUFF FROM DOTFILES
-mess "Exec what I need to exec"
+
+mess "Execute all I need"
 for e in "${execs[@]}"
 do
+    mess "Executing '$e'"
     $e
 done
 
-#NEED AFTER GIT FOR VIM SWAP DIRECTORIES
-mess "Make empty directories where needed"
-if ! [ "$mkdirs" == "" ]; then
-    for i in ${$mkdirs[@]}
-    do
-        mess "Make $i directory"
-        mkdir -p $i
-    done
-fi
-
-
-
-
-
-
-
+mess "Edit all I need"
+for e in "${edits[@]}"
+do
+    messpause "Edit $e file as you need to"
+    $edit $e
+done
 
 warn "Installation is complete! [REBOOT]"
 reboot
