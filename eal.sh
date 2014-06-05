@@ -34,7 +34,10 @@ pacstrap /mnt base base-devel
 mess "Move fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
 
+mess "Prepare chroot-script for installing grub and setting root password"
 echo '
+source ceal.sh
+
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
 mess "Install grub to $mbr mbr"
@@ -45,7 +48,7 @@ mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
 mess "Move scripts to /root so you could run it right after reboot"
-mv *.sh /root/
+mv {ceal,peal}.sh /root/
 
 messpause "Setup ROOT password [MANUAL]"
 passwd
@@ -53,6 +56,10 @@ passwd
 mess "Exit chroot"
 exit
 ' > /mnt/eal-chroot.sh
+mess "Set executable flag"
+chmod +x /mnt/eal-chroot.sh
+mess "Copy *.sh there"
+cp {ceal,peal}.sh /mnt
 
 mess "Go to chroot"
 arch-chroot /mnt /eal-chroot.sh
