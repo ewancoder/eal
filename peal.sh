@@ -28,7 +28,7 @@ for (( i = 0; i < ${#users[@]}; i++ )); do
     echo "${users[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     messpause "Setup user (${users[$i]}) password [MANUAL]"
     passwd ${users[$i]}
-    if [ -f ${users[$i]}.sh ];
+    if [ -f ${users[$i]}.sh ]; then
         mess "Copy ceal.sh & ${users[$i]}.sh scripts to /home/${users[$i]} folder"
         cp ceal.sh ${users[$i]}.sh /home/${users[$i]}/
         rm ${users[$i]}.sh #Need for gradually deleting all the files
@@ -68,7 +68,7 @@ mess "Install essential software"
 mess "Install yaourt"
 bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
 mess "Install git"
-yaourt -S --noconfirm --asroot git
+yaourt -S --noconfirm git
 mess "Configure git for root AND main user ($user)"
 mess "Configure git user.name as $gitname"
 git config --global user.name $gitname
@@ -89,7 +89,7 @@ yaourt -Syy
 mess "Install all software"
 for (( i = 0; i < ${#software[@]}; i++ )); do
     mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
-    yaourt -S --noconfirm --asroot ${software[$i]}
+    yaourt -S --noconfirm ${software[$i]}
 done
 mess "Finally cleaning mess - remove orphans recursively"
 pacman -Rns $(pacman -Qtdq) --noconfirm
@@ -100,7 +100,7 @@ if ! [ "$gitrepos" == "" ]; then
         mess "Clone ${gitrepos[$i]} repo"
         git clone https://github.com/${gitrepos[$i]}.git ${gitfolders[$i]}
         if ! [ "${gitrules[$i]}" == "" ]; then
-            mess "SET rule '${gitrules[$i]}'"
+            mess "SET chown '${gitrules[$i]}'"
             chown -R ${gitrules[$i]} ${gitfolders[$i]}
         fi
         if ! [ "${gitmodules[$i]}" == "" ]; then
@@ -114,7 +114,7 @@ if ! [ "$gitrepos" == "" ]; then
                     mess "Move $(basename $f) folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
                     cp -nr ${gitlinks[$i]}/$(basename $f)/* $f/ && rm -r ${gitlinks[$i]}/$(basename $f)
                 fi
-                mess "MERGE ${gitfolders[$i]}/${gitfilter[$i]} to ${gitlinks[$i]}"
+                mess "MERGE '${gitfolders[$i]}/${gitfilter[$i]}' to ${gitlinks[$i]}"
                 ln -fs ${gitfolders[$i]}/${gitfilter[$i]} ${gitlinks[$i]}/
             done
         fi

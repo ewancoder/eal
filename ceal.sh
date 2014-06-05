@@ -47,7 +47,8 @@ mirrors=( Belarus Denmark United France Russia )
     #User login
     users=( ewancoder lft )
     #Shells for users (leave as '' for standard)
-    shells=( zsh '' )
+    #SHELL must be a FULL-path name
+    shells=( /bin/zsh '' )
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
     groups=( fuse fuse,testing )
@@ -92,7 +93,7 @@ mirrors=( Belarus Denmark United France Russia )
     #Sumbodules to pull - set to '' if you don't need any
     gitmodules=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merging) from current repo (set '' if nowhere)
-    gitlinks=( ~ /etc )
+    gitlinks=( /home/$user /etc )
     #What to link (merge) from current repo to link above (filter)
     gitfilter=( "{.*,bin}" "*" )
 
@@ -157,7 +158,7 @@ execs=(
     "sensors-detect --auto"
     "mkdir -p /home/$user/.vim/{swap,backup}"
     "rsync -a /mnt/backup/Arch/* /home/$user/"
-    "mv /home/$user/spool/cron/ewancoder /var/spool/cron/ewancoder"
+    "mv /home/$user/spool/cron/$user /var/spool/cron/$user"
     "vim +BundleInstall +qall"
     "cp ~/.irssi/config_sample ~/.irssi/config"
 )

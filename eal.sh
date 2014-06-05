@@ -36,7 +36,7 @@ mv fstab /mnt/etc/fstab
 
 mess "Prepare chroot-script for installing grub and setting root password"
 echo '
-source ceal.sh
+source /root/ceal.sh
 
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
@@ -62,7 +62,7 @@ mess "Copy {ceal,peal}.sh to /mnt/root"
 cp {ceal,peal}.sh /mnt/root/
 
 mess "Go to chroot"
-arch-chroot /mnt /eal-chroot.sh
+arch-chroot /mnt /root/eal-chroot.sh
 mess "Unmount all within /mnt"
 umount -R /mnt
 
