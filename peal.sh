@@ -109,7 +109,8 @@ if ! [ "$gitrepos" == "" ]; then
         fi
         if ! [ "${gitlinks[$i]}" == "" ]; then
             mess "MERGE all LINKS"
-            for f in ${gitfolders[$i]}/${gitfilter[$i]}; do
+            chopt -s dotglob #Setting dotglob (temporary solution instead of filter)
+            for f in ${gitfolders[$i]}/*; do
                 if [ -d ${gitlinks[$i]}/$(basename $f) ]; then
                     mess "Move $(basename $f) folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
                     cp -nr ${gitlinks[$i]}/$(basename $f)/* $f/ && rm -r ${gitlinks[$i]}/$(basename $f)
@@ -117,6 +118,7 @@ if ! [ "$gitrepos" == "" ]; then
                 mess "MERGE $f to ${gitlinks[$i]}"
                 ln -fs $f ${gitlinks[$i]}/
             done
+            chopt -u dotglob #Unsetting dotglob
         fi
         mess "Cd into home directory"
         cd
@@ -132,7 +134,6 @@ done
 
 if [ $winfonts -eq 1 ]
 if ! [ "$windows" == "" ]; then
-then
     mess "Mount windows partition to /mnt/windows"
     sudo mkdir -p /mnt/windows
     mess "Make regular dirs: /mnt/{usb, usb0, data, mtp}"
@@ -177,14 +178,14 @@ do
     ln -fs $l
 done
 
-mess "Execute all I need"
+mess "Execute all I need to execute"
 for e in "${execs[@]}"
 do
     mess "Executing '$e'"
     $e
 done
 
-mess "Edit all I need"
+mess "Edit all I need to edit"
 for e in "${edits[@]}"
 do
     messpause "Edit $e file as you need to"
