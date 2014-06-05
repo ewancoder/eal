@@ -147,9 +147,9 @@ links=(
 
 #Execs to exec
 execs=(
-    "grub-mkconfig -o /boot/grub/grub.cfg"
-    "locale-gen"
-    "setfont $font"
+    'grub-mkconfig -o /boot/grub/grub.cfg'
+    'locale-gen'
+    'setfont $font'
     "mkdir -p /var/lib/bitlbee && chown -R bitlbee:bitlbee /var/lib/bitlbee"
     "chmod -x /etc/grub.d/10-linux"
     "modprobe fuse"

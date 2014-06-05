@@ -167,8 +167,8 @@ fi
 mess "Enable all services"
 for s in ${services[@]}
 do
-    mess "Enable $l service"
-    systemctl enable $l
+    mess "Enable $s service"
+    systemctl enable $s
 done
 
 mess "Link all I need to link"
@@ -178,10 +178,9 @@ do
 done
 
 mess "Execute all I need to execute"
-for e in ${execs[@]}
-do
-    mess "Executing '$e'"
-    $e
+for (( i = 0; i < ${#execs[@]}; i++ )); do
+    mess "Executing '${execs[$i]}'"
+    ${execs[$i]}
 done
 
 mess "Edit all I need to edit"
