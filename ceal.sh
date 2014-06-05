@@ -95,7 +95,7 @@ mirrors=( Belarus Denmark United France Russia )
     #Where to link ALL content (merging) from current repo (set '' if nowhere)
     gitlinks=( /home/$user /etc )
     #What to link (merge) from current repo to link above (filter)
-    gitfilter=( "{.*,bin}" "*" )
+    gitfilter=( "{.*,*}" "*" )
 
 #Software configuration
 

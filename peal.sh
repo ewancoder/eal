@@ -114,8 +114,8 @@ if ! [ "$gitrepos" == "" ]; then
                     mess "Move $(basename $f) folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
                     cp -nr ${gitlinks[$i]}/$(basename $f)/* $f/ && rm -r ${gitlinks[$i]}/$(basename $f)
                 fi
-                mess "MERGE '${gitfolders[$i]}/${gitfilter[$i]}' to ${gitlinks[$i]}"
-                ln -fs ${gitfolders[$i]}/${gitfilter[$i]} ${gitlinks[$i]}/
+                mess "MERGE $f to ${gitlinks[$i]}"
+                ln -fs $f ${gitlinks[$i]}/
             done
         fi
         mess "Cd into home directory"
