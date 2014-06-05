@@ -109,7 +109,7 @@ if ! [ "$gitrepos" == "" ]; then
         fi
         if ! [ "${gitlinks[$i]}" == "" ]; then
             mess "MERGE all LINKS"
-            chopt -s dotglob #Setting dotglob (temporary solution instead of filter)
+            shopt -s dotglob #Setting dotglob (temporary solution instead of filter)
             for f in ${gitfolders[$i]}/*; do
                 if [ -d ${gitlinks[$i]}/$(basename $f) ]; then
                     mess "Move $(basename $f) folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
@@ -118,7 +118,7 @@ if ! [ "$gitrepos" == "" ]; then
                 mess "MERGE $f to ${gitlinks[$i]}"
                 ln -fs $f ${gitlinks[$i]}/
             done
-            chopt -u dotglob #Unsetting dotglob
+            shopt -u dotglob #Unsetting dotglob
         fi
         mess "Cd into home directory"
         cd
@@ -166,27 +166,27 @@ if [ -f $filename ]; then
 fi
 
 mess "Enable all services"
-for s in "${services[@]}"
+for s in ${services[@]}
 do
     mess "Enable $l service"
     systemctl enable $l
 done
 
 mess "Link all I need to link"
-for l in "${links[@]}"
+for l in ${links[@]}
 do
     ln -fs $l
 done
 
 mess "Execute all I need to execute"
-for e in "${execs[@]}"
+for e in ${execs[@]}
 do
     mess "Executing '$e'"
     $e
 done
 
 mess "Edit all I need to edit"
-for e in "${edits[@]}"
+for e in ${edits[@]}
 do
     messpause "Edit $e file as you need to"
     $edit $e
