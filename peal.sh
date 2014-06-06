@@ -28,11 +28,6 @@ for (( i = 0; i < ${#users[@]}; i++ )); do
     echo "${users[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     messpause "Setup user (${users[$i]}) password [MANUAL]"
     passwd ${users[$i]}
-    if [ -f ${users[$i]}.sh ]; then
-        mess "Copy ceal.sh & ${users[$i]}.sh scripts to /home/${users[$i]} folder"
-        cp ceal.sh ${users[$i]}.sh /home/${users[$i]}/
-        rm ${users[$i]}.sh #Need for gradually deleting all the files
-    fi
 done
 
 if ! [ "$sudoers" == "" ]; then

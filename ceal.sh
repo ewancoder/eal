@@ -167,6 +167,7 @@ execs=(
 )
 #NEED TO FIX CRON FILE - now is only temporary solution (KOSTYL)
 #NEED TO RUN AS USER "vim"
+#Bundleinstall is now kostyling
 
 #Need this separately from execs array because I need to warn user before doing it
 edits=(
