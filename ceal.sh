@@ -143,6 +143,7 @@ links=(
     "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
     "/home/$user/bin/runonce.sh /home/$user/"
     "/mnt/backup/Downloads/* /home/$user/Downloads/"
+    "/home/$user/.mtoolsrc /root/"
 )
 
 #Execs to exec
