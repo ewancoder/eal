@@ -148,7 +148,7 @@ links=(
 #Execs to exec
 #Do NOT try to paste here multiple commands like 'first && second'
 execs=(
-    "grub-mkconfig -o /boot/grub/grub.cfg"
+    "mkdir -p /mnt/{usb,usb0,data,mtp}"
     "locale-gen"
     "setfont $font"
     "mkdir -p /var/lib/bitlbee"
@@ -164,6 +164,7 @@ execs=(
     "ln -fs /home/$user/.vim /root/"
     "vim +BundleInstall +qall"
     "cp /home/$user/.irssi/config_sample /home/$user/.irssi/config"
+    "grub-mkconfig -o /boot/grub/grub.cfg"
 )
 #NEED TO FIX CRON FILE - now is only temporary solution (KOSTYL)
 #NEED TO RUN AS USER "vim"

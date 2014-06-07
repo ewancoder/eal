@@ -108,7 +108,8 @@ if ! [ "$gitrepos" == "" ]; then
             for f in $(ls -A ${gitfolders[$i]}/ | grep -v .git); do
                 if [ -d ${gitlinks[$i]}/$f ]; then
                     mess "Move $f folder from ${gitlinks[$i]} to ${gitfolders[$i]} because it exists :)"
-                    cp -nr ${gitlinks[$i]}/$f/* ${gitfolders[$i]}/$f/ && rm -r ${gitlinks[$i]}/$f
+                    cp -nr ${gitlinks[$i]}/$f/* ${gitfolders[$i]}/$f/
+                    rm -r ${gitlinks[$i]}/$f
                 fi
                 mess "MERGE $f to ${gitlinks[$i]}"
                 ln -fs ${gitfolders[$i]}/$f ${gitlinks[$i]}/
@@ -129,14 +130,12 @@ done
 
 if ! [ "$windows" == "" ]; then
     mess "Mount windows partition to /mnt/windows"
-    sudo mkdir -p /mnt/windows
-    mess "Make regular dirs: /mnt/{usb, usb0, data, mtp}"
-    sudo mkdir -p /mnt/{usb,usb0,data,mtp}
-    sudo mount $windows /mnt/windows
+    mkdir -p /mnt/windows
+    mount $windows /mnt/windows
     mess "Copy windows fonts to /usr/share/fonts/winfonts"
-    sudo cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
+    cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
     mess "Update fonts cache"
-    sudo fc-cache -fv
+    fc-cache -fv
 fi
 
 #FIX ISSUES AND BUGS
