@@ -48,10 +48,10 @@ mirrors=( Belarus Denmark United France Russia )
     users=( ewancoder lft )
     #Shells for users (leave as '' for standard)
     #SHELL must be a FULL-path name
-    shells=( /bin/zsh '' )
+    shells=( /bin/zsh /bin/zsh )
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
-    groups=( fuse fuse,testing )
+    groups=( fuse,lock,uucp,tty fuse )
     #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script (so I should write 'ewancoder' only ONCE). You can set your "main" user as your second user doing so: 'user=${users[1]}'
     user=${users[0]} #I am setting this as 'ewancoder'
 
@@ -114,12 +114,12 @@ mirrors=( Belarus Denmark United France Russia )
     software=(
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
-        "python python-matplotlib python-mock python-numpy python-pygame-hg python-scipy python-sphinx tig"
+        "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
         "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
         "geeqie gource scrot vlc"
         "bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dnsmasq dropbox-experimental hostapd irssi net-tools perl-html-parser python2-mako skype"
         "anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru"
-        "gksu gparted mc pasystray-git pavucontrol smartmontools thunar"
+        "gksu gparted mc mtools pasystray-git pavucontrol smartmontools thunar"
         "lmms calligra-krita smplayer"
     )
 
