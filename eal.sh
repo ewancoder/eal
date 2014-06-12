@@ -3,7 +3,7 @@ source ceal.sh
 clear
 
 title "Ewancoder Arch Linux installation script\nVersion $version"
-warn "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t1) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+warn "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
 mess "Mount all partitions and create fstab"
@@ -14,7 +14,7 @@ for (( i = 0; i < ${#devices[@]}; i++ )); do
     mess "Mount ${devices[$i]} to /mnt${mounts[$i]}"
     mount ${devices[$i]} /mnt${mounts[$i]}
     mess "Add fstab ${descriptions[$i]} partition entry '${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}'"
-    echo -e "\n#${descriptions[$i]} partition\n${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}" >> fstab
+    echo -e "\n# ${descriptions[$i]} partition\n${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}" >> fstab
 done
 
 mess "Forming mirrorlist"
@@ -37,7 +37,7 @@ mv fstab /mnt/etc/fstab
 mess "Set hostname ($hostname)"
 echo $hostname > /mnt/etc/hostname
 
-mess "Prepare chroot-script for installing grub and setting root password"
+mess "Prepare chroot-script"
 echo '
 source /root/ceal.sh
 
@@ -46,14 +46,14 @@ ln -s /usr/share/zoneinfo/$timezone /etc/localtime
 
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
-mess "Install grub to $mbr mbr"
+mess "Install grub bootloader to $mbr mbr"
 grub-install --target=i386-pc --recheck $mbr
 mess "Install os-prober"
 pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-mess "Remove script finally"
+mess "Remove chroot script"
 rm /root/eal-chroot.sh
 
 messpause "Setup ROOT password [MANUAL]"
