@@ -62,6 +62,42 @@ mirrors=( Belarus Denmark United France Russia )
         "$user ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
     ) #I need these lines for using some commands without a need for password typing
 
+    execs=(
+        "mess 'Make vim swap&backup dirs'
+        mkdir -p /home/$user/.vim/{swap,backup} \n
+        mess 'Install vim plugins'
+        vim +BundleInstall +qall \n
+        mess 'Copy irssi config sample'
+        cp /home/$user/.irssi/config_sample /home/$user/.irssi/config
+        messpause 'Edit irssi passwords [MANUAL]'
+        $edit /home/$user/.irssi/config"
+    )
+
+rootexec=(
+    "mkdir -p /mnt/{usb,usb0,data,mtp}"
+    "locale-gen"
+    "setfont $font"
+    "mkdir -p /var/lib/bitlbee"
+    "chown -R bitlbee:bitlbee /var/lib/bitlbee"
+    "chmod -x /etc/grub.d/10_linux"
+    "modprobe fuse"
+    "sensors-detect --auto"
+    "rsync -a /mnt/backup/Arch/* /home/$user/"
+    "mv /home/$user/cron/$user /var/spool/cron/"
+    "rm -r /home/$user/cron"
+    "ln -fs /home/$user/.vim /root/"
+    "grub-mkconfig -o /boot/grub/grub.cfg"
+)
+#NEED TO FIX CRON FILE - now is only temporary solution (KOSTYL)
+#NEED TO RUN AS USER "vim"
+#Bundleinstall is now kostyling
+
+
+
+
+
+
+
 #Internet configuration
 
     #Use netctl (0 - use dhcpcd, 1 - use netctl)
@@ -76,7 +112,7 @@ mirrors=( Belarus Denmark United France Russia )
 #Git configuration
 
     #Your git user name
-    gitname=$user
+    gitname=$user $user
     #Git email
     gitemail=$user@gmail.com
     #Tool to use ad diff
@@ -115,7 +151,7 @@ mirrors=( Belarus Denmark United France Russia )
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
         "geeqie gource scrot vlc"
         "bitlbee canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dnsmasq dropbox-experimental hostapd irssi net-tools perl-html-parser python2-mako skype"
         "anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru"
@@ -148,33 +184,6 @@ links=(
 
 #Execs to exec
 #Do NOT try to paste here multiple commands like 'first && second'
-execs=(
-    "mkdir -p /mnt/{usb,usb0,data,mtp}"
-    "locale-gen"
-    "setfont $font"
-    "mkdir -p /var/lib/bitlbee"
-    "chown -R bitlbee:bitlbee /var/lib/bitlbee"
-    "chmod -x /etc/grub.d/10_linux"
-    "modprobe fuse"
-    "sensors-detect --auto"
-    "mkdir -p /home/$user/.vim/swap"
-    "mkdir -p /home/$user/.vim/backup"
-    "rsync -a /mnt/backup/Arch/* /home/$user/"
-    "mv /home/$user/cron/$user /var/spool/cron/"
-    "rm -r /home/$user/cron"
-    "ln -fs /home/$user/.vim /root/"
-    "vim +BundleInstall +qall"
-    "cp /home/$user/.irssi/config_sample /home/$user/.irssi/config"
-    "grub-mkconfig -o /boot/grub/grub.cfg"
-)
-#NEED TO FIX CRON FILE - now is only temporary solution (KOSTYL)
-#NEED TO RUN AS USER "vim"
-#Bundleinstall is now kostyling
-
-#Need this separately from execs array because I need to warn user before doing it
-edits=(
-    "/home/$user/.irssi/config"
-)
 
 #===== INTERFACE =====
 
