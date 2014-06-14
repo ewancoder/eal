@@ -95,7 +95,7 @@ if ! [ "$group" == "" ]; then
 fi
 
 mess -t "Quickly create users (need for chmod-ing git repos)"
-for i in ${#user[@]}; do
+for i in ${user[@]}; do
     mess "Create user $i"
     useradd -m -g users -s /bin/bash $i
 done
@@ -187,6 +187,7 @@ if ! [ "$link" == "" ]; then
     mess -t "Link all I need to link"
     for l in ${link[@]}
     do
+        mess "Link $l"
         ln -fs $l
     done
 fi
