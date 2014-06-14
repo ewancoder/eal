@@ -69,7 +69,7 @@ mirror=( Belarus Denmark United France Russia )
         vim +BundleInstall +qall \n
         mess 'Copy irssi config sample' \n
         cp /home/$main/.irssi/config_sample /home/$main/.irssi/config \n
-        mess 'Edit irssi passwords [MANUAL]' pause \n
+        mess -p 'Edit irssi passwords' \n
         $edit /home/$main/.irssi/config"
     )
 
@@ -79,6 +79,7 @@ rootexec=(
     "mkdir -p /mnt/usb"
     "mkdir -p /mnt/data"
     "mkdir -p /mnt/mtp"
+    "rsync -a /mnt/backup/Other/cron /var/spool/cron"
     "locale-gen"
     "setfont $font"
     "chmod -x /etc/grub.d/10_linux"
@@ -90,8 +91,6 @@ rootexec=(
     "ln -fs /home/$main/.vim /root/"
     "grub-mkconfig -o /boot/grub/grub.cfg"
 )
-
-#NEED TO FIX CRON FILE - now is only temporary solution (KOSTYL)
 
 #Internet configuration
 
@@ -146,7 +145,7 @@ rootexec=(
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g pam_mount preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
         "geeqie gource scrot"
         "canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dnsmasq dropbox-experimental hostapd net-tools perl-html-parser python2-mako skype"
         "anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru"
@@ -169,7 +168,6 @@ link=(
     "/mnt/cloud/Dropbox /home/$main/Dropbox"
     "/mnt/cloud/Copy /home/$main/Copy"
     "/home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
-    "/etc/.dotfiles/pam.d\;system-auth /etc/pam.d/system-auth"
     "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
     "/home/$main/bin/runonce.sh /home/$main/"
     "/mnt/backup/Downloads/* /home/$main/Downloads/"
