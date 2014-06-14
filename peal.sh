@@ -94,6 +94,12 @@ if ! [ "$group" == "" ]; then
     done
 fi
 
+mess -t "Quickly create users (need for chmod-ing git repos)"
+for i in ${#user[@]}; do
+    mess "Create user $i"
+    useradd -m -g users -s /bin/bash $i
+done
+
 if ! [ "$gitrepo" == "" ]; then
     mess -t "Clone github repositories"
     for (( i = 0; i < ${#gitrepo[@]}; i++ )); do
@@ -114,7 +120,7 @@ if ! [ "$gitrepo" == "" ]; then
             for f in $(ls -A ${gitfolder[$i]}/ | grep -v .git); do
                 if [ -d ${gitlink[$i]}/$f ]; then
                     mess "Move $f folder from ${gitlink[$i]} to ${gitfolder[$i]} becaus it exists"
-                    cp -nr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/
+                    cp -nr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/ 2>/dev/null
                     rm -r ${gitlink[$i]}/$f
                 fi
                 mess "Make symlink from ${gitfolder[$i]}/$f to ${gitlink[$i]}/"
@@ -125,16 +131,16 @@ if ! [ "$gitrepo" == "" ]; then
     done
 fi
 
-mess -t "Create users"
+mess -t "Setup users"
 mess "Prepare sudoers file for pasting entries"
 echo "\n## Users configuration" >> /etc/sudoers
-mess "Create all users"
+mess "Setup"
 for (( i = 0; i < ${#user[@]}; i++ )); do
-    mess "Add user ${user[$i]} with groups: 'users,${group[$i]}'"
-    useradd -m -g users -G ${group[$i]} -s /bin/bash ${user[$i]}
+    mess "Add user ${user[$i]} to groups: '${group[$i]}'"
+    usermod -G ${group[$i]} ${user[$i]}
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    mess "Setup user (${user[$i]}) password [MANUAL]" pause
+    mess -p "Setup user (${user[$i]}) password [MANUAL]"
     passwd ${user[$i]}
     mess "Set ${user[$i]} shell to ${shell[$i]}"
     chsh -s ${shell[$i]} ${user[$i]}
@@ -152,16 +158,18 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         git config --global merge.tool ${gittool[$i]}
         mess "Configure git core.editor as ${giteditor[$i]}"
         git config --global core.editor ${giteditor[$i]}
-        ' > user.sh
-        echo -e ${execs[$i]} >> user.sh
+        ' > /home/${user[$i]}/user.sh
+        echo -e ${execs[$i]} >> /home/${user[$i]}/user.sh
+        mess "Make executable (+x)"
+        chmod +x /home/${user[$i]}/user.sh
         #HERE NEEDED TO BE SURE THAT X-SERVER WONT START
         mv /home/${user[$i]}/.zprofile /home/${user[$i]}/.zprofilecopy 2>/dev/null
         mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
         mess "Execute user-executed script by ${user[$i]} user"
-        su - ${users[$i]} -c user.sh
+        su - ${users[$i]} -c /home/${user[$i]}/user.sh
         mv /home/${user[$i]}/.zprofilecopy /home/${user[$i]}/.zprofile 2>/dev/null
         mv /home/${user[$i]}/.bash_profilecopy /home/${user[$i]}/.bash_profile 2>/dev/null
-        rm user.sh
+        rm /home/${user[$i]}/user.sh
     fi
 done
 

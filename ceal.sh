@@ -53,7 +53,7 @@ mirror=( Belarus Denmark United France Russia )
     #Leave it as '' if you don't need one
     group=( fuse,lock,uucp,tty fuse )
     #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script (so I should write 'ewancoder' only ONCE). You can set your "main" user as your second user doing so: 'user=${users[1]}'
-    main=${users[0]} #I am setting this as 'ewancoder'
+    main=${user[0]} #I am setting this as 'ewancoder'
 
     #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${users[0]} for first user and ${users[1]} for the second (count begins with zero)
     #If not needed, set it to sudoers=''
@@ -156,7 +156,6 @@ rootexec=(
 
 #Services to enable
 service=(
-    bitlbee
     preload
     cronie
     deluged
