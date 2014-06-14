@@ -2,23 +2,24 @@
 source ceal.sh
 clear
 
-title "Ewancoder Arch Linux installation script\nVersion $version"
-warn "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+mess -t "Ewancoder Arch Linux installation script\nVersion $version"
+mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
-mess "Mount all partitions and create fstab"
+mess -t "Mount all partitions and create fstab"
+mess "Create local fstab file (prepare)"
 echo "# /etc/fstab: static file system information" > fstab
-for (( i = 0; i < ${#devices[@]}; i++ )); do
-    mess "Create folder /mnt${mounts[$i]}"
-    mkdir -p /mnt${mounts[$i]}
-    mess "Mount ${devices[$i]} to /mnt${mounts[$i]}"
-    mount ${devices[$i]} /mnt${mounts[$i]}
-    mess "Add fstab ${descriptions[$i]} partition entry '${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}'"
-    echo -e "\n# ${descriptions[$i]} partition\n${devices[$i]}\t${mounts[$i]}\t${types[$i]}\t${options[$i]}\t${dumps[$i]}\t${passes[$i]}" >> fstab
+for (( i = 0; i < ${#device[@]}; i++ )); do
+    mess "Create folder /mnt${mount[$i]}"
+    mkdir -p /mnt${mount[$i]}
+    mess "Mount ${device[$i]} to /mnt${mount[$i]}"
+    mount ${device[$i]} /mnt${mount[$i]}
+    mess "Add fstab ${description[$i]} partition entry '${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}'"
+    echo -e "\n# ${description[$i]} partition\n${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}" >> fstab
 done
 
-mess "Forming mirrorlist"
-for i in "${mirrors[@]}"
+mess -t "Form mirrorlist"
+for i in "${mirror[@]}"
 do
     mess "Place $i in mirrorlist"
     grep -A 1 --no-group-separator $i /etc/pacman.d/mirrorlist >> mirrorlist
@@ -28,16 +29,16 @@ mv mirrorlist /etc/pacman.d/mirrorlist
 mess "Update pacman packages list"
 pacman -Syy
 
+mess -t "Install & setup system"
 mess "Install base-system"
 pacstrap /mnt base base-devel
-
-mess "Move fstab to /mnt/etc/fstab"
+mess "Move previously created fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
-
 mess "Set hostname ($hostname)"
 echo $hostname > /mnt/etc/hostname
 
-mess "Prepare chroot-script"
+mess -t "CHROOT to system"
+mess "Prepare eal-chroot.sh chroot script"
 echo '
 source /root/ceal.sh
 
@@ -56,21 +57,21 @@ grub-mkconfig -o /boot/grub/grub.cfg
 mess "Remove chroot script"
 rm /root/eal-chroot.sh
 
-messpause "Setup ROOT password [MANUAL]"
+mess -p "Setup ROOT password"
 passwd
 
 mess "Exit chroot"
 exit
 ' > /mnt/root/eal-chroot.sh
-mess "Set executable flag"
+mess "Set executable flag for chroot script"
 chmod +x /mnt/root/eal-chroot.sh
 mess "Copy {ceal,peal}.sh to /mnt/root"
 cp {ceal,peal}.sh /mnt/root/
-
 mess "Go to chroot"
 arch-chroot /mnt /root/eal-chroot.sh
+
+mess -t "Finish installation"
 mess "Unmount all within /mnt"
 umount -R /mnt
-
-warn "After [REBOOT] run ./peal.sh to continue"
+mess -w "After [REBOOT] run ./peal.sh to continue"
 reboot
