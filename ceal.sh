@@ -63,13 +63,13 @@ mirror=( Belarus Denmark United France Russia )
     ) #I need these lines for using some commands without a need for password typing
 
     execs=(
-        "mess 'Make vim swap&backup dirs'
+        "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
-        mess 'Install vim plugins'
+        mess 'Install vim plugins' \n
         vim +BundleInstall +qall \n
-        mess 'Copy irssi config sample'
-        cp /home/$main/.irssi/config_sample /home/$main/.irssi/config
-        mess 'Edit irssi passwords [MANUAL]' pause
+        mess 'Copy irssi config sample' \n
+        cp /home/$main/.irssi/config_sample /home/$main/.irssi/config \n
+        mess 'Edit irssi passwords [MANUAL]' pause \n
         $edit /home/$main/.irssi/config"
     )
 
