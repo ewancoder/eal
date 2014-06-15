@@ -28,6 +28,9 @@ mess "Move new mirrorlist to /etc/pacman.d/mirrorlist"
 mv mirrorlist /etc/pacman.d/mirrorlist
 mess "Update pacman packages list"
 pacman -Syy
+mess "Initializing pacman keyring"
+pacman-key --init
+pacman-key --populate archlinux
 
 mess -t "Install & setup system"
 mess "Install base-system"
