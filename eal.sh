@@ -62,7 +62,11 @@ rm /root/eal-chroot.sh
 
 mess -p "Setup ROOT password"
 passwd
-
+' > /mnt/root/eal-chroot.sh
+mess "Add peal.sh to eal-chroot script"
+cat peal.sh > /mnt/root/eal-chroot.sh
+mess "Add 'exit chroot' message to the end of eal-chroot script"
+echo '
 mess "Exit chroot"
 exit
 ' > /mnt/root/eal-chroot.sh
@@ -76,5 +80,5 @@ arch-chroot /mnt /root/eal-chroot.sh
 mess -t "Finish installation"
 mess "Unmount all within /mnt"
 umount -R /mnt
-mess -w "After [REBOOT] run ./peal.sh to continue"
+mess "Reboot"
 reboot
