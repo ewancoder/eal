@@ -1,5 +1,5 @@
 #!/bin/bash
-version="1.8 Almost-Clean (Full-Clean will be like 1.8.2), 2014"
+version="1.8.1 Clean, 2014"
 
 #AutoInstall (0 - pause on each step, 1 - pause only when needed)
 auto=0
@@ -10,14 +10,23 @@ edit=vi
 #Console font (cyr-sun16 for russian symbols)
 font=cyr-sun16
 
-#Hostname
+#Hostname & timezone
 hostname=ewanhost
-
-#Local timezone
 timezone=Europe/Minsk
 
-#Mirrorlist - at least one should be set
+#Mirrorlist - at least one should be set (starting from capital letter)
 mirror=( Belarus Denmark United France Russia )
+
+#Internet configuration
+
+    #Use netctl (0 - use dhcpcd, 1 - use netctl)
+    netctl=1 #If you set it as 0, you can leave all other settings because dhcpcd doesn't need them
+    #Interface in your computer which is used for internet connection
+    interface=enp2s0
+    #Static IP address to use
+    ip=192.168.100.22
+    #DNS to use (usually, your router address)
+    dns=192.168.100.1
 
 #All devices - in the order of mounting ('/' goes before '/home'). At least one should be set (/). No slash in the end ('/home', not '/home/')
 
@@ -27,8 +36,8 @@ mirror=( Belarus Denmark United France Russia )
     device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
     #Mount points starting from '/'
     mount=( / /home /mnt/cloud /mnt/backup )
-    #Filesystem, options, dumps&passes (fstab entries)
-    #'discard' option - for SSD
+    #Filesystem, options, dump&pass (fstab entries)
+    #'discard' option works only for SSD
     type=( ext4 ext4 ext4 ext4 )
     option=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime )
     dump=( 0 0 0 0 )
@@ -39,7 +48,7 @@ mirror=( Belarus Denmark United France Russia )
     #Grub MBR device (where to install bootloader)
     mbr=/dev/sdb
     #Windows device for copying fonts
-    #Leave as '' if you don't want to copy windows fonts
+    #Leave it as '' or remove if you don't want to copy windows fonts
     windows=/dev/sdb1
 
 #User configuration - at least one should be set
@@ -47,63 +56,61 @@ mirror=( Belarus Denmark United France Russia )
     #User login
     user=( ewancoder lft )
     #Shells for users (leave as '' for standard)
-    #SHELL must be a FULL-path name
+    #Shell must be a full-path name
     shell=( /bin/zsh /bin/zsh )
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
     group=( fuse,lock,uucp,tty fuse )
-    #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script (so I should write 'ewancoder' only ONCE). You can set your "main" user as your second user doing so: 'user=${users[1]}'
+    #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script (so I should write 'ewancoder' only ONCE). You can set your "main" user as your second user doing so: 'main=${user[1]}'
     main=${user[0]} #I am setting this as 'ewancoder'
 
-    #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${users[0]} for first user and ${users[1]} for the second (count begins with zero)
-    #If not needed, set it to sudoers=''
+    #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${user[0]} for first user and ${user[1]} for the second (count begins with zero)
+    #If not needed, set it to sudoers='' or remove
     sudoers=(
         "$main ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0"
         "$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
     ) #I need these lines for using some commands without a need for password typing
 
+#Executable commands and links
+
+    #These commands will be executed by corresponding user, use \n at the end of each line except the last one and separate user-executed entries by ""
+    #For example, here is defined commands which will be executed for the first user only (${user[0]}).
+    #I am currently need these only to install vim plugins
     execs=(
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
         mess 'Install vim plugins' \n
-        vim +BundleInstall +qall \n
-        mess 'Copy irssi config sample' \n
-        cp /home/$main/.irssi/config_sample /home/$main/.irssi/config \n
-        mess -p 'Edit irssi passwords' \n
-        $edit /home/$main/.irssi/config"
+        vim +BundleInstall +qall"
     )
 
-#Execs to exec
-#Do NOT try to paste here multiple commands like 'first && second'
-rootexec=(
-    "mkdir -p /mnt/usb"
-    "mkdir -p /mnt/data"
-    "mkdir -p /mnt/mtp"
-    "rsync -a /mnt/backup/Other/cron /var/spool/cron"
-    "locale-gen"
-    "setfont $font"
-    "chmod -x /etc/grub.d/10_linux"
-    "modprobe fuse"
-    "sensors-detect --auto"
-    "rsync -a /mnt/backup/Arch/* /home/$main/"
-    "mv /home/$main/cron/$main /var/spool/cron/"
-    "rm -r /home/$main/cron"
-    "ln -fs /home/$main/.vim /root/"
-    "grub-mkconfig -o /boot/grub/grub.cfg"
-)
+    #These commands will be executed consecutively by root user after all installation process, so there's no need to type '\n' at the end of each line. Each line separated from another by "". Do not try to paste here multiple commands like "first && second"
+    rootexec=(
+        "mkdir -p /mnt/usb"
+        "mkdir -p /mnt/data"
+        "mkdir -p /mnt/mtp"
+        "rsync -a /mnt/backup/Arch/* /home/$main/"
+        "rsync -a /mnt/backup/Other/cron /var/spool/cron"
+        "ln -fs /home/$main/.vim /root/"
+        "modprobe fuse"
+        "sensors-detect --auto"
+        "chmod -x /etc/grub.d/10_linux"
+    )
 
-#Internet configuration
+    #These locations will be symlinked over system like 'ln -fs $1 $2'
+    #You can symlink your savegames from cloud servers, scripts, folders, etc.
+    link=(
+        "/mnt/backup/Downloads/* /home/$main/Downloads/"
+        "/mnt/cloud/Dropbox /home/$main/Dropbox"
+        "/mnt/cloud/Copy /home/$main/Copy"
+        "/home/$main/.mtoolsrc /root/"
+        "/home/$main/bin/runonce.sh /home/$main/"
+        "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
+        "/home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
+    )
 
-    #Use netctl (0 - use dhcpcd, 1 - use netctl)
-    netctl=1 #If you set it 0, you can leave all other settings as '' because dhcpcd doesn't need any parameters
-    #Interface in your computer which is used for internet connection
-    interface=enp2s0
-    #Static IP address to use
-    ip=192.168.100.22
-    #DNS to use (usually, your router address)
-    dns=192.168.100.1
-
-#Git configuration
+#Git configuration - make sure you have 'git' package in 'software' section below
+#You can setup git for each user like 'gitname=( $main lolseconduser )' but I am using only one user
+#You can remove whole git section of you don't need one
 
     #Your git user name
     gitname=$main
@@ -114,7 +121,7 @@ rootexec=(
     #Editor to use
     giteditor=vim
 
-    #Set gitrepos='' if you don't need any
+    #Set gitrepos='' if you don't need any (or just remove all of this)
     gitrepo=( $main/dotfiles $main/etc $main/btp )
     #Where to clone current gitrepo - without slash at the end
     gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp )
@@ -133,46 +140,28 @@ rootexec=(
         Drivers
         Coding
         Core
-        Graphics
         Internet
         Office
-        Additional
         Art
     )
 
     #Software itself
     software=(
-        "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
+        "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pasystray-git pavucontrol pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gnome-themes-standard gxkb jmtpfs jre kalu lm_sensors ntfs-3g preload rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
-        "geeqie gource scrot"
-        "canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dnsmasq dropbox-experimental hostapd net-tools perl-html-parser python2-mako skype"
-        "anki gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru"
-        "gksu gparted mc mtools pasystray-git pavucontrol smartmontools thunar"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 kalu lm_sensors ntfs-3g rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
+        "canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dropbox-experimental net-tools perl-html-parser python2-mako skype"
+        "anki geeqie gource gparted gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot smartmontools thunar"
         "lmms calligra-krita smplayer"
     )
 
-#Services to enable
-service=(
-    preload
-    cronie
-    deluged
-    deluge-web
-    hostapd
-    dnsmasq
-)
-
-#Links to link
-link=(
-    "/mnt/cloud/Dropbox /home/$main/Dropbox"
-    "/mnt/cloud/Copy /home/$main/Copy"
-    "/home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
-    "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
-    "/home/$main/bin/runonce.sh /home/$main/"
-    "/mnt/backup/Downloads/* /home/$main/Downloads/"
-    "/home/$main/.mtoolsrc /root/"
-)
+    #Services to enable
+    service=(
+        cronie
+        deluged
+        deluge-web
+    )
 
 #===== INTERFACE =====
 

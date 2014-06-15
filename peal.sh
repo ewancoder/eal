@@ -199,5 +199,13 @@ if ! [ "$rootexec" == "" ]; then
     done
 fi
 
+mess -t "Finalizing installation: generate locales, set font, re-make grub config"
+mess "Generate locales"
+locale-gen
+mess "Set font as $font"
+setfont $font
+mess "Make grub config again"
+grub-mkconfig -o /boot/grub/grub.cfg
+
 mess -w "Installation is complete! [REBOOT]"
 reboot
