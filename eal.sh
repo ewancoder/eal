@@ -59,9 +59,6 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-mess "Remove chroot script"
-rm /root/eal-chroot.sh
-
 mess -p "Setup ROOT password"
 passwd
 ' > /mnt/root/eal-chroot.sh
@@ -69,6 +66,9 @@ mess "Add peal.sh to eal-chroot script"
 cat peal.sh >> /mnt/root/eal-chroot.sh
 mess "Add 'exit chroot' message to the end of eal-chroot script"
 echo '
+mess "Remove all scripts"
+rm /root/{eal-chroot,eal,ceal,peal}.sh
+
 mess "Exit chroot"
 exit
 ' >> /mnt/root/eal-chroot.sh
@@ -76,11 +76,16 @@ mess "Set executable flag for chroot script"
 chmod +x /mnt/root/eal-chroot.sh
 mess "Copy {ceal,peal}.sh to /mnt/root"
 cp {ceal,peal}.sh /mnt/root/
+mess "Mount all things for working in chroot"
+mount -t proc proc /mnt/proc/
+mount --rbind /sys /mnt/sys/
+mount --rbind /dev /mnt/dev/
+cp -L /etc/resolv.conf /mnt/etc/resolv.conf
 mess "Go to chroot"
 arch-chroot /mnt /root/eal-chroot.sh
 
 mess -t "Finish installation"
 mess "Unmount all within /mnt"
 umount -R /mnt
-mess "Reboot"
-reboot
+mess "Exiting chroot"
+exit

@@ -27,7 +27,10 @@ mount -o bind /dev /arch/dev
 mount -o bind /dev/pts /arch/dev/pts
 cp -L /etc/resolv.conf /arch/etc
 
-mess "Copy {eal,peal,ceal}.sh scripts to /arch/root/"
-cp {eal,peal,ceal}.sh /arch/root/
+mess "Copy {eal,ceal,peal}.sh scripts to /arch/root/"
+cp {eal,ceal,peal}.sh /arch/root/
 mess "Chroot into /arch and execute /arch/root/eal.sh"
 chroot /arch /root/eal.sh
+mess "Unmount all from /arch"
+umount -R /arch
+mess -w "It is the end. You can reboot into your working system"
