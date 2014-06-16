@@ -1,5 +1,5 @@
 #!/bin/bash
-source ceal.sh
+source /root/ceal.sh
 clear
 
 mess -t "Ewancoder Arch Linux POST-installation script\nVersion $version"

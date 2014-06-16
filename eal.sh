@@ -1,4 +1,5 @@
 #!/bin/bash
+cd $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source ceal.sh
 clear
 
@@ -43,10 +44,11 @@ echo $hostname > /mnt/etc/hostname
 mess -t "CHROOT to system"
 mess "Prepare eal-chroot.sh chroot script"
 echo '
+#!/bin/bash
 source /root/ceal.sh
 
 mess "Set local timezone ($timezone)"
-ln -s /usr/share/zoneinfo/$timezone /etc/localtime
+ln -fs /usr/share/zoneinfo/$timezone /etc/localtime
 
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
@@ -64,12 +66,12 @@ mess -p "Setup ROOT password"
 passwd
 ' > /mnt/root/eal-chroot.sh
 mess "Add peal.sh to eal-chroot script"
-cat peal.sh > /mnt/root/eal-chroot.sh
+cat peal.sh >> /mnt/root/eal-chroot.sh
 mess "Add 'exit chroot' message to the end of eal-chroot script"
 echo '
 mess "Exit chroot"
 exit
-' > /mnt/root/eal-chroot.sh
+' >> /mnt/root/eal-chroot.sh
 mess "Set executable flag for chroot script"
 chmod +x /mnt/root/eal-chroot.sh
 mess "Copy {ceal,peal}.sh to /mnt/root"

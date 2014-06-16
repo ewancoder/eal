@@ -3,14 +3,20 @@
 clear
 source ceal.sh
 #Need to have squashfs-tools installed
+#JUST IN CASE:
+#umount -R /arch
+#rm -r /squashfs-root
 
 mess -t "This script is intended for installing arch linux from within your working (arch) linux"
 mess -w "Be sure that you've changed all constants in ceal.sh (and formatted devices :D lol) because this script will automatically execute eal.sh after chrooting into live-cd"
 
-mess "Download root live-cd"
-curl -O http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
+mess "Download (or not if exists) root live-cd"
+if ! [ -f $iso ]; then
+    curl -o root-image.fs.sfs $iso
+    iso=root-image.fs.sfs
+fi
 mess "Unsquash root live-cd"
-unsquashfs -d /squashfs-root root-image.fs.sfs
+unsquashfs -d /squashfs-root $iso
 mess "Make /arch folder"
 mkdir -p /arch
 mess "Mount all needed things to /arch"
@@ -24,4 +30,4 @@ cp -L /etc/resolv.conf /arch/etc
 mess "Copy {eal,peal,ceal}.sh scripts to /arch/root/"
 cp {eal,peal,ceal}.sh /arch/root/
 mess "Chroot into /arch and execute /arch/root/eal.sh"
-chroot /arch /arch/root/eal.sh
+chroot /arch /root/eal.sh
