@@ -1,3 +1,6 @@
+#!/bin/bash
+
+clear
 source ceal.sh
 #Need to have squashfs-tools installed
 
