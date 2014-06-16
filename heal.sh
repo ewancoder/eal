@@ -5,7 +5,7 @@ source ceal.sh
 #Need to have squashfs-tools installed
 
 mess -t "This script is intended for installing arch linux from within your working (arch) linux"
-mess -w "Be sure that you've changed all constants in ceal.sh because this script will automatically execute eal.sh after chrooting into live-cd"
+mess -w "Be sure that you've changed all constants in ceal.sh (and formatted devices :D lol) because this script will automatically execute eal.sh after chrooting into live-cd"
 
 mess "Download root live-cd"
 curl -O http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
