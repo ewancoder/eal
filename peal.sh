@@ -25,7 +25,9 @@ fi
 
 mess -t "Install essential software"
 mess "Install yaourt"
-bash <(curl aur.sh) -si --asroot --noconfirm package-query yaourt
+curl -O aur.sh/aur.sh
+chmod +x aur.sh
+./aur.sh -si --asroot --noconfirm package-query yaourt
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"
@@ -105,14 +107,14 @@ if ! [ "$gitrepo" == "" ]; then
     for (( i = 0; i < ${#gitrepo[@]}; i++ )); do
         mess "Clone ${gitrepo[$i]} repo"
         git clone https://github.com/${gitrepo[$i]}.git ${gitfolder[$i]}
-        if ! [ "${gitrule[$i]}" == "" ]; then
-            mess "SET chown '${gitrule[$i]}'"
-            chown -R ${gitrule[$i]} ${gitfolder[$i]}
-        fi
         if ! [ "${gitmodule[$i]}" == "" ]; then
             mess "Pull submodules ${gitmodule[$i]}"
             cd ${gitfolder[$i]} && git submodule update --init --recursive ${gitmodule[i]}
             cd
+        fi
+        if ! [ "${gitrule[$i]}" == "" ]; then
+            mess "SET chown '${gitrule[$i]}'"
+            chown -R ${gitrule[$i]} ${gitfolder[$i]}
         fi
         if ! [ "${gitlink[$i]}" == "" ]; then
             mess "Merge all files (make symlinks)"
@@ -139,55 +141,47 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     usermod -G ${group[$i]} ${user[$i]}
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    mess -p "Setup user (${user[$i]}) password [MANUAL]"
+    mess -p "Setup user (${user[$i]}) password"
     passwd ${user[$i]}
-    mess "Set ${user[$i]} shell to ${shell[$i]}"
-    chsh -s ${shell[$i]} ${user[$i]}
-    if ! [ "${gitname[$i]}" == "" ]; then
+    if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
         mess "Prepare user-executed script for ${user[$i]} user"
-        echo '
-        source ceal.sh
-
-        mess "Configure git for ${user[$i]}"
-        mess "Configure git user.name as ${gitname[$i]}"
-        git config --global user.name ${gitname[$i]}
-        mess "Configure git user.email as ${gitemail[$i]}"
-        git config --global user.email ${gitemail[$i]}
-        mess "Configure git merge.tool as ${gittool[$i]}"
-        git config --global merge.tool ${gittool[$i]}
-        mess "Configure git core.editor as ${giteditor[$i]}"
-        git config --global core.editor ${giteditor[$i]}
-        ' > /home/${user[$i]}/user.sh
-        echo -e ${execs[$i]} >> /home/${user[$i]}/user.sh
+        echo "mess -t \"User executed script for ${user[$i]} user\"" > /home/${user[$i]}/user.sh
+        if ! [ "${gitname[$i]}" == "" ]; then
+            echo '
+            source ceal.sh
+            mess "Configure git for ${user[$i]}"
+            mess "Configure git user.name as ${gitname[$i]}"
+            git config --global user.name ${gitname[$i]}
+            mess "Configure git user.email as ${gitemail[$i]}"
+            git config --global user.email ${gitemail[$i]}
+            mess "Configure git merge.tool as ${gittool[$i]}"
+            git config --global merge.tool ${gittool[$i]}
+            mess "Configure git core.editor as ${giteditor[$i]}"
+            git config --global core.editor ${giteditor[$i]}
+            ' >> /home/${user[$i]}/user.sh
+        fi
+        if ! [ "${execs[$i]}" == "" ]; then
+            echo -e ${execs[$i]} >> /home/${user[$i]}/user.sh
+        fi
         mess "Make executable (+x)"
         chmod +x /home/${user[$i]}/user.sh
-        #HERE NEEDED TO BE SURE THAT X-SERVER WONT START
-        mv /home/${user[$i]}/.zprofile /home/${user[$i]}/.zprofilecopy 2>/dev/null
         mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
         mess "Execute user-executed script by ${user[$i]} user"
         su - ${users[$i]} -c /home/${user[$i]}/user.sh
-        mv /home/${user[$i]}/.zprofilecopy /home/${user[$i]}/.zprofile 2>/dev/null
         mv /home/${user[$i]}/.bash_profilecopy /home/${user[$i]}/.bash_profile 2>/dev/null
         rm /home/${user[$i]}/user.sh
     fi
+    mess "Set ${user[$i]} shell to ${shell[$i]}"
+    chsh -s ${shell[$i]} ${user[$i]}
 done
 
 if ! [ "$sudoers" == "" ]; then
     mess -t "Add additional entries into /etc/sudoers"
-    echo "\n## Additional configuration" >> /etc/sudoers
+    echo -e "\n## Additional configuration" >> /etc/sudoers
     for i in "${sudoers[@]}"
     do
         mess "Add '$i' entry"
         echo $i >> /etc/sudoers
-    done
-fi
-
-if ! [ "$link" == "" ]; then
-    mess -t "Link all I need to link"
-    for l in ${link[@]}
-    do
-        mess "Link $l"
-        ln -fs $l
     done
 fi
 
@@ -202,10 +196,5 @@ fi
 mess -t "Finalizing installation: generate locales, set font, re-make grub config"
 mess "Generate locales"
 locale-gen
-mess "Set font as $font"
-setfont $font
 mess "Make grub config again"
 grub-mkconfig -o /boot/grub/grub.cfg
-
-mess -w "Installation is complete! [REBOOT]"
-reboot

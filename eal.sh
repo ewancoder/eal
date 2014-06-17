@@ -50,6 +50,11 @@ source /root/ceal.sh
 mess "Set local timezone ($timezone)"
 ln -fs /usr/share/zoneinfo/$timezone /etc/localtime
 
+mess "Generate starter locales"
+locale-gen
+mess "Set font as $font"
+setfont $font
+
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
 mess "Install grub bootloader to $mbr mbr"
@@ -67,7 +72,7 @@ cat peal.sh >> /mnt/root/eal-chroot.sh
 mess "Add 'exit chroot' message to the end of eal-chroot script"
 echo '
 mess "Remove all scripts"
-rm /root/{eal-chroot,eal,ceal,peal}.sh
+rm /root/{eal-chroot,ceal,peal}.sh
 
 mess "Exit chroot"
 exit
@@ -76,12 +81,12 @@ mess "Set executable flag for chroot script"
 chmod +x /mnt/root/eal-chroot.sh
 mess "Copy {ceal,peal}.sh to /mnt/root"
 cp {ceal,peal}.sh /mnt/root/
-mess "Mount all things for working in chroot"
-mount -t proc proc /mnt/proc/
-mount --rbind /sys /mnt/sys/
-mount --rbind /dev /mnt/dev/
-cp -L /etc/resolv.conf /mnt/etc/resolv.conf
-mess "Go to chroot"
+#mess "Mount all things for working in chroot"
+#mount -t proc proc /mnt/proc/
+#mount --rbind /sys /mnt/sys/
+#mount --rbind /dev /mnt/dev/
+#cp -L /etc/resolv.conf /mnt/etc/resolv.conf
+mess "Go to arch-chroot"
 arch-chroot /mnt /root/eal-chroot.sh
 
 mess -t "Finish installation"

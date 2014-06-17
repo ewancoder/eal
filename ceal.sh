@@ -90,6 +90,13 @@ mirror=( Belarus Denmark United France Russia )
 
     #These commands will be executed consecutively by root user after all installation process, so there's no need to type '\n' at the end of each line. Each line separated from another by "". Do not try to paste here multiple commands like "first && second"
     rootexec=(
+        "ln -fs /mnt/backup/Downloads/* /home/$main/Downloads/"
+        "ln -fs /mnt/cloud/Dropbox /home/$main/Dropbox"
+        "ln -fs /mnt/cloud/Copy /home/$main/Copy"
+        "ln -fs /home/$main/.mtoolsrc /root/"
+        "ln -fs /home/$main/bin/runonce.sh /home/$main/"
+        "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
+        "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
         "mkdir -p /mnt/usb"
         "mkdir -p /mnt/data"
         "mkdir -p /mnt/mtp"
@@ -99,18 +106,6 @@ mirror=( Belarus Denmark United France Russia )
         "modprobe fuse"
         "sensors-detect --auto"
         "chmod -x /etc/grub.d/10_linux"
-    )
-
-    #These locations will be symlinked over system like 'ln -fs $1 $2'
-    #You can symlink your savegames from cloud servers, scripts, folders, etc.
-    link=(
-        "/mnt/backup/Downloads/* /home/$main/Downloads/"
-        "/mnt/cloud/Dropbox /home/$main/Dropbox"
-        "/mnt/cloud/Copy /home/$main/Copy"
-        "/home/$main/.mtoolsrc /root/"
-        "/home/$main/bin/runonce.sh /home/$main/"
-        "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
-        "/home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
     )
 
 #Git configuration - make sure you have 'git' package in 'software' section below
