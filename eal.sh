@@ -42,6 +42,8 @@ mess "Set hostname ($hostname)"
 echo $hostname > /mnt/etc/hostname
 
 mess -t "CHROOT to system"
+mess "Create root folder (just in case)"
+mkdir -p /mnt/root
 mess "Prepare eal-chroot.sh chroot script"
 echo '
 #!/bin/bash
