@@ -14,6 +14,8 @@ edit=vi
 
 #Console font (cyr-sun16 for russian symbols)
 font=cyr-sun16
+#Locales: put here locales that you need (at least one should be set)
+locale=( en_US.UTF-8 ru_RU.UTF-8 )
 
 #Hostname & timezone
 hostname=ewanhost
@@ -90,7 +92,9 @@ mirror=( Belarus Denmark United France Russia )
 
     #These commands will be executed consecutively by root user after all installation process, so there's no need to type '\n' at the end of each line. Each line separated from another by "". Do not try to paste here multiple commands like "first && second"
     rootexec=(
-        "ln -fs /mnt/backup/Downloads/* /home/$main/Downloads/"
+        "ln -fs /mnt/backup/Downloads/Completed /home/$main/Downloads/"
+        "ln -fs /mnt/backup/Downloads/Downloading /home/$main/Downloads/"
+        "ln -fs /mnt/backup/Downloads/Torrents /home/$main/Downloads/"
         "ln -fs /mnt/cloud/Dropbox /home/$main/Dropbox"
         "ln -fs /mnt/cloud/Copy /home/$main/Copy"
         "ln -fs /home/$main/.mtoolsrc /root/"
@@ -106,6 +110,7 @@ mirror=( Belarus Denmark United France Russia )
         "modprobe fuse"
         "sensors-detect --auto"
         "chmod -x /etc/grub.d/10_linux"
+        "grub-mkconfig -o /boot/grub/grub.cfg"
     )
 
 #Git configuration - make sure you have 'git' package in 'software' section below

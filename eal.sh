@@ -50,7 +50,12 @@ source /root/ceal.sh
 mess "Set local timezone ($timezone)"
 ln -fs /usr/share/zoneinfo/$timezone /etc/localtime
 
-mess "Generate starter locales"
+mess -t "Uncomment locales"
+for i in ${locale[@]}; do
+    mess "Add locale $i"
+    sed -i "s/^#$i/$i/g" /etc/locale.gen
+done
+mess "Generate locales"
 locale-gen
 mess "Set font as $font"
 setfont $font

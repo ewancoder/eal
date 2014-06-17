@@ -145,10 +145,13 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     passwd ${user[$i]}
     if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
         mess "Prepare user-executed script for ${user[$i]} user"
-        echo "mess -t \"User executed script for ${user[$i]} user\"" > /home/${user[$i]}/user.sh
+        echo "
+        source ceal.sh
+        mess -t \"User executed script for ${user[$i]} user\"
+        " > /home/${user[$i]}/user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
+            mess "Add git configuration to user-executed script"
             echo '
-            source ceal.sh
             mess "Configure git for ${user[$i]}"
             mess "Configure git user.name as ${gitname[$i]}"
             git config --global user.name ${gitname[$i]}
@@ -161,6 +164,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             ' >> /home/${user[$i]}/user.sh
         fi
         if ! [ "${execs[$i]}" == "" ]; then
+            mess "Add user-based execs to user-executed script"
             echo -e ${execs[$i]} >> /home/${user[$i]}/user.sh
         fi
         mess "Make executable (+x)"
@@ -192,9 +196,3 @@ if ! [ "$rootexec" == "" ]; then
         ${rootexec[$i]}
     done
 fi
-
-mess -t "Finalizing installation: generate locales, set font, re-make grub config"
-mess "Generate locales"
-locale-gen
-mess "Make grub config again"
-grub-mkconfig -o /boot/grub/grub.cfg
