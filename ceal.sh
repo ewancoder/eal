@@ -108,7 +108,6 @@ mirror=( Belarus Denmark United France Russia )
         "rsync -a /mnt/backup/Other/cron /var/spool/cron"
         "ln -fs /home/$main/.vim /root/"
         "modprobe fuse"
-        "sensors-detect --auto"
         "chmod -x /etc/grub.d/10_linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
     )
