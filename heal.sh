@@ -2,15 +2,14 @@
 
 clear
 source ceal.sh
-#Need to have squashfs-tools installed
-#JUST IN CASE:
-#umount -R /arch
-#rm -r /squashfs-root
-
 mess -t "This script is intended for installing arch linux from within your working (arch) linux"
 mess -w "Be sure that you've changed all constants in ceal.sh (and formatted devices :D lol) because this script will automatically execute eal.sh after chrooting into live-cd"
 source ceal.sh
 
+if [ "$(pacman -Qs squashfs-tools)" == "" ]; then
+    mess "Install squashfs-tools"
+    pacman -S squashfs-tools
+fi
 mess "Download (or not if exists) root live-cd"
 if ! [ -f root-image.fs.sfs ]; then
     curl -o root-image.fs.sfs $iso
