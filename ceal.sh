@@ -2,9 +2,8 @@
 version="1.8.1 Clean, 2014"
 
 #This is needed only for host-install (heal.sh)
-#Set it to downloadable url or to local file
-#iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
-iso=root-image.fs.sfs
+#Set it to downloadable url path to root arch image
+iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
 
 #AutoInstall (0 - pause on each step, 1 - pause only when needed)
 auto=0

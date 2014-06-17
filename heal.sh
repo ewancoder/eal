@@ -12,12 +12,11 @@ mess -w "Be sure that you've changed all constants in ceal.sh (and formatted dev
 source ceal.sh
 
 mess "Download (or not if exists) root live-cd"
-if ! [ -f $iso ]; then
+if ! [ -f root-image.fs.sfs ]; then
     curl -o root-image.fs.sfs $iso
-    iso=root-image.fs.sfs
 fi
 mess "Unsquash root live-cd"
-unsquashfs -d /squashfs-root $iso
+unsquashfs -d /squashfs-root root-image.fs.sfs
 mess "Make /arch folder"
 mkdir -p /arch
 mess "Mount all needed things to /arch"
