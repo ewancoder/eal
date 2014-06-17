@@ -9,6 +9,7 @@ source ceal.sh
 
 mess -t "This script is intended for installing arch linux from within your working (arch) linux"
 mess -w "Be sure that you've changed all constants in ceal.sh (and formatted devices :D lol) because this script will automatically execute eal.sh after chrooting into live-cd"
+source ceal.sh
 
 mess "Download (or not if exists) root live-cd"
 if ! [ -f $iso ]; then
