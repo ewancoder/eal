@@ -137,7 +137,7 @@ fi
 
 mess -t "Setup users"
 mess "Prepare sudoers file for pasting entries"
-echo "\n## Users configuration" >> /etc/sudoers
+echo -e "\n## Users configuration" >> /etc/sudoers
 for (( i = 0; i < ${#user[@]}; i++ )); do
     mess "Add user ${user[$i]} to groups: '${group[$i]}'"
     usermod -G ${group[$i]} ${user[$i]}
