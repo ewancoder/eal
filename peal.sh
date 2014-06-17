@@ -50,6 +50,8 @@ if ! [ "$windows" == "" ]; then
     cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
     mess "Update fonts cache"
     fc-cache -fv
+    mess "Unmount windows partition"
+    umount $windows
 fi
 
 filename1=/usr/lib/python3.4/site-packages/canto_next/feed.py
