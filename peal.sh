@@ -28,6 +28,7 @@ mess "Install yaourt"
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
 ./aur.sh -si --asroot --noconfirm package-query yaourt
+rm aur.sh
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"
@@ -176,7 +177,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         chmod +x /home/${user[$i]}/user.sh
         mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
         mess "Execute user-executed script by ${user[$i]} user"
-        su - ${users[$i]} -c /home/${user[$i]}/user.sh
+        runuser -l ${users[$i]} -c /home/${user[$i]}/user.sh
         mv /home/${user[$i]}/.bash_profilecopy /home/${user[$i]}/.bash_profile 2>/dev/null
         rm /home/${user[$i]}/user.sh
     fi
