@@ -8,9 +8,6 @@ iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.s
 #AutoInstall (0 - pause on each step, 1 - pause only when needed)
 auto=0
 
-#Editor to edit files (vi, nano)
-edit=vi
-
 #Console font (cyr-sun16 for russian symbols)
 font=cyr-sun16
 #Locales: put here locales that you need (at least one should be set)
@@ -91,15 +88,13 @@ mirror=( Belarus Denmark United France Russia )
 
     #These commands will be executed consecutively by root user after all installation process, so there's no need to type '\n' at the end of each line. Each line separated from another by "". Do not try to paste here multiple commands like "first && second"
     rootexec=(
-        "ln -fs /mnt/backup/Downloads/Completed /home/$main/Downloads/"
-        "ln -fs /mnt/backup/Downloads/Downloading /home/$main/Downloads/"
-        "ln -fs /mnt/backup/Downloads/Torrents /home/$main/Downloads/"
-        "ln -fs /mnt/cloud/Dropbox /home/$main/Dropbox"
-        "ln -fs /mnt/cloud/Copy /home/$main/Copy"
+        "ln -fs /mnt/backup/Downloads /home/$main/"
+        "ln -fs /mnt/cloud/Dropbox /home/$main/"
+        "ln -fs /mnt/cloud/Copy /home/$main/"
         "ln -fs /home/$main/.mtoolsrc /root/"
         "ln -fs /home/$main/bin/runonce.sh /home/$main/"
-        "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
-        "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
+        "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
+        "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/usb"
         "mkdir -p /mnt/data"
         "mkdir -p /mnt/mtp"
@@ -191,16 +186,16 @@ mess(){
 
     case $o in
         "-p")
-            Style="$Bold$Yellow-> $m [MANUAL]$Def"
+            Style="$Bold$Yellow\n-> $m [MANUAL]$Def"
             Pause=1
             ;;
         "-t")
             Line="$(printf "%$(tput cols)s\n"|tr ' ' '-')"
-            Style="$Line$Bold$Green\n-> $m$Def\n$Line"
+            Style="\n$Line$Bold$Green\n-> $m$Def\n$Line"
             Pause=0
             ;;
         "-w")
-            Style=$Bold$Red$m$Def
+            Style="\n$Bold$Red! $m$Def"
             Pause=1
             ;;
         "")
@@ -211,6 +206,8 @@ mess(){
 
     echo -e $Style
     if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
-        read -p $Bold$Yellow"Continue [ENTER]"$Def
+        if ! [ "$o" == "-t" ]; then
+            read -p $Bold$Yellow"Continue [ENTER]"$Def
+        fi
     fi
 }

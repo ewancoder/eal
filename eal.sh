@@ -4,7 +4,7 @@ source ceal.sh
 clear
 
 mess -t "Ewancoder Arch Linux installation script\nVersion $version"
-mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file ($edit ceal.sh)\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
 mess -t "Mount all partitions and create fstab"
@@ -89,11 +89,6 @@ mess "Set executable flag for chroot script"
 chmod +x /mnt/root/eal-chroot.sh
 mess "Copy {ceal,peal}.sh to /mnt/root"
 cp {ceal,peal}.sh /mnt/root/
-#mess "Mount all things for working in chroot"
-#mount -t proc proc /mnt/proc/
-#mount --rbind /sys /mnt/sys/
-#mount --rbind /dev /mnt/dev/
-#cp -L /etc/resolv.conf /mnt/etc/resolv.conf
 mess "Go to arch-chroot"
 arch-chroot /mnt /root/eal-chroot.sh
 
