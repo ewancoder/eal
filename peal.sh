@@ -152,7 +152,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
         mess "Prepare user-executed script for ${user[$i]} user"
         echo "
-        source ceal.sh
+        source /home/${user[$i]}/ceal.sh
         mess -t \"User executed script for ${user[$i]} user\"
         " > /home/${user[$i]}/user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
@@ -175,12 +175,14 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         fi
         mess "Make executable (+x)"
         chmod +x /home/${user[$i]}/user.sh
-        mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
+        mess "Copy ceal.sh there"
+        cp /root/ceal.sh /home/${user[$i]}/
         mess "Execute user-executed script by ${user[$i]} user"
+        mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
         runuser -l ${users[$i]} -c /home/${user[$i]}/user.sh
         mv /home/${user[$i]}/.bash_profilecopy /home/${user[$i]}/.bash_profile 2>/dev/null
-        mess "Remove user.sh script from home directory"
-        rm /home/${user[$i]}/user.sh
+        mess "Remove user.sh & ceal.sh scripts from home directory"
+        rm /home/${user[$i]}/{user,ceal}.sh
     fi
     mess "Set ${user[$i]} shell to ${shell[$i]}"
     chsh -s ${shell[$i]} ${user[$i]}
