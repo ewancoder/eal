@@ -109,11 +109,11 @@ if ! [ "$gitrepo" == "" ]; then
     for (( i = 0; i < ${#gitrepo[@]}; i++ )); do
         mess "Clone ${gitrepo[$i]} repo"
         git clone https://github.com/${gitrepo[$i]}.git ${gitfolder[$i]}
-        if ! [ "${gitmodule[$i]}" == "" ]; then
-            mess "Pull submodules ${gitmodule[$i]}"
-            cd ${gitfolder[$i]} && git submodule update --init --recursive ${gitmodule[i]}
-            cd
-        fi
+        #if ! [ "${gitmodule[$i]}" == "" ]; then
+        #    mess "Pull submodules ${gitmodule[$i]}"
+        #    cd ${gitfolder[$i]} && git submodule update --init --recursive ${gitmodule[i]}
+        #    cd
+        #fi
         if ! [ "${gitrule[$i]}" == "" ]; then
             mess "SET chown '${gitrule[$i]}'"
             chown -R ${gitrule[$i]} ${gitfolder[$i]}
