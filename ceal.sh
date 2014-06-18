@@ -1,5 +1,5 @@
 #!/bin/bash
-version="1.8.1 Clean, 2014"
+version="1.9 Healed, 2014"
 
 #This is needed only for host-install (heal.sh)
 #Set it to downloadable url path to root arch image

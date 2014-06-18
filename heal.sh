@@ -2,7 +2,7 @@
 source ceal.sh
 clear
 
-mess -t "Ewancoder Arch Linux HOST installation script\nVersion $version\n\nThis script is intended for installing arch linux from within your working (arch) linux"
+mess -t "Ewancoder Arch Linux HOST installation script\nVersion $version\n\nThis script is intended for installing arch linux from within your working (arch) linux. If you want to just install linux from live-cd and you're already using live-cd, just ran eal.sh to start"
 mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
@@ -15,8 +15,11 @@ if ! [ -f root-image.fs.sfs ]; then
     mess "Download root live-cd image"
     curl -o root-image.fs.sfs $iso
 fi
-mess "Unsquash root live-cd image"
-unsquashfs -d /squashfs-root root-image.fs.sfs
+if ! [ -d /squashfs-root ]; then
+    mess "Unsquash root live-cd image"
+    unsquashfs -d /squashfs-root root-image.fs.sfs
+fi
+mess "Live-cd placed to /squashfs-root/root-image.fs"
 
 mess -t "Prepare chroot-environment"
 mess "Make /arch folder"
