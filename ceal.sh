@@ -126,7 +126,7 @@ mirror=( Belarus Denmark United France Russia )
     #Chown rule to apply to current gitrepo (set as '' to just leave as 'root')
     gitrule=( $main:users '' $main:users )
     #Sumbodules to pull - set to '' if you don't need any
-    #gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
+    gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merging) from current repo (set '' if nowhere)
     gitlink=( /home/$main /etc )
 
