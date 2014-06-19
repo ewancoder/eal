@@ -35,8 +35,8 @@ cp -L /etc/resolv.conf /arch/etc
 mess -t "Chroot into live-cd environment and execute eal.sh"
 mess "Copy {eal,ceal,peal}.sh scripts to /arch/root/"
 cp {eal,ceal,peal}.sh /arch/root/
-mess "Chroot into /arch and execute /arch/root/eal.sh"
-chroot /arch /root/eal.sh
+mess "Chroot into /arch and execute /root/eal.sh"
+chroot /arch /root/eal.sh --hide
 
 mess "Unmount all within /arch"
 umount -R /arch

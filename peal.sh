@@ -1,8 +1,5 @@
 #!/bin/bash
 source /root/ceal.sh
-clear
-
-mess -t "Ewancoder Arch Linux POST-installation script\nVersion $version"
 
 mess -t "Activate and setup network connection"
 if [ $netctl -eq 1 ]
@@ -116,7 +113,8 @@ if ! [ "$gitrepo" == "" ]; then
             git submodule update --init --recursive ${gitmodule[$i]}
             IFS=' ' read -a submods <<< "${gitmodule[$i]}"
             for j in "${submods[@]}"; do
-                cd ${gitfolder[$i]}/${gitmodule[$i]}
+                mess "Checkout submodule $j to master"
+                cd ${gitfolder[$i]}/$j
                 git checkout master
             done
             cd
@@ -150,8 +148,6 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     usermod -G ${group[$i]} ${user[$i]}
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    mess -p "Setup user (${user[$i]}) password"
-    passwd ${user[$i]}
     if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
         mess "Prepare user-executed script for ${user[$i]} user"
         echo "
@@ -205,7 +201,10 @@ fi
 if ! [ "$rootexec" == "" ]; then
     mess -t "Execute all root commands"
     for (( i = 0; i < ${#rootexec[@]}; i++ )); do
-        mess "Executing '${rootexec[$i]}'"
-        ${rootexec[$i]}
+        touch root.sh
+        mess "Add '${rootexec[$i]}' to root script"
+        echo ${rootexec[$i]} >> root.sh
+        chmod +x root.sh
+        ./root.sh
     done
 fi

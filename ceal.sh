@@ -82,25 +82,46 @@ mirror=( Belarus Denmark United France Russia )
     execs=(
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
-        mess 'Install vim plugins' \n
-        vim +BundleInstall +qall"
+        mess -w 'Install vim plugins MANUALLY (with :BundleInstall command)' \n
+        mess 'Try se hidden' \n
+        vim +'se hidden' +BundleInstall \n
+        mess 'Try -E option' \n
+        vim -E +BundleInstall \n
+        mess 'Try both' \n
+        vim -E +'se hidden' +BundleInstall"
     )
 
     #These commands will be executed consecutively by root user after all installation process, so there's no need to type '\n' at the end of each line. Each line separated from another by "". Do not try to paste here multiple commands like "first && second"
+#    rootexec=(
+#        "ln -fs /mnt/backup/Downloads /home/$main/"
+#        "ln -fs /mnt/cloud/Dropbox /home/$main/"
+#        "ln -fs /mnt/cloud/Copy /home/$main/"
+#        "ln -fs /home/$main/.mtoolsrc /root/"
+#        "ln -fs /home/$main/bin/runonce.sh /home/$main/"
+#        "ln -fs /mnt/backup/Cloud/Copy/ca(fr).png /usr/share/gxkb/flags/"
+#        "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
+#        "mkdir -p /mnt/usb"
+#        "mkdir -p /mnt/data"
+#        "mkdir -p /mnt/mtp"
+#        "rsync -a /mnt/backup/Arch/* /home/$main/"
+#        "rsync -a /mnt/backup/Other/cron /var/spool/cron"
+#        "ln -fs /home/$main/.vim /root/"
+#        "vim +BundleInstall +qall"
+#        "modprobe fuse"
+#        "chmod -x /etc/grub.d/10_linux"
+#        "grub-mkconfig -o /boot/grub/grub.cfg"
+#    )
     rootexec=(
         "ln -fs /mnt/backup/Downloads /home/$main/"
-        "ln -fs /mnt/cloud/Dropbox /home/$main/"
-        "ln -fs /mnt/cloud/Copy /home/$main/"
+        "ln -fs /mnt/cloud/* /home/$main/"
         "ln -fs /home/$main/.mtoolsrc /root/"
-        "ln -fs /home/$main/bin/runonce.sh /home/$main/"
-        "ln -fs '/mnt/backup/Cloud/Copy/ca(fr).png' /usr/share/gxkb/flags/"
-        "ln -fs '/home/$main/Copy/Games/Minecraft/Feed The Beast/.ftblauncher' /home/$main/"
-        "mkdir -p /mnt/usb"
-        "mkdir -p /mnt/data"
-        "mkdir -p /mnt/mtp"
-        "rsync -a '/mnt/backup/Arch/*' /home/$main/"
-        "rsync -a /mnt/backup/Other/cron /var/spool/cron"
         "ln -fs /home/$main/.vim /root/"
+        "ln -fs /home/$main/bin/runonce.sh /home/$main/"
+        "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
+        "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
+        "mkdir -p /mnt/{data,mtp,usb}"
+        "rsync -a /mnt/backup/Arch/* /home/$main/"
+        "rsync -a /mnt/backup/Other/cron /var/spool/"
         "modprobe fuse"
         "chmod -x /etc/grub.d/10_linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
