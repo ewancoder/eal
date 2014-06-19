@@ -106,6 +106,7 @@ mirror=( Belarus Denmark United France Russia )
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/{data,mtp,usb}"
         "rsync -a /mnt/backup/Arch/* /home/$main/"
+        "rsync -a /mnt/backup/ArchConfig/* /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
         "modprobe fuse"
         "chmod -x /etc/grub.d/10_linux"
