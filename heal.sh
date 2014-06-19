@@ -2,8 +2,8 @@
 source ceal.sh
 clear
 
-mess -t "Ewancoder Arch Linux HOST installation script\nVersion $version\n\nThis script is intended for installing arch linux from within your working (arch) linux. If you want to just install linux from live-cd and you're already using live-cd, just ran eal.sh to start"
-mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+mess -t "Ewancoder Arch Linux HOST installation script\nVersion $version\n\nThis script is intended for installing arch linux from within your working (arch) linux. If you want to just install linux from live-cd and you're already using live-cd, just run eal.sh to start"
+mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
 mess -t "Prepare live-cd"

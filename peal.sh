@@ -1,6 +1,4 @@
 #!/bin/bash
-source /root/ceal.sh
-
 mess -t "Activate and setup network connection"
 if [ $netctl -eq 1 ]; then
     mess "Copy $profile template"
