@@ -113,9 +113,12 @@ if ! [ "$gitrepo" == "" ]; then
         if ! [ "${gitmodule[$i]}" == "" ]; then
             mess "Pull submodules ${gitmodule[$i]}"
             cd ${gitfolder[$i]}
-            git submodule update --init --recursive ${gitmodule[i]}
-            cd ${gitmodule[$i]}
-            git checkout master
+            git submodule update --init --recursive ${gitmodule[$i]}
+            IFS=' ' read -a submods <<< "${gitmodule[$i]}"
+            for j in "${submods[@]}"; do
+                cd ${gitfolder[$i]}/${gitmodule[$i]}
+                git checkout master
+            done
             cd
         fi
         if ! [ "${gitrule[$i]}" == "" ]; then
@@ -179,7 +182,8 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         cp /root/ceal.sh /home/${user[$i]}/
         mess "Execute user-executed script by ${user[$i]} user"
         mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
-        runuser -l ${users[$i]} -c /home/${user[$i]}/user.sh
+        #runuser -l ${users[$i]} -c /home/${user[$i]}/user.sh
+        su -c /home/${user[$i]}/user.sh -s /bin/bash ${user[$i]}
         mv /home/${user[$i]}/.bash_profilecopy /home/${user[$i]}/.bash_profile 2>/dev/null
         mess "Remove user.sh & ceal.sh scripts from home directory"
         rm /home/${user[$i]}/{user,ceal}.sh

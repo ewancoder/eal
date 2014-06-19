@@ -11,7 +11,7 @@ if [ "$(pacman -Qs squashfs-tools)" == "" ]; then
     mess "Install squashfs-tools"
     pacman -S squashfs-tools
 fi
-if ! [ -f root-image.fs.sfs ]; then
+if ! [ -f root-image.fs.sfs ] && ! [ -d /squashfs-root ]; then
     mess "Download root live-cd image"
     curl -o root-image.fs.sfs $iso
 fi
