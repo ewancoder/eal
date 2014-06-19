@@ -1,14 +1,17 @@
 #!/bin/bash
-version="1.8.1 Clean, 2014"
+version="1.9 Healed, 2014"
+
+#This is needed only for host-install (heal.sh)
+#Set it to downloadable url path to root arch image
+iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
 
 #AutoInstall (0 - pause on each step, 1 - pause only when needed)
 auto=0
 
-#Editor to edit files (vi, nano)
-edit=vi
-
 #Console font (cyr-sun16 for russian symbols)
 font=cyr-sun16
+#Locales: put here locales that you need (at least one should be set)
+locale=( en_US.UTF-8 ru_RU.UTF-8 )
 
 #Hostname & timezone
 hostname=ewanhost
@@ -21,12 +24,19 @@ mirror=( Belarus Denmark United France Russia )
 
     #Use netctl (0 - use dhcpcd, 1 - use netctl)
     netctl=1 #If you set it as 0, you can leave all other settings because dhcpcd doesn't need them
+    #Choose netctl profile to use (ethernet-static, wireless-wpa-static, etc...)
+    profile=wireless-wpa-static
+
     #Interface in your computer which is used for internet connection
-    interface=enp2s0
+    interface=wlan
     #Static IP address to use
     ip=192.168.100.22
     #DNS to use (usually, your router address)
     dns=192.168.100.1
+
+    #Settings for wireless connection
+    essid=TTT
+    key=192837465
 
 #All devices - in the order of mounting ('/' goes before '/home'). At least one should be set (/). No slash in the end ('/home', not '/home/')
 
@@ -83,29 +93,23 @@ mirror=( Belarus Denmark United France Russia )
         vim +BundleInstall +qall"
     )
 
-    #These commands will be executed consecutively by root user after all installation process, so there's no need to type '\n' at the end of each line. Each line separated from another by "". Do not try to paste here multiple commands like "first && second"
+    #These commands will be executed consecutively by root user after all installation process.
     rootexec=(
-        "mkdir -p /mnt/usb"
-        "mkdir -p /mnt/data"
-        "mkdir -p /mnt/mtp"
-        "rsync -a /mnt/backup/Arch/* /home/$main/"
-        "rsync -a /mnt/backup/Other/cron /var/spool/cron"
+        "ln -fs /mnt/backup/Downloads /home/$main/"
+        "ln -fs /mnt/cloud/* /home/$main/"
+        "ln -fs /home/$main/.gitconfig /root/"
+        "ln -fs /home/$main/.mtoolsrc /root/"
         "ln -fs /home/$main/.vim /root/"
+        "ln -fs /home/$main/.oh-my-zsh /root/"
+        "ln -fs /home/$main/.zshrc /root/"
+        "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
+        "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
+        "mkdir -p /mnt/{data,mtp,usb}"
+        "rsync -a /mnt/backup/Arch/* /home/$main/"
+        "rsync -a /mnt/backup/Other/cron /var/spool/"
         "modprobe fuse"
-        "sensors-detect --auto"
         "chmod -x /etc/grub.d/10_linux"
-    )
-
-    #These locations will be symlinked over system like 'ln -fs $1 $2'
-    #You can symlink your savegames from cloud servers, scripts, folders, etc.
-    link=(
-        "/mnt/backup/Downloads/* /home/$main/Downloads/"
-        "/mnt/cloud/Dropbox /home/$main/Dropbox"
-        "/mnt/cloud/Copy /home/$main/Copy"
-        "/home/$main/.mtoolsrc /root/"
-        "/home/$main/bin/runonce.sh /home/$main/"
-        "/mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/ca\(fr\).png"
-        "/home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/.ftblauncher"
+        "grub-mkconfig -o /boot/grub/grub.cfg"
     )
 
 #Git configuration - make sure you have 'git' package in 'software' section below
@@ -150,7 +154,7 @@ mirror=( Belarus Denmark United France Russia )
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 kalu lm_sensors ntfs-3g pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls xboomx xclip xcompmgr zsh"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 ntfs-3g pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip xcompmgr zsh"
         "canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dropbox-experimental net-tools perl-html-parser python2-mako skype"
         "anki geeqie gource gparted gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot smartmontools thunar"
         "lmms calligra-krita smplayer"
@@ -188,16 +192,16 @@ mess(){
 
     case $o in
         "-p")
-            Style="$Bold$Yellow-> $m [MANUAL]$Def"
+            Style="$Bold$Yellow\n-> $m [MANUAL]$Def"
             Pause=1
             ;;
         "-t")
             Line="$(printf "%$(tput cols)s\n"|tr ' ' '-')"
-            Style="$Line$Bold$Green\n-> $m$Def\n$Line"
+            Style="\n$Line$Bold$Green\n-> $m$Def\n$Line"
             Pause=0
             ;;
         "-w")
-            Style=$Bold$Red$m$Def
+            Style="\n$Bold$Red! $m$Def"
             Pause=1
             ;;
         "")
@@ -208,6 +212,8 @@ mess(){
 
     echo -e $Style
     if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
-        read -p $Bold$Yellow"Continue [ENTER]"$Def
+        if ! [ "$o" == "-t" ]; then
+            read -p $Bold$Yellow"Continue [ENTER]"$Def
+        fi
     fi
 }
