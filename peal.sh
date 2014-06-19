@@ -25,7 +25,7 @@ mess "Install yaourt"
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
 ./aur.sh -si --asroot --noconfirm package-query yaourt
-rm aur.sh
+rm -r aur.sh package-query yaourt
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"
@@ -149,11 +149,12 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
+        cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
         echo "
-        source /home/${user[$i]}/ceal.sh
+        source ceal.sh
         mess -t \"User executed script for ${user[$i]} user\"
-        " > /home/${user[$i]}/user.sh
+        " > user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
             echo '
@@ -166,23 +167,23 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             git config --global merge.tool ${gittool[$i]}
             mess "Configure git core.editor as ${giteditor[$i]}"
             git config --global core.editor ${giteditor[$i]}
-            ' >> /home/${user[$i]}/user.sh
+            ' >> user.sh
         fi
         if ! [ "${execs[$i]}" == "" ]; then
             mess "Add user-based execs to user-executed script"
-            echo -e ${execs[$i]} >> /home/${user[$i]}/user.sh
+            echo -e ${execs[$i]} >> user.sh
         fi
         mess "Make executable (+x)"
-        chmod +x /home/${user[$i]}/user.sh
+        chmod +x user.sh
         mess "Copy ceal.sh there"
-        cp /root/ceal.sh /home/${user[$i]}/
+        cp /root/ceal.sh .
         mess "Execute user-executed script by ${user[$i]} user"
-        mv /home/${user[$i]}/.bash_profile /home/${user[$i]}/.bash_profilecopy 2>/dev/null
-        #runuser -l ${users[$i]} -c /home/${user[$i]}/user.sh
-        su -c /home/${user[$i]}/user.sh -s /bin/bash ${user[$i]}
-        mv /home/${user[$i]}/.bash_profilecopy /home/${user[$i]}/.bash_profile 2>/dev/null
+        mv .bash_profile .bash_profilecopy 2>/dev/null
+        su -c user.sh -s /bin/bash ${user[$i]}
+        mv .bash_profilecopy .bash_profile 2>/dev/null
         mess "Remove user.sh & ceal.sh scripts from home directory"
-        rm /home/${user[$i]}/{user,ceal}.sh
+        rm {user,ceal}.sh
+        cd
     fi
     mess "Set ${user[$i]} shell to ${shell[$i]}"
     chsh -s ${shell[$i]} ${user[$i]}
@@ -201,10 +202,11 @@ fi
 if ! [ "$rootexec" == "" ]; then
     mess -t "Execute all root commands"
     for (( i = 0; i < ${#rootexec[@]}; i++ )); do
-        touch root.sh
-        mess "Add '${rootexec[$i]}' to root script"
+        echo "source /root/ceal.sh" > root.sh
+        echo "mess \"Execute '${rootexec[$i]}'\"" >> root.sh
         echo ${rootexec[$i]} >> root.sh
         chmod +x root.sh
         ./root.sh
+        rm root.sh
     done
 fi

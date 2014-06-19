@@ -9,7 +9,7 @@ source ceal.sh
 mess -t "Prepare live-cd"
 if [ "$(pacman -Qs squashfs-tools)" == "" ]; then
     mess "Install squashfs-tools"
-    pacman -S squashfs-tools
+    pacman -S --noconfirm squashfs-tools
 fi
 if ! [ -f root-image.fs.sfs ] && ! [ -d /squashfs-root ]; then
     mess "Download root live-cd image"
