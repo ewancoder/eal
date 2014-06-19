@@ -2,17 +2,18 @@
 source /root/ceal.sh
 
 mess -t "Activate and setup network connection"
-if [ $netctl -eq 1 ]
-then
-    mess "Copy ethernet-static template"
-    cp /etc/netctl/examples/ethernet-static /etc/netctl/
-    mess "Configure network at $interface interface with $ip static ip address and $dns dns address"
-    sed -i "s/eth0/$interface/" /etc/netctl/ethernet-static
-    sed -i "s/^Address=.*/Address=('$ip\/24')/" /etc/netctl/ethernet-static
-    sed -i "s/192.168.1.1/$dns/" /etc/netctl/ethernet-static
-    mess "Enable and start netctl ethernet-static"
-    netctl enable ethernet-static
-    netctl start ethernet-static
+if [ $netctl -eq 1 ]; then
+    mess "Copy $profile template"
+    cp /etc/netctl/examples/$profile /etc/netctl/
+    mess "Configure network"
+    sed -i "s/eth0/$interface/" /etc/netctl/$profile
+    sed -i "s/wlan0/$interface/" /etc/netctl/$profile
+    sed -i "s/^Address=.*/Address='$ip\/24'/" /etc/netctl/$profile
+    sed -i "s/192.168.1.1/$dns/" /etc/netctl/$profile
+    sed -i "s/^ESSID=.*/ESSID='$essid'/" /etc/netctl/$profile
+    sed -i "s/^Key=.*/Key='$key'/" /etc/netctl/$profile
+    mess "Enable netctl $profile"
+    netctl enable $profile
 else
     mess "Enable and start dhcpcd"
     systemctl enable dhcpcd
@@ -45,6 +46,7 @@ if ! [ "$windows" == "" ]; then
     mkdir -p /mnt/windows
     mount $windows /mnt/windows
     mess "Copy windows fonts to /usr/share/fonts/winfonts"
+    mkdir -p /usr/share/fonts
     cp -r /mnt/windows/Windows/Fonts /usr/share/fonts/winfonts
     mess "Update fonts cache"
     fc-cache -fv
@@ -179,7 +181,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         cp /root/ceal.sh .
         mess "Execute user-executed script by ${user[$i]} user"
         mv .bash_profile .bash_profilecopy 2>/dev/null
-        su -c user.sh -s /bin/bash ${user[$i]}
+        su -c ./user.sh -s /bin/bash ${user[$i]}
         mv .bash_profilecopy .bash_profile 2>/dev/null
         mess "Remove user.sh & ceal.sh scripts from home directory"
         rm {user,ceal}.sh

@@ -24,12 +24,19 @@ mirror=( Belarus Denmark United France Russia )
 
     #Use netctl (0 - use dhcpcd, 1 - use netctl)
     netctl=1 #If you set it as 0, you can leave all other settings because dhcpcd doesn't need them
+    #Choose netctl profile to use (ethernet-static, wireless-wpa-static, etc...)
+    profile=wireless-wpa-static
+
     #Interface in your computer which is used for internet connection
-    interface=enp2s0
+    interface=wlan
     #Static IP address to use
     ip=192.168.100.22
     #DNS to use (usually, your router address)
     dns=192.168.100.1
+
+    #Settings for wireless connection
+    essid=TTT
+    key=192837465
 
 #All devices - in the order of mounting ('/' goes before '/home'). At least one should be set (/). No slash in the end ('/home', not '/home/')
 
@@ -93,6 +100,8 @@ mirror=( Belarus Denmark United France Russia )
         "ln -fs /home/$main/.gitconfig /root/"
         "ln -fs /home/$main/.mtoolsrc /root/"
         "ln -fs /home/$main/.vim /root/"
+        "ln -fs /home/$main/.oh-my-zsh /root/"
+        "ln -fs /home/$main/.zshrc /root/"
         "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/{data,mtp,usb}"
