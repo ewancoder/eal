@@ -18,7 +18,9 @@ prepare() {
                 echo -e "\tmess -q 'Auto-repeating in $timeout seconds'\n\tread -t $timeout ans" >> $2
             fi
             echo '    if [ "$ans" == "n" ] || [ "$ans" == "N" ]; then' >> $2
-            echo -e "\t\tbreak\n\tfi\ndone" >> $2
+            echo -e "\t\tbreak" >> $2
+            echo '    elif [ "$ans" == "givemebash" ]; then' >> $2
+            echo -e "\t\t/bin/bash\n\tfi\ndone" >> $2
         else
             echo $p >> $2
         fi
