@@ -1,6 +1,10 @@
 #!/bin/bash
 version="1.9.5 Error-Handled, 2014"
 
+#Errors handling timeout
+#Set it to 0 if you don't wanna autorepeat on error, othervise set it so number of seconds which will serve as timeout for repeating failed command
+timeout=10
+
 #Install frow within working (arch) linux distro (from your host system)
 hostinstall=1
 #This is needed only for host-install (heal.sh)
