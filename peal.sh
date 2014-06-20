@@ -178,7 +178,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         mess "Prepare user-executed script for ${user[$i]} user"
         echo '
         source ceal.sh
-        mess -t \"User executed script for ${user[$i]} user\"
+        mess -t "User executed script for ${user[$i]} user"
         ' > user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
