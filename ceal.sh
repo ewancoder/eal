@@ -1,5 +1,5 @@
 #!/bin/bash
-version="1.9 Healed, 2014"
+version="1.9.5 Error-Handled, 2014"
 
 #Install frow within working (arch) linux distro (from your host system)
 hostinstall=1

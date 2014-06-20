@@ -32,3 +32,7 @@ if [ $hostinstall -eq 1 ]; then
 else
     ./eal.sh
 fi
+cd ..
+rm -r eal
+
+mess -w "This is it. You can reboot into your working system"

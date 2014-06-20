@@ -35,4 +35,3 @@ chroot /arch /root/eal.sh --host
 
 mess "Unmount all within /arch"
 umount -R /arch
-mess -w "This is it. You can reboot into your working system"
