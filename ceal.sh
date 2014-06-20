@@ -201,11 +201,13 @@ mess(){
         "-p")
             Style="$Bold$Yellow\n-> $m [MANUAL]$Def"
             Pause=1
+            step=$m
             ;;
         "-t")
             Line="$(printf "%$(tput cols)s\n"|tr ' ' '-')"
             Style="\n$Line$Bold$Green\n-> $m$Def\n$Line"
             Pause=0
+            step=$m
             ;;
         "-w")
             Style="\n$Bold$Red! $m$Def"
@@ -218,6 +220,7 @@ mess(){
         "")
             Style="$Bold$Green\n-> $Def$Bold$m$Def"
             Pause=0
+            step=$m
             ;;
     esac
 

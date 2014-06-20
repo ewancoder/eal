@@ -11,7 +11,7 @@ prepare() {
         if ! [[ "$p" == "" ]] && ! [[ ${p:0:1} == "#" ]] && ! [[ ${p:0:3} == "if " ]] && ! [[ ${p:0:2} == "fi" ]] && ! [[ ${p:0:4} == "for " ]] && ! [[ ${p:0:4} == "else" ]] && ! [[ ${p:0:4} == "done" ]] && ! [[ ${p:0:6} == "echo '" ]] && ! [[ ${p:0:5} == "' >> " ]] && ! [[ ${p:0:4} == "' > " ]] && ! [[ ${p:0:5} == "mess " ]]; then
             echo  "until $p; do" >> $2
             echo -e "\tans=''" >> $2
-            echo '    mess -q "Eror occured on step [$m]. Retry? (y/n)"' >> $2
+            echo '    mess -q "Error occured on step [$step]. Retry? (y/n)"' >> $2
             if [ $timeout -eq 0 ]; then
                 echo -e "\tread ans" >> $2
             else
