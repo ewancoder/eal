@@ -102,8 +102,7 @@ fi
 
 if ! [ "$service" == "" ]; then
     mess -t "Enable services"
-    for s in ${service[@]}
-    do
+    for s in ${service[@]}; do
         mess "Enable $s service"
         systemctl enable $s
     done
@@ -111,11 +110,9 @@ fi
 
 if ! [ "$group" == "" ]; then
     mess -t "Create non-existing groups"
-    for i in "${group[@]}"
-    do
+    for i in "${group[@]}"; do
         IFS=',' read -a grs <<< "$i"
-        for j in "${grs[@]}"
-        do
+        for j in "${grs[@]}"; do
             if [ "$(grep $j /etc/group)" == "" ]; then
                 mess "Add group '$j'"
                 groupadd $j
@@ -179,10 +176,10 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
         cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
-        echo "
+        echo '
         source ceal.sh
         mess -t \"User executed script for ${user[$i]} user\"
-        " > user.sh
+        ' > user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
             echo '
@@ -220,8 +217,7 @@ done
 if ! [ "$sudoers" == "" ]; then
     mess -t "Add additional entries into /etc/sudoers"
     echo -e "\n## Additional configuration" >> /etc/sudoers
-    for i in "${sudoers[@]}"
-    do
+    for i in "${sudoers[@]}"; do
         mess "Add '$i' entry"
         echo $i >> /etc/sudoers
     done
