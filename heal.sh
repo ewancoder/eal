@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 source ceal.sh
 clear
 
