@@ -247,6 +247,6 @@ done
 
 mess -t "Finish installation"
 mess "Remove all scripts"
-rm /root/{eal-chroot,ceal}.sh
+rm /root/{ceal,peal}.sh
 mess "Exit chroot (installed system -> live-cd)"
 exit
