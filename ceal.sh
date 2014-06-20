@@ -205,6 +205,10 @@ mess(){
             Style="\n$Bold$Red! $m$Def"
             Pause=1
             ;;
+        "-q")
+            Style="$Bold$Red$m$Def"
+            Pause=0
+            ;;
         "")
             Style="$Bold$Green\n-> $Def$Bold$m$Def"
             Pause=0
@@ -213,7 +217,7 @@ mess(){
 
     echo -e $Style
     if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
-        if ! [ "$o" == "-t" ]; then
+        if ! [ "$o" == "-t" ] && ! [ "$o" == "-q" ]; then
             read -p $Bold$Yellow"Continue [ENTER]"$Def
         fi
     fi
