@@ -155,7 +155,7 @@ mirror=( Belarus Denmark United France Russia )
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 ntfs-3g pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip xcompmgr zsh"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 ntfs-3g openssh pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip xcompmgr zsh"
         "canto-curses chromium chromium-libpdf chromium-pepper-flash copy-agent deluge djview4 dropbox-experimental net-tools perl-html-parser python2-mako skype"
         "anki geeqie gource gparted gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot smartmontools thunar"
         "lmms calligra-krita smplayer"
