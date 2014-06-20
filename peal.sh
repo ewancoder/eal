@@ -64,7 +64,7 @@ for (( i = 0; i < ${#software[@]}; i++ )); do
     yaourt -S --noconfirm ${software[$i]}
 done
 mess "Clean mess - remove orphans recursively"
-pacman -Rns $(pacman -Qtdq) --noconfirm
+pacman -Rns $(pacman -Qtdq) --noconfirm || true
 
 if ! [ "$windows" == "" ]; then
     mess -t "Copy windows fonts to linux"
