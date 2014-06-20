@@ -1,4 +1,32 @@
 #!/bin/bash
+source /root/ceal.sh
+
+mess -t "Setup hostname & timezone"
+mess "Set hostname ($hostname)"
+echo $hostname > /etc/hostname
+mess "Set local timezone ($timezone)"
+ln -fs /usr/share/zoneinfo/$timezone /etc/localtime
+
+mess -t "Uncomment locales"
+for i in ${locale[@]}; do
+    mess "Add locale $i"
+    sed -i "s/^#$i/$i/g" /etc/locale.gen
+done
+mess "Generate locales"
+locale-gen
+mess "Set font as $font"
+setfont $font
+
+mess -t "Install grub"
+mess "Install grub to /boot"
+pacman -S --noconfirm grub
+mess "Install grub bootloader to $mbr mbr"
+grub-install --target=i386-pc --recheck $mbr
+mess "Install os-prober"
+pacman -S --noconfirm os-prober
+mess "Make grub config"
+grub-mkconfig -o /boot/grub/grub.cfg
+
 mess -t "Activate and setup network connection"
 if [ $netctl -eq 1 ]; then
     mess "Copy $profile template"
@@ -212,3 +240,17 @@ if ! [ "$rootexec" == "" ]; then
     done
     shopt -u dotglob
 fi
+
+mess -t "Setup all passwords"
+mess -p "Setup ROOT password"
+passwd
+for i in ${user[@]}; do
+    mess -p "Setup user ($i) password"
+    passwd $i
+done
+
+mess -t "Finish installation"
+mess "Remove all scripts"
+rm /root/{eal-chroot,ceal}.sh
+mess "Exit chroot (installed system -> live-cd)"
+exit

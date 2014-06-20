@@ -22,8 +22,7 @@ for (( i = 0; i < ${#device[@]}; i++ )); do
 done
 
 mess -t "Form mirrorlist & update pacman"
-for i in "${mirror[@]}"
-do
+for i in "${mirror[@]}"; do
     mess "Place $i in mirrorlist"
     grep -A 1 --no-group-separator $i /etc/pacman.d/mirrorlist >> mirrorlist
 done
@@ -45,61 +44,10 @@ mv fstab /mnt/etc/fstab
 mess -t "Chroot to system"
 mess "Create root folder (just in case)"
 mkdir -p /mnt/root
-mess "Prepare eal-chroot.sh chroot script"
-echo '
-#!/bin/bash
-source /root/ceal.sh
-
-mess -t "Setup hostname & timezone"
-mess "Set hostname ($hostname)"
-echo $hostname > /etc/hostname
-mess "Set local timezone ($timezone)"
-ln -fs /usr/share/zoneinfo/$timezone /etc/localtime
-
-mess -t "Uncomment locales"
-for i in ${locale[@]}; do
-    mess "Add locale $i"
-    sed -i "s/^#$i/$i/g" /etc/locale.gen
-done
-mess "Generate locales"
-locale-gen
-mess "Set font as $font"
-setfont $font
-
-mess -t "Install grub"
-mess "Install grub to /boot"
-pacman -S --noconfirm grub
-mess "Install grub bootloader to $mbr mbr"
-grub-install --target=i386-pc --recheck $mbr
-mess "Install os-prober"
-pacman -S --noconfirm os-prober
-mess "Make grub config"
-grub-mkconfig -o /boot/grub/grub.cfg
-' > /mnt/root/eal-chroot.sh
-mess "Add peal.sh to eal-chroot script"
-cat peal.sh >> /mnt/root/eal-chroot.sh
-mess "Add passwords setup & exit chroot sections"
-echo '
-mess -t "Setup all passwords"
-mess -p "Setup ROOT password"
-passwd
-for i in ${user[@]}; do
-    mess -p "Setup user ($i) password"
-    passwd $i
-done
-
-mess -t "Finish installation"
-mess "Remove all scripts"
-rm /root/{eal-chroot,ceal}.sh
-mess "Exit chroot (installed system -> live-cd)"
-exit
-' >> /mnt/root/eal-chroot.sh
-mess "Set executable flag for chroot script"
-chmod +x /mnt/root/eal-chroot.sh
-mess "Copy ceal.sh to /mnt/root"
-cp ceal.sh /mnt/root/
-mess "Go to arch-chroot"
-arch-chroot /mnt /root/eal-chroot.sh
+mess "Copy {ceal,peal}.sh to /mnt/root"
+cp {ceal,peal}.sh /mnt/root/
+mess "Go to arch-chroot and execute peal.sh"
+arch-chroot /mnt /root/peal.sh
 
 mess "Unmount all within /mnt (unmount installed system)"
 umount -R /mnt
