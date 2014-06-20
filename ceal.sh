@@ -127,11 +127,11 @@ mirror=( Belarus Denmark United France Russia )
     giteditor=vim
 
     #Set gitrepos='' if you don't need any (or just remove all of this)
-    gitrepo=( $main/dotfiles $main/etc $main/btp )
+    gitrepo=( $main/dotfiles $main/etc $main/btp $main/eal )
     #Where to clone current gitrepo - without slash at the end
-    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp )
+    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp /home/$main/eal )
     #Chown rule to apply to current gitrepo (set as '' to just leave as 'root')
-    gitrule=( $main:users '' $main:users )
+    gitrule=( $main:users '' $main:users $main:users )
     #Sumbodules to pull - set to '' if you don't need any
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merging) from current repo (set '' if nowhere)
