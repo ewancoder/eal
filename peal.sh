@@ -178,7 +178,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         mess "Prepare user-executed script for ${user[$i]} user"
         echo '
         source ceal.sh
-        mess -t \"User executed script for ${user[$i]} user\"
+        mess -t "User executed script for ${user[$i]} user"
         ' > user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
@@ -247,6 +247,6 @@ done
 
 mess -t "Finish installation"
 mess "Remove all scripts"
-rm /root/{eal-chroot,ceal}.sh
+rm /root/{ceal,peal}.sh
 mess "Exit chroot (installed system -> live-cd)"
 exit

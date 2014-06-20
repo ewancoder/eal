@@ -1,10 +1,4 @@
 #!/bin/bash
-set -e
-source ceal.sh
-clear
-
-mess -t "Ewancoder Arch Linux HOST installation script\nVersion $version\n\nThis script is intended for installing arch linux from within your working (arch) linux. If you want to just install linux from live-cd and you're already using live-cd, just run eal.sh to start"
-mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
 source ceal.sh
 
 mess -t "Prepare live-cd"
@@ -37,8 +31,7 @@ mess -t "Chroot into live-cd environment and execute eal.sh"
 mess "Copy {eal,ceal,peal}.sh scripts to /arch/root/"
 cp {eal,ceal,peal}.sh /arch/root/
 mess "Chroot into /arch and execute /root/eal.sh"
-chroot /arch /root/eal.sh --hide
+chroot /arch /root/eal.sh --host
 
 mess "Unmount all within /arch"
 umount -R /arch
-mess -w "This is it. You can reboot into your working system"

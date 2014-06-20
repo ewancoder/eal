@@ -1,6 +1,8 @@
 #!/bin/bash
-version="1.9 Healed, 2014"
+version="1.9.5 Error-Handled, 2014"
 
+#Install frow within working (arch) linux distro (from your host system)
+hostinstall=1
 #This is needed only for host-install (heal.sh)
 #Set it to downloadable url path to root arch image
 iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
@@ -205,6 +207,10 @@ mess(){
             Style="\n$Bold$Red! $m$Def"
             Pause=1
             ;;
+        "-q")
+            Style="$Bold$Red$m$Def"
+            Pause=0
+            ;;
         "")
             Style="$Bold$Green\n-> $Def$Bold$m$Def"
             Pause=0
@@ -213,7 +219,7 @@ mess(){
 
     echo -e $Style
     if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
-        if ! [ "$o" == "-t" ]; then
+        if ! [ "$o" == "-t" ] && ! [ "$o" == "-q" ]; then
             read -p $Bold$Yellow"Continue [ENTER]"$Def
         fi
     fi
