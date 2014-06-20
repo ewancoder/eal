@@ -27,4 +27,8 @@ prepare peal.sh eal/peal.sh
 cp ceal.sh eal/
 cd eal
 chmod +x {eal,heal,peal}.sh
-./heal.sh
+if [ $hostinstall -eq 1 ]; then
+    ./heal.sh
+else
+    ./eal.sh
+fi

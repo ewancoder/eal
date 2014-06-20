@@ -1,6 +1,8 @@
 #!/bin/bash
 version="1.9 Healed, 2014"
 
+#Install frow within working (arch) linux distro (from your host system)
+hostinstall=1
 #This is needed only for host-install (heal.sh)
 #Set it to downloadable url path to root arch image
 iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
