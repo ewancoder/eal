@@ -1,4 +1,32 @@
 #!/bin/bash
+source /root/ceal.sh
+
+mess -t "Setup hostname & timezone"
+mess "Set hostname ($hostname)"
+echo $hostname > /etc/hostname
+mess "Set local timezone ($timezone)"
+ln -fs /usr/share/zoneinfo/$timezone /etc/localtime
+
+mess -t "Uncomment locales"
+for i in ${locale[@]}; do
+    mess "Add locale $i"
+    sed -i "s/^#$i/$i/g" /etc/locale.gen
+done
+mess "Generate locales"
+locale-gen
+mess "Set font as $font"
+setfont $font
+
+mess -t "Install grub"
+mess "Install grub to /boot"
+pacman -S --noconfirm grub
+mess "Install grub bootloader to $mbr mbr"
+grub-install --target=i386-pc --recheck $mbr
+mess "Install os-prober"
+pacman -S --noconfirm os-prober
+mess "Make grub config"
+grub-mkconfig -o /boot/grub/grub.cfg
+
 mess -t "Activate and setup network connection"
 if [ $netctl -eq 1 ]; then
     mess "Copy $profile template"
@@ -74,8 +102,7 @@ fi
 
 if ! [ "$service" == "" ]; then
     mess -t "Enable services"
-    for s in ${service[@]}
-    do
+    for s in ${service[@]}; do
         mess "Enable $s service"
         systemctl enable $s
     done
@@ -83,11 +110,9 @@ fi
 
 if ! [ "$group" == "" ]; then
     mess -t "Create non-existing groups"
-    for i in "${group[@]}"
-    do
+    for i in "${group[@]}"; do
         IFS=',' read -a grs <<< "$i"
-        for j in "${grs[@]}"
-        do
+        for j in "${grs[@]}"; do
             if [ "$(grep $j /etc/group)" == "" ]; then
                 mess "Add group '$j'"
                 groupadd $j
@@ -151,10 +176,10 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
         cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
-        echo "
+        echo '
         source ceal.sh
         mess -t \"User executed script for ${user[$i]} user\"
-        " > user.sh
+        ' > user.sh
         if ! [ "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
             echo '
@@ -192,8 +217,7 @@ done
 if ! [ "$sudoers" == "" ]; then
     mess -t "Add additional entries into /etc/sudoers"
     echo -e "\n## Additional configuration" >> /etc/sudoers
-    for i in "${sudoers[@]}"
-    do
+    for i in "${sudoers[@]}"; do
         mess "Add '$i' entry"
         echo $i >> /etc/sudoers
     done
@@ -212,3 +236,17 @@ if ! [ "$rootexec" == "" ]; then
     done
     shopt -u dotglob
 fi
+
+mess -t "Setup all passwords"
+mess -p "Setup ROOT password"
+passwd
+for i in ${user[@]}; do
+    mess -p "Setup user ($i) password"
+    passwd $i
+done
+
+mess -t "Finish installation"
+mess "Remove all scripts"
+rm /root/{eal-chroot,ceal}.sh
+mess "Exit chroot (installed system -> live-cd)"
+exit

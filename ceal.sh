@@ -106,6 +106,7 @@ mirror=( Belarus Denmark United France Russia )
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/{data,mtp,usb}"
         "rsync -a /mnt/backup/Arch/* /home/$main/"
+        "rsync -a /mnt/backup/ArchConfig/* /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
         "modprobe fuse"
         "chmod -x /etc/grub.d/10_linux"
@@ -126,11 +127,11 @@ mirror=( Belarus Denmark United France Russia )
     giteditor=vim
 
     #Set gitrepos='' if you don't need any (or just remove all of this)
-    gitrepo=( $main/dotfiles $main/etc $main/btp )
+    gitrepo=( $main/dotfiles $main/etc $main/btp $main/eal )
     #Where to clone current gitrepo - without slash at the end
-    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp )
+    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp /home/$main/eal )
     #Chown rule to apply to current gitrepo (set as '' to just leave as 'root')
-    gitrule=( $main:users '' $main:users )
+    gitrule=( $main:users '' $main:users $main:users )
     #Sumbodules to pull - set to '' if you don't need any
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merging) from current repo (set '' if nowhere)
@@ -154,8 +155,8 @@ mirror=( Belarus Denmark United France Russia )
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 ntfs-3g pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip xcompmgr zsh"
-        "canto-curses chromium chromium-libpdf chromium-pepper-flash deluge djview4 dropbox-experimental net-tools perl-html-parser python2-mako skype"
+        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 ntfs-3g openssh pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip xcompmgr zsh"
+        "canto-curses chromium chromium-libpdf chromium-pepper-flash copy-agent deluge djview4 dropbox-experimental net-tools perl-html-parser python2-mako skype"
         "anki geeqie gource gparted gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot smartmontools thunar"
         "lmms calligra-krita smplayer"
     )
