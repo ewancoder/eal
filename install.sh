@@ -1,4 +1,10 @@
 #!/bin/bash
+source ceal.sh
+clear
+mess -t "Ewancoder Arch Linux installation script\nVersion $version"
+mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+source ceal.sh
+
 prepare() {
     rm -f $2
     while read -r p; do
@@ -13,6 +19,12 @@ prepare() {
     done <$1
 }
 
-prepare heal.sh herr.sh
-prepare eal.sh err.sh
-prepare peal.sh perr.sh
+mess "Prepare installation script - add error handling"
+mkdir -p eal
+prepare eal.sh eal/eal.sh
+prepare heal.sh eal/heal.sh
+prepare peal.sh eal/peal.sh
+cp ceal.sh eal/
+cd eal
+chmod +x {eal,heal,peal}.sh
+./heal.sh

@@ -1,12 +1,6 @@
 #!/bin/bash
 cd $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source ceal.sh
-if ! [ "$1" == "--hide" ]; then
-    clear
-    mess -t "Ewancoder Arch Linux installation script\nVersion $version"
-    mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have FORMATTED your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
-    source ceal.sh
-fi
 
 mess -t "Mount all partitions and create fstab"
 mess "Create local fstab file (prepare)"
@@ -50,7 +44,7 @@ arch-chroot /mnt /root/peal.sh
 
 mess "Unmount all within /mnt (unmount installed system)"
 umount -R /mnt
-if [ "$1" == "--hide" ]; then
+if [ "$1" == "--host" ]; then
     mess "Exiting chroot (live-cd -> host system)"
     exit
 else
