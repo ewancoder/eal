@@ -17,7 +17,7 @@ done
 mess -t "Form mirrorlist & update pacman"
 for i in "${mirror[@]}"; do
     mess "Place $i in mirrorlist"
-    grep -A 1 --no-group-separator $i /etc/pacman.d/mirrorlist >> mirrorlist
+    grep -i -A 1 --no-group-separator $i /etc/pacman.d/mirrorlist >> mirrorlist
 done
 mess "Move new mirrorlist to /etc/pacman.d/mirrorlist"
 mv mirrorlist /etc/pacman.d/mirrorlist

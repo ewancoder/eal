@@ -1,57 +1,65 @@
 #!/bin/bash
+#Ewancoder Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
+#2014 Ewancoder <ewancoder@gmail.com>
 version="1.9.5 Error-Handled, 2014"
 
-#Errors handling timeout
-#Set it to 0 if you don't wanna autorepeat on error, othervise set it so number of seconds which will serve as timeout for repeating failed command
-timeout=10
+#If an error is detected while script is running, you will be prompted for action: repeat this command (which caused the error) or skip it and go further
+#If timeout=0, script will wait for your decision. If you set $timeout variable to something, script will wait this time (in seconds) and then try to repeat failed command
+timeout=10  #If an error happened, wait 10 seconds and try again
 
-#Install frow within working (arch) linux distro (from your host system)
+#Set hostinstall=1 if you want to install linux from within your already installed (arch) linux (yep, that's real)
+#If you're already under live-cd and wanna install old-way, set it to 0
 hostinstall=1
-#This is needed only for host-install (heal.sh)
-#Set it to downloadable url path to root arch image
+#This is needed only for host-install (installing from within your already working linux)
+#Set it to downloadable url path to live-cd ROOT (extension should be fs.sfs) arch linux image
 iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
 
-#AutoInstall (0 - pause on each step, 1 - pause only when needed)
+#With auto=0 script will pause on the each step and let you continue by pressing [RETURN] (useful for debugging)
+#If you want to install in a totally automatical way, set this to 1
+#Be AWARE: setting auto=1 means that script will very FAST execute lots of commands and will pause ONLY if an error would be detected
 auto=0
 
 #Console font (cyr-sun16 for russian symbols)
 font=cyr-sun16
-#Locales: put here locales that you need (at least one should be set)
+#Locales: put here locales which you need
 locale=( en_US.UTF-8 ru_RU.UTF-8 )
 
 #Hostname & timezone
 hostname=ewanhost
 timezone=Europe/Minsk
 
-#Mirrorlist - at least one should be set (starting from capital letter)
-mirror=( Belarus Denmark United France Russia )
+#Mirrorlist - list of countries in the order of importance
+mirror=( Belarus Denmark Russia United France )
 
 #Internet configuration
 
     #Use netctl (0 - use dhcpcd, 1 - use netctl)
-    netctl=1 #If you set it as 0, you can leave all other settings because dhcpcd doesn't need them
+    #If you set netctl=0, you don't need any of other settings in internet section, because dhcpcd doesn't use them
+    netctl=1
     #Choose netctl profile to use (ethernet-static, wireless-wpa-static, etc...)
     profile=wireless-wpa-static
 
-    #Interface in your computer which is used for internet connection
+    #Network interface which is used for internet connection (enp2s0, wlp7s4, wlan0, etc...)
+    #You can discover your network interface by typing [ip link] command
     interface=wlan
     #Static IP address to use
     ip=192.168.100.22
     #DNS to use (usually, your router address)
+    #This setting sets both dns and gateway. If your network connection needs different dns&gateway, connect me and I'll improve the script
     dns=192.168.100.1
 
     #Settings for wireless connection
     essid=TTT
     key=192837465
 
-#All devices - in the order of mounting ('/' goes before '/home'). At least one should be set (/). No slash in the end ('/home', not '/home/')
+#All devices - in the order of mounting ('/' goes before '/home'). No slash in the end ('/home', not '/home/')
 
-    #Just text info
+    #Just text info which will display during install
     description=( Root Home Cloud Backup )
-    #Devices which is to mount
-    device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
     #Mount points starting from '/'
     mount=( / /home /mnt/cloud /mnt/backup )
+    #Devices which is to mount to corresponding mount points
+    device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
     #Filesystem, options, dump&pass (fstab entries)
     #'discard' option works only for SSD
     type=( ext4 ext4 ext4 ext4 )
@@ -64,20 +72,22 @@ mirror=( Belarus Denmark United France Russia )
     #Grub MBR device (where to install bootloader)
     mbr=/dev/sdb
     #Windows device for copying fonts
+    #If you have windows installed somewhere (for example, in /dev/sdb1), you can automatically copy fonts from c:\windows\fonts to /usr/share/fonts/winfonts
     #Leave it as '' or remove if you don't want to copy windows fonts
     windows=/dev/sdb1
 
-#User configuration - at least one should be set
+#Users configuration
 
     #User login
+    #I am using 2 users. You can always set only one user like [user=myname] or [user=( myname )]
     user=( ewancoder lft )
     #Shells for users (leave as '' for standard)
     #Shell must be a full-path name
     shell=( /bin/zsh /bin/zsh )
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
-    group=( fuse,lock,uucp,tty fuse )
-    #Main user - this is set just for my personal cause to make script simpler and more flexible by referring to $user variable later in the script (so I should write 'ewancoder' only ONCE). You can set your "main" user as your second user doing so: 'main=${user[1]}'
+    group=( fuse,lock,uucp,tty fuse ) #I am adding groups "fuse,lock,uucp,tty" to my first user (ewancoder) and only one group "fuse" to my second user (lft). Both will be also added in the group "users"
+    #Main user - this variable is set just for referring to my nickname (ewancoder) only once per script. Then my nickname placed in a $main constant. You can set your "main" user as your second user doing so: 'main=${user[1]}'
     main=${user[0]} #I am setting this as 'ewancoder'
 
     #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${user[0]} for first user and ${user[1]} for the second (count begins with zero)
@@ -85,13 +95,14 @@ mirror=( Belarus Denmark United France Russia )
     sudoers=(
         "$main ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0"
         "$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
-    ) #I need these lines for using some commands without a need for password typing
+        ) #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
 
 #Executable commands and links
 
     #These commands will be executed by corresponding user, use \n at the end of each line except the last one and separate user-executed entries by ""
     #For example, here is defined commands which will be executed for the first user only (${user[0]}).
     #I am currently need these only to install vim plugins
+    #You're probably do not need these so you could just delete it, but if you'll ever need to automatically execute some commands during install as user - you know the trick
     execs=(
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
@@ -99,7 +110,7 @@ mirror=( Belarus Denmark United France Russia )
         vim +BundleInstall +qall"
     )
 
-    #These commands will be executed consecutively by root user after all installation process.
+    #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
     rootexec=(
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
@@ -121,7 +132,8 @@ mirror=( Belarus Denmark United France Russia )
 
 #Git configuration - make sure you have 'git' package in 'software' section below
 #You can setup git for each user like 'gitname=( $main lolseconduser )' but I am using only one user
-#You can remove whole git section of you don't need one
+#You can remove whole git section if you don't need one
+#Git is what making whole this thing shine! You can store all your configs in github repository and then automatically download it during install and link through the system. I'll write handbook about it some day and maybe habr-article
 
     #Your git user name
     gitname=$main
@@ -132,15 +144,16 @@ mirror=( Belarus Denmark United France Russia )
     #Editor to use
     giteditor=vim
 
-    #Set gitrepos='' if you don't need any (or just remove all of this)
+    #All these repos will be cloned from github
     gitrepo=( $main/dotfiles $main/etc $main/btp $main/eal )
-    #Where to clone current gitrepo - without slash at the end
+    #All the repos will be cloned in corresponding directories (set them without slash at the end)
     gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp /home/$main/eal )
-    #Chown rule to apply to current gitrepo (set as '' to just leave as 'root')
+    #Because all repos cloned as root user, all they are root-owned at the beginning. Here you can setup chown rule which will apply after cloning to all repo content
     gitrule=( $main:users '' $main:users $main:users )
-    #Sumbodules to pull - set to '' if you don't need any
+    #Sumbodules to pull (remove if you don't need any)
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
-    #Where to link ALL content (merging) from current repo (set '' if nowhere)
+    #Where to link ALL content (merge) from the repo
+    #This is the sweetest peace from the whole script. All the files from your $gitfolder directories will be symlinked to $gitlink directories
     gitlink=( /home/$main /etc )
 
 #Software configuration
@@ -157,6 +170,7 @@ mirror=( Belarus Denmark United France Russia )
     )
 
     #Software itself
+    #Firstly set drivers software, only then - all other relative to them. Otherwise you can get a conflict error.
     software=(
         "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
@@ -167,7 +181,7 @@ mirror=( Belarus Denmark United France Russia )
         "lmms calligra-krita smplayer"
     )
 
-    #Services to enable
+    #Services to enable (systemctl enable $service)
     service=(
         cronie
         deluged
@@ -175,6 +189,7 @@ mirror=( Belarus Denmark United France Russia )
     )
 
 #===== INTERFACE =====
+#All below is just styling stuff. You do NOT need to configure it. Just don't touch it :)
 
 #Output styling
     Green=$(tput setaf 2)
