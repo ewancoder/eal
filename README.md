@@ -14,10 +14,12 @@ It consists of 5 parts:
 How to install?
 ---------------
 
-Currently I don't have time to write big manual, so all you need to know is 2 parts:
+All you need to know is basically 2 parts:
 
 * **ceal.sh** - Constants eal - all constants for the script. You need to edit this file for your needs and desires before you start an installation
 * **install.sh** - executable file itself. You ran this file and installation begins. Read more in ceal.sh - I left there some comments
+
+You can find more documentation at https://eal.readthedocs.org
 
 Quick-install
 -------------
