@@ -239,6 +239,8 @@ For each user will be created entry in sudoers file which will allow to use sudo
 11. Executable commands
 =======================
 
+If you have complex arch linux ecosystem, you definitely want to execute some of your specific commands at the end of installation process. This is handled by **execs** and **rootexec** variables.
+
 12. Git configuration
 =====================
 
