@@ -3,7 +3,7 @@ Ewancoder Arch Linux install script
 
 This is useful tool for reinstalling your arch linux and setting up all the programs automatically
 
-It consists of 2 parts:
+It consists of 5 parts:
 
 * eal.sh
 * ceal.sh
