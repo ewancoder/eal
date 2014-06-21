@@ -239,4 +239,9 @@ For each user will be created entry in sudoers file which will allow to use sudo
 11. Executable commands
 =======================
 
+12. Git configuration
+=====================
+
+13. Software list
+=================
 
