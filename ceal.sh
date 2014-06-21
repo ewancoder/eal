@@ -56,10 +56,10 @@ mirror=( Belarus Denmark Russia United France )
 
     #Just text info which will display during install
     description=( Root Home Cloud Backup )
-    #Mount points starting from '/'
-    mount=( / /home /mnt/cloud /mnt/backup )
     #Devices which is to mount to corresponding mount points
     device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
+    #Mount points starting from '/'
+    mount=( / /home /mnt/cloud /mnt/backup )
     #Filesystem, options, dump&pass (fstab entries)
     #'discard' option works only for SSD
     type=( ext4 ext4 ext4 ext4 )
@@ -92,10 +92,7 @@ mirror=( Belarus Denmark Russia United France )
 
     #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${user[0]} for first user and ${user[1]} for the second (count begins with zero)
     #If not needed, set it to sudoers='' or remove
-    sudoers=(
-        "$main ALL=(ALL) NOPASSWD: /usr/bin/ifconfig lan up 192.168.1.1 netmask 255.255.255.0"
-        "$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm"
-        ) #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
+    sudoers=( "$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" ) #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
 
 #Executable commands and links
 

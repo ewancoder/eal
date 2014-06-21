@@ -151,3 +151,92 @@ If you're connecting via wi-fi (and maybe using encryption) you will need ESSID 
 
 9. Devices
 ==========
+
+EAL script does NOT format your drives. You should do it youself (preferably with **mkfs.ext4** command). Then you can configure these drives in ceal.sh to automount them and add to fstab during install.
+
+All variables are arrays with corresponding values. For examle
+
+.. code-block:: bash
+   
+   mount=( / /home )
+   device=( /dev/sdb5 /dev/sdb6 )
+
+This means that **/dev/sdb5** will be mounted to **/** and **/dev/sdb6** will be mounted as **/home**.
+
+All devices should be set in the order of mounting. **/home** could not go before **/**. The first and mandatory device is **/** - root.
+
+Description is just text description of the mounted drive. I have 4 devices mounted in my system: root, home, cloud and backup.
+
+.. code-block:: bash
+
+   description=( Root Home Cloud Backup )
+
+Device & mount are actual devices and their mount points.
+
+.. code-block:: bash
+
+   device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
+   mount=( / /home /mnt/cloud /mnt/backup )
+
+Type, option, dump and pass are options in fstab file. Pass should be 1 for root partition and 2 for all other. Dump is usually 0 for all of them. **Discard** option is used only for SSD to minimize wear leveling count, do not try to use it on HDD.
+
+.. code-block:: bash
+
+   type=( ext4 ext4 ext4 ext4 )
+   option=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime )
+   dump=( 0 0 0 0 )
+   pass=( 1 2 2 2 )
+
+And we need to set some additional devices. First - we need to point out which device's MBR will be used to store grub bootloader. It is usually your drive where root partition is located.
+
+.. code-block:: bash
+
+   mbr=/dev/sdb
+
+If you have Windows OS installed on your machine and you want to automatically copy all fonts from c:\windows\fonts to /usr/share/fonts/winfonts and then update fonts cache in your system, set **windows** to your windows partition. Otherwise just delete this option or set it to ''.
+
+.. code-block:: bash
+
+   windows=/dev/sdb1
+
+10. Users configuration
+=======================
+
+Now we need to configure our users. If you have only one user in the system, you can set variables like **user=myusername**. I have two users: ewancoder and lft (linux future tools).
+
+So, users is our usernames declared in bash array.
+
+.. code-block:: bash
+
+   user=( ewancoder lft )
+
+Shell is array with shells :) which will be set to users correspondingly. If not set, it will stay standard (bash).
+
+.. code-block:: bash
+
+   shell=( /bin/zsh /bin/zsh )
+
+Group is a variable with groups which will be added to corresponding user. Groups itself divided by comma. For example, I am adding fuse, lock, uucp and tty groups to my ewancoder user, and only one fuse group to lft user.
+
+.. code-block:: bash
+
+   group=( fuse,lock,uucp,tty fuse )
+
+Main variable serves just as a **reference** to **ewancoder** string. So you can just simply change **ewancoder** to **yourname** and all other in the script will be changed to **yourname**. For example, git repositories will become github.com/**yourname**/something.git.
+
+You can also set main to second user like **main=${user[1]}**. Array elements in bash start from 0.
+
+.. code-block:: bash
+
+   main=${user[0]}
+
+For each user will be created entry in sudoers file which will allow to use sudo for that user. If you want to add some additional entries in sudoers file (for example, for executing something without password prompt) you can add this additional entry to **sudoers** array. I have 1 entry there which allows me to update system without password prompt.
+
+.. code-block:: bash
+
+   sudoers=( "$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" )
+
+11. Executable commands
+=======================
+
+
