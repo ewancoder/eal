@@ -23,10 +23,12 @@ mess "Move new mirrorlist to /etc/pacman.d/mirrorlist"
 mv mirrorlist /etc/pacman.d/mirrorlist
 mess "Update pacman packages list"
 pacman -Syy
-mess "Initializing pacman keyring"
-pacman-key --init
-pacman-key --populate archlinux
-pacman-key --keyserver hkp://pgp.mit.edu -r B02854ED753E0F1F
+if [ $hostinstall -eq 1 ]; then
+    mess "Initializing pacman keyring"
+    pacman-key --init
+    pacman-key --populate archlinux
+    pacman-key --keyserver hkp://pgp.mit.edu -r B02854ED753E0F1F
+fi
 
 mess -t "Install system"
 mess "Install base-system"
@@ -44,7 +46,7 @@ arch-chroot /mnt /root/peal.sh
 
 mess "Unmount all within /mnt (unmount installed system)"
 umount -R /mnt
-if [ "$1" == "--host" ]; then
+if [ $hostinstall -eq 1 ]; then
     mess "Exiting chroot (live-cd -> host system)"
     exit
 else
