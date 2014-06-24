@@ -12,6 +12,11 @@
 .. _grep: https://en.wikipedia.org/wiki/Grep
 .. _sed: https://en.wikipedia.org/wiki/Sed
 .. _udev: https://wiki.archlinux.org/index.php/udev#Writing_udev_rules
+.. _git: http://git-scm.com/
+.. _github: https://github.com/
+.. _dotfiles: https://dotfiles.github.io/
+.. _chown: https://en.wikipedia.org/wiki/Chown
+.. _gitignore: https://help.github.com/articles/ignoring-files
 
 .. _ceal.sh: https://github.com/ewancoder/eal/blob/master/ceal.sh
 .. _install.sh: https://github.com/ewancoder/eal/blob/master/install.sh
@@ -288,6 +293,8 @@ If you have Windows OS installed on your machine and you want to automatically *
 
    windows=/dev/sdb1
 
+.. _user_config:
+
 10. Users configuration
 =======================
 
@@ -388,8 +395,63 @@ There's an example:
 12. Git configuration
 =====================
 
+If you're not familiar with the `git`_ and `github`_ you can **totally remove** git section from configuration file, although this script is highly integrated with git `dotfiles`_ technique, so you will benefit much much more by making your own dotfiles repo and fulling it with your unique software configuration.
+
+If you're just familiar with **git** and **github** but don't have a **dotfiles** repository, you can automatically clone your favourite github repositories whenever you want and even link all the content from these repos to whenever you want (for this, read below).
+
+And finally, if you already have your dotfiles repo and you want to download it automatically and setup your software by symlinks, you can set it up pretty quickly and easy.
+
+First, of course, we need to setup our git **essential settings**:
+
+.. code-block:: bash
+
+   gitname=$main
+   gitemail=$main@gmail.com
+   gittool=vimdiff
+   giteditor=vim
+
+You can refer these settings to any of your usernames (if you have universal name on the web like I do) or just set something like ``gitname=mygitname`` within the script. These settings will be applied to specific user. I need these settings only for one user, but you always can do like
+
+.. code-block:: bash
+
+   gitname=( firstgituser nextgituser thirdgituser )
+   gitemail=( email1@gmail.com email2@yandex.ru email1@gmail.com )
+   gittool=( vimdiff vimdiff vimdiff )
+   giteditor=( vi vim nano )
+
+Next goes git **repositories** setup. As we did with our **user** variable (see :ref:`user_config`), all these variables are set **corresponding** to each other. We have 5 variables:
+
+* gitrepo - list of our repos in a form **"user/repo"** (like vundle does)
+* gitfolder - **folder** in which you want to clone this repo
+* gitrule - `chown`_ **rule** to apply
+* gitmodule - **submodules** to pull
+* gitlink - where to **symlink** all repo content
+
+.. code-block:: bash
+
+    gitrepo=( $main/dotfiles $main/etc $main/btp $main/eal )
+    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp /home/$main/eal )
+    gitrule=( $main:users '' $main:users $main:users )
+    gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
+    gitlink=( /home/$main /etc )
+
+Lets discuss this on an example above.
+
+First, we're **cloning** git repository *https://github.com/ewancoder/dotfiles.git* to **folder** */home/ewancoder/.dotfiles*. We're doing this as root, so all the files will be read-only for any regular user.
+
+Next, we're pulling two **submodules** that I have in my dotfiles repo - *oh-my-zsh* and *vundle*. All submodules for **one user** divided by a space and enclosed in quotation marks for division with **other users**.
+
+After that, we're ready to change all files **permissions** to whatever you need. In the example we're performing ``chown ewancoder:users -R /home/ewancoder/.dotfiles`` - giving power to the $main (ewancoder) user.
+
+And now is the **most interesting part**. If you actually have your dotfiles repository and it contains perfect directory hierarchy to match your home folder (or /etc folder, or any folder you want), for example if your dotfiles contains *.config/mc/ini* file for configuring mc and not just *ini* file, then you can set **gitlink** variable to your home directory (or any) so that **all content from repo** will be **symlinked** to home directory.
+
+.. note::
+
+   Even if you home directory would have some folders/files which you dotfiles repository has, it is not a problem at all. All files from home will be firstly moved to dotfiles repository, and then dotfiles repository will be linked. So you should set your `gitignore`_ to * to exclude lots of untracked content.
+
 .. _software:
 
 13. Software list
 =================
 
+The most funny part is that script actually install software at first and only then goes through all other stuff. But in the configuration file/guide the software goes as the last piece.
