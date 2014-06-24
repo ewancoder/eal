@@ -50,6 +50,6 @@ if [ $hostinstall -eq 1 ]; then
     mess "Exiting chroot (live-cd -> host system)"
     exit
 else
-    mess -w "This is it. Your system is now installed [REBOOT]"
+    mess -w "This is it. Your system is installed [REBOOT]"
     reboot
 fi
