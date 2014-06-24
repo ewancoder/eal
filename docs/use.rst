@@ -86,6 +86,8 @@ There's nothing to configure. This variable shows current **version** of a scrip
 
    version="1.9.5 Error-Handled, 2014"
 
+.. _error_handling:
+
 2. Error-handling
 =================
 
@@ -127,7 +129,7 @@ Also you should check ``iso`` variable. It should be a working link to the root 
 4. Automatic install
 ====================
 
-If you want to monitor EACH step of the script and give your permission to do it, leave ``auto=0`` as 0. If you want script to do all **automatically** so you could do your other work in the meantime - set ``auto=1``. Anyway, there's cool error handling system (see :ref:`error handling`) which will stop the script if something goes wrong. But by using first option you can **see** what actually going on and **learn** how script works, so for the first time leave it as 0.
+If you want to monitor EACH step of the script and give your permission to do it, leave ``auto=0`` as 0. If you want script to do all **automatically** so you could do your other work in the meantime - set ``auto=1``. Anyway, there's cool error handling system (see :ref:`error_handling`) which will stop the script if something goes wrong. But by using first option you can **see** what actually going on and **learn** how script works, so for the first time leave it as 0.
 
 .. code-block:: bash
 
@@ -335,6 +337,53 @@ For each user will be created an entry in **sudoers** file which will allow to u
 =======================
 
 If you have complex arch linux ecosystem, you definitely want to execute some of your specific commands at the end of installation process. This is handled by **execs** and **rootexec** variables.
+
+If you want to execute some commands after installation process as root, just add a line with a command in a **rootexec** array. Each line will be executed consecutively after all installation process and even after **user commands** will be executed (look below).
+
+.. note::
+
+   You can define **bash array** elements not only horizontally like ``array=( item1 item2 )`` but also vertically, like
+
+   .. code-block:: bash
+
+      array=(
+         item1
+         item2
+      )
+
+   This comes in handy when you have lots of big commands to execute and also want a pretty code.
+
+**User commands** is something like **rootexec** array, but they are executed **as corresponding user**. For example, if you want to execute "mkdir ~/lol" as your first user and "vim +BundleInstall +qall" as your second user, form an array **execs** like this:
+
+.. code-block:: bash
+
+   execs=(
+      "mkdir ~/lol"
+      "vim +BundleInstall +qall"
+   )
+
+What if you want to give specific user a bunch of commands to execute? It's easy: add a linebreak at the and of a line and array parser will take your command as a little script:
+
+.. code-block:: bash
+
+   execs=(
+      "mkdir ~/lol \n
+      yoursecondcommand \n
+      yourthirdcommand"
+      "vim +BundleInstall +qall")
+
+Look precisely that ``\n`` (which is stands for new line) is at the end of the **each line except** last one. And all three line enclosed in quotation marks as one big line.
+
+.. note::
+
+   You can use even something like ``execs=( "command1\n command2\n command3\n" )`` but that would not be pretty.
+
+There's an example:
+
+.. literalinclude:: ../ceal.sh
+   :language: bash
+   :start-after: Executable commands and links
+   :end-before: Git configuration
 
 12. Git configuration
 =====================
