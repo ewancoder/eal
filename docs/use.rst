@@ -5,8 +5,10 @@
 
 .. _clone: https://help.github.com/articles/github-glossary#clone
 .. _curl: https://en.wikipedia.org/wiki/CURL
+.. _wget: https://en.wikipedia.org/wiki/Wget
 .. _fdisk: http://tldp.org/HOWTO/Partition/fdisk_partitioning.html
 .. _mkfs.ext4: https://wiki.archlinux.org/index.php/ext4
+.. _squashfs: https://en.wikipedia.org/wiki/SquashFS
 
 .. _ceal.sh: https://github.com/ewancoder/eal/blob/master/ceal.sh
 .. _install.sh: https://github.com/ewancoder/eal/blob/master/install.sh
@@ -22,7 +24,7 @@ This is complete user guide for Ewancoder / Effective&Easy Arch Linux installati
 Where to get
 ------------
 
-You just need to download **5 files** from my `dotfiles repo`_. I've already made a script for that, so just run
+You need to download **5 files** from my `dotfiles repo`_. There's already a script for that, so just run
 
 .. code-block:: bash
 
@@ -35,6 +37,10 @@ All this command does is runs via `curl`_ the **al.sh** script which downloads a
 * `eal.sh`_ - the main script for installing base-system from live-cd
 * `heal.sh`_ - **host** eal, for downloading and preparing live-cd itself from within working linux system
 * `peal.sh`_ - **post** eal, for installing and configuring all software (running from within chroot after installing base-system)
+
+.. note::
+
+   Script is using `curl`_ and not `wget`_ because Arch Linux live cd have curl as default and doesn't have wget.
 
 Alternatively, you can
 
@@ -55,77 +61,81 @@ You only need to:
 #. **Configure** the `ceal.sh`_ script (see :ref:`configuration` section)
 #. **Start** `install.sh`_ script (Just run ``./install.sh``)
 
-EAL script reads **ceal.sh** file and then do all its magic based on constants which you **should** set first. I've made EAL script very **flexible** in terms of changeability and it's going to be much more flexible and perfect with your help and feedback.
+EAL script reads **ceal.sh** file and then do all its magic based on constants which you **should** set first. The script is very **flexible** in terms of changeability and it's going to be much more flexible and perfect with your help and feedback.
 
 .. warning::
 
-   Do NOT try to execute script (install.sh) before you change **ceal.sh** constants. These settings are only for me, I have my own drives (like /dev/sdb5 and /dev/sda6) set up for automounting. Also, users creation and setting OS hostname are automatic too (**all is automatic**) so you want to change them for your liking.
+   Do NOT try to execute script (install.sh) before you change **ceal.sh** constants. It have drives like /dev/**sdb5** and users like **ewancoder**, so you probabbly want to change all the constants for your liking (or at least, partition your drives like this).
 
 .. _configuration:
 
 Configuration
 -------------
 
-In this chapter I will detailed describe each variable set in the `ceal.sh`_ file.
+This chapter is detailed description of the each variable withing the `ceal.sh`_ file.
 
 1. Version
 ==========
+
+There's nothing to configure. This variable shows current **version** of a script.
 
 .. code-block:: bash
 
    version="1.9.5 Error-Handled, 2014"
 
-There's nothing to configure. This variable shows current version of a script. I'm usually naming them funny for the things that I've added (for added heal.sh - Healed, for added error-handling - see below)
-
 2. Error-handling
 =================
 
-When there will occur an error within a script - you will be prompted with question either you wish to continue (skip the error) or to repeat command again. If you're installing some packages with pacman and there's just an internet connection goes down - you're probably will want to repeat the command. It is default action (so if you'd just press [RETURN] without any options given, it will repeat the command).
+When there will an **error** occur within a script - you will be prompted with a question either you wish **to repeat or to continue** (skip the error). If for example you're installing some packages with pacman and there's an internet connection randomly goes down - you're probably will want to repeat the command. It is the default action.
 
-EAL script can automatically repeat the command if an error was detected. This is useful if you're installing script automatically (with **auto** switch turned on) and go for a walk at that time. You don't want to go back and see that some random error taked place at the beginning of the script and did not proceed further, do you?
+.. image:: images/error.png
 
-Set variable **timeout** to number of seconds after which the command will be executed again. And then again. And etc. Set it to 0 if you don't want to use this feature.
+EAL script can do it automatically if an error was detected. This is useful if you're installing script automatically (with **auto** switch turned on, see :ref:`auto`) and go for a walk at that time. You don't want to go back and see that some random error taked place at the beginning of the script and did not proceed further, do you?
 
 .. code-block:: bash
 
    timeout=10
 
-3. Installing from within host system
-=====================================
+Set this variable to **number of seconds** after which the command will be executed again. Set it to 0 if you don't want to use this feature.
 
-If you'd like to install Arch Linux from within your already working (arch) linux (but in the other hdd/ssd partitions, of course) - this variables would do the trick.
+3. Host system or live-cd
+=========================
+
+If you'd like to install Arch Linux from within your **already working (arch) linux** (but onto the other hdd/ssd partitions, of course) - this variables would do the trick.
 
 .. note::
 
    I am writing (arch) in brackets because I'm going to make it possible to install arch linux from within ANY distribution (it's not as hard as it seems to be).
 
-If you have live-cd, you can just reboot into it and run script without this feature. For that set **hostinstall=0**. Otherwise installation process will go through downloading live-cd, chrooting into it and installing arch linux from within your working distro.
+If you have live-cd, you can just reboot into it and run script without this feature. For that set ``hostinstall=0``. Otherwise, installation process will go through downloading live-cd, chrooting into it and installing arch linux from within your working distro (this is pretty cool and you can do your work in the meantime).
 
 .. code-block:: bash
 
    hostinstall=1
 
-Also you should check **iso** variable. It should be a working link to the **root SFS (squashfs) live-cd image** (you could just leave it alone - it is working for me).
+Also you should check ``iso`` variable. It should be a working link to the root `squashfs`_ live-cd image. It is working now, so you could just leave it alone.
 
 .. code-block:: bash
 
    iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
 
+.. _auto:
+
 4. Automatic install
 ====================
 
-If you want to monitor EACH step of the script and give your permission to do it, leave **auto=0** as 0. It is default behaviour and I'm not going to change that although I'm using **auto=1** all the time. Because this way you can see all stuff happening and monitor all possible bugs that have not been caught by EAL error handler (although, I hope there's no such bugs).
-
-Be AWARE: If you change auto to 1, all installation process will go as fast as your computer could think, download files and install packages. But this is pretty awesome when you just want to install your system and do your other stuff at the second window :)
+If you want to monitor EACH step of the script and give your permission to do it, leave ``auto=0`` as 0. If you want script to do all **automatically** so you could do your other work in the meantime - set ``auto=1``. Anyway, there's cool error handling system (see :ref:`error handling`) which will stop the script if something goes wrong. But by using first option you can **see** what actually going on and **learn** how script works, so for the first time leave it as 0.
 
 .. code-block:: bash
 
    auto=0
 
+Be AWARE: If you change auto to 1, all installation process will go as fast as your computer could think, download files and install packages. And this is pretty awesome when you just want to install your system and do your other stuff in the meantime :)
+
 5. Font and locales
 ===================
 
-As archwiki tells us, we should set console fonts for displaying some character (for example, for russian utf-8 fonts it's cyr-sun16).
+As archwiki tells us, we should set **console fonts** for displaying some character (for example, for russian utf-8 fonts it's cyr-sun16).
 
 .. code-block:: bash
 
