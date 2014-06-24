@@ -1,16 +1,81 @@
+.. _dotfiles repo: https://github.com/ewancoder/eal
+.. _all 5 files: https://github.com/ewancoder/eal
+.. _zip archive: https://github.com/ewancoder/eal/archive/master.zip
+.. _al.sh: https://ewancoder.github.io/al.sh
+
+.. _clone: https://help.github.com/articles/github-glossary#clone
+.. _curl: https://en.wikipedia.org/wiki/CURL
+.. _fdisk: http://tldp.org/HOWTO/Partition/fdisk_partitioning.html
+.. _mkfs.ext4: https://wiki.archlinux.org/index.php/ext4
+
+.. _ceal.sh: https://github.com/ewancoder/eal/blob/master/ceal.sh
+.. _install.sh: https://github.com/ewancoder/eal/blob/master/install.sh
+.. _eal.sh: https://github.com/ewancoder/eal/blob/master/eal.sh
+.. _heal.sh: https://github.com/ewancoder/eal/blob/master/heal.sh
+.. _peal.sh: https://github.com/ewancoder/eal/blob/master/peal.sh
+
 User Guide
 **********
 
-EAL script reads **ceal.sh** file and then do all it's magic based on constants which you should set first. I've made EAL script very flexible in terms of changeability and it's going to be much more flexible with your help and feedback.
+This is complete user guide for Ewancoder / Effective&Easy Arch Linux installation script, getting it, configuring and executing. Jump to :ref:`configuration` if you want some info upon `ceal.sh`_ file and setting script for your needs.
+
+Where to get
+------------
+
+You just need to download **5 files** from my `dotfiles repo`_. I've already made a script for that, so just run
+
+.. code-block:: bash
+
+   bash <(curl ewancoder.github.io/al.sh)
+
+All this command does is runs via `curl`_ the **al.sh** script which downloads all five files in current directory:
+
+* `ceal.sh`_ - **constants** eal, main configuration file
+* `install.sh`_ - main file which you need to **execute** to start installation after editing ceal.sh
+* `eal.sh`_ - the main script for installing base-system from live-cd
+* `heal.sh`_ - **host** eal, for downloading and preparing live-cd itself from within working linux system
+* `peal.sh`_ - **post** eal, for installing and configuring all software (running from within chroot after installing base-system)
+
+Alternatively, you can
+
+* download `al.sh`_ and execute it manually
+* download `all 5 files`_ by-hand
+* `clone`_ my repository (but this is unnecessary and irrational for install purpose)
+* download it as a `zip archive`_
+
+How to start
+------------
+
+You only need to:
+
+#. **Format** (and partition if needed) your drives
+
+   For example, use `fdisk`_ to partition your drives and `mkfs.ext4`_ to format your partitions.
+
+#. **Configure** the `ceal.sh`_ script (see :ref:`configuration` section)
+#. **Start** `install.sh`_ script (Just run ``./install.sh``)
+
+EAL script reads **ceal.sh** file and then do all its magic based on constants which you **should** set first. I've made EAL script very **flexible** in terms of changeability and it's going to be much more flexible and perfect with your help and feedback.
+
+.. warning::
+
+   Do NOT try to execute script (install.sh) before you change **ceal.sh** constants. These settings are only for me, I have my own drives (like /dev/sdb5 and /dev/sda6) set up for automounting. Also, users creation and setting OS hostname are automatic too (**all is automatic**) so you want to change them for your liking.
+
+.. _configuration:
+
+Configuration
+-------------
+
+In this chapter I will detailed describe each variable set in the `ceal.sh`_ file.
 
 1. Version
 ==========
 
-There's nothing to configure. This variable shows current version of a script. I'm usually naming them funny for the things that I've added (for added heal.sh - Healed, for added error-handling - see below )
-
 .. code-block:: bash
 
    version="1.9.5 Error-Handled, 2014"
+
+There's nothing to configure. This variable shows current version of a script. I'm usually naming them funny for the things that I've added (for added heal.sh - Healed, for added error-handling - see below)
 
 2. Error-handling
 =================
