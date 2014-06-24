@@ -9,6 +9,9 @@
 .. _fdisk: http://tldp.org/HOWTO/Partition/fdisk_partitioning.html
 .. _mkfs.ext4: https://wiki.archlinux.org/index.php/ext4
 .. _squashfs: https://en.wikipedia.org/wiki/SquashFS
+.. _grep: https://en.wikipedia.org/wiki/Grep
+.. _sed: https://en.wikipedia.org/wiki/Sed
+.. _udev: https://wiki.archlinux.org/index.php/udev#Writing_udev_rules
 
 .. _ceal.sh: https://github.com/ewancoder/eal/blob/master/ceal.sh
 .. _install.sh: https://github.com/ewancoder/eal/blob/master/install.sh
@@ -141,36 +144,33 @@ As archwiki tells us, we should set **console fonts** for displaying some charac
 
    font=cyr-sun16
 
-And, as well, we need our locales set in **bash array**.
+And, as well, we need our **locales** set in **bash array**.
 
 .. code-block:: bash
 
    locale=( en_US.UTF-8 ru_RU.UTF-8 )
 
-Just list all locales you want to include there separated by whitespace like in the example. If you need only one locale, you can always exclude brackets and write it like a regular variable:
-
-.. code-block:: bash
-
-   locale=en_US.UTF-8
+Just list all locales you want to include separated by whitespace like in the example.
 
 .. note::
 
-   From now on, any time you'll see an array like var=( el1 el2 el3 ) you could just crop it to one value like var=el1 if you need only one value.
+   If you need only one value in a **bash array**, you can always remove brackets and make it a **variable** like this: ``locale=en_US.UTF-8``.
 
 6. Hostname and timezone
 ========================
 
-This is your hostname and timezone. There's all obvious. Hostname is the name of your PC, you should make it yourself. Timezone is linked file which is located at the /usr/share/zoneinfo/.
+This is the **hostname** of your PC and your **timezone**. Hostname is the name of your PC, you should make it yourself. Timezone is linked file which is located at the */usr/share/zoneinfo* folder.
 
 .. code-block:: bash
 
    hostname=ewanhost
    timezone=Europe/Minsk
 
+
 7. Mirrorlist
 =============
 
-Mirrorlist is forming by using **grep** onto /etc/pacman.d/mirrorlist file from live-cd. So just include all countries (or any words which will be get by grep) consecutively respectively to importance. For example, here Belarus goes first, then all other countries. And United stays both for United States and for United Kingdom.
+Mirrorlist is formed by using `grep`_ from */etc/pacman.d/mirrorlist* file on live-cd. So just include all countries' names respectively to importance. For example, here Belarus goes first, then all other countries. And United stays both for United States and for United Kingdom.
 
 .. code-block:: bash
 
@@ -181,41 +181,49 @@ Mirrorlist is forming by using **grep** onto /etc/pacman.d/mirrorlist file from 
 
 Internet can be configured 2 ways:
 
-* dhcpcd - the most easiest way. It does not requires any configuration and runs out of box because it is dhcp receiver. Although, dhcp server should be set on your router and you should have ethernet connection (I've not experienced wi-fi connection over dhcpcd, although it is possible)
-* netctl - powerful and easy-to-setup network manager which is stable and ensures good connection over any interfaces with any settings and contains lots of pre-configured profiles as example
-
-If you set **netctl=0** - you will use dhcpcd service. Otherwise - you should set all params you need to use netctl.
+* dhcpcd - the most easiest way. It does not require any configuration and runs out of box because it is dhcp receiver. Although, dhcp server should be set on your router and you should have ethernet connection (I've not experienced wi-fi connection over dhcpcd, although it is possible)
+* netctl - powerful and easy-to-setup network manager which is stable, ensures good connection over any interfaces with any settings and contains lots of pre-configured profiles as examples
 
 .. code-block:: bash
 
    netctl=1
 
-Profile is one of the profiles in /etc/netctl/examples folder which will be copied and edited by sed based on your config values. You can choose **ethernet-dhcp**, **ethernet-static**, **wireless-open**, **wireless-wpa-static**, etc. I am currently using **wireless-wpa-static**.
+If you set ``netctl=0`` - you will use dhcpcd service. Otherwise - you should set all other params that you need to use netctl.
 
 .. code-block:: bash
 
    profile=wireless-wpa-static
 
+Profile is one of the profiles in /etc/netctl/examples folder which will be copied and edited by `sed`_ based on your config values. You can choose *ethernet-dhcp*, *ethernet-static*, *wireless-open*, *wireless-wpa-static*, etc.
+
+.. note::
+   
+   I am currently using **wireless-wpa-static** because my Raspberry PI needs my ethernet cable.
+
 .. warning::
 
-   Wireless-**WPA**-... profiles need **wpa_supplicant** package which handles **wpa** encryption. So make sure you have one in **software** section below
+   **WPA** profiles need **wpa_supplicant** package which handles wpa encryption. So make sure you have one in **software** section below (see :ref:`software`)
 
-Also you should definitely configure network interface. You could run [ip link] command to know which interfaces do you have. It's going to be something like "enp2s0" or "wlp3s5". Mine is **wlan** just because I have applied special rules to udev.
+Next, you should definitely configure network interface. You could run ``ip link`` command to know which interfaces do you have. It's going to be something like *enp2s0* or *wlp3s5*. Mine is **wlan** just because I have applied special rules to `udev`_.
 
 .. code-block:: bash
 
    interface=wlan
 
-If you're using **static** ip address (alongside with static netctl profile), you should definitely setup **ip** & **dns** and **gateway**. In my current configuration **dns** and **gateway** are the same, so I made them as one variable - **dns**. If you have different dns&gateway, you can connect me and I'll improve my script little bit more.
-
-.. note::
-
-   With netctl it's not dns of your provider, it's dns of your router. So you should basically set it to your router's ip address and it should all work.
+If you're using **static** ip address (alongside with static netctl profile), you should definitely setup **ip**. Also you need to setup **dns** and **gateway** to be able to connect to your router.
 
 .. code-block:: bash
 
    ip=192.168.100.22
    dns=192.168.100.1
+
+.. note::
+
+   With netctl dns is not a network dns, it's address of your router (because you connect to it firstly).
+
+.. warning::
+
+   In my current configuration **dns** and **gateway** are the same, so I made them as one variable - **dns**. If you have different dns&gateway, you can connect me and I'll improve my script a little bit more.
 
 If you're connecting via wi-fi (and maybe using encryption) you will need ESSID & PassKey to connect to your access point. There are easily set up here too.
 
@@ -227,33 +235,33 @@ If you're connecting via wi-fi (and maybe using encryption) you will need ESSID 
 9. Devices
 ==========
 
-EAL script does NOT format your drives. You should do it youself (preferably with **mkfs.ext4** command). Then you can configure these drives in ceal.sh to automount them and add to fstab during install.
+EAL script does **NOT format** your drives. You should do it youself (preferably with `mkfs.ext4`_ command). Then you can configure these drives in `ceal.sh`_ to automount them and add to fstab during install.
 
 All variables are arrays with corresponding values. For examle
 
 .. code-block:: bash
    
-   mount=( / /home )
    device=( /dev/sdb5 /dev/sdb6 )
+   mount=( / /home )
 
-This means that **/dev/sdb5** will be mounted to **/** and **/dev/sdb6** will be mounted as **/home**.
+This means that **/dev/sdb5** will be mounted to **/** and **/dev/sdb6** will be mounted to **/home**.
 
 All devices should be set in the order of mounting. **/home** could not go before **/**. The first and mandatory device is **/** - root.
 
-Description is just text description of the mounted drive. I have 4 devices mounted in my system: root, home, cloud and backup.
+**Description** is just text description of the mounted drive. I have 4 devices mounted in my system: root, home, cloud and backup.
 
 .. code-block:: bash
 
    description=( Root Home Cloud Backup )
 
-Device & mount are actual devices and their mount points.
+**Device & mount** are the actual devices and their mount points.
 
 .. code-block:: bash
 
    device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 )
    mount=( / /home /mnt/cloud /mnt/backup )
 
-Type, option, dump and pass are options in fstab file. Pass should be 1 for root partition and 2 for all other. Dump is usually 0 for all of them. **Discard** option is used only for SSD to minimize wear leveling count, do not try to use it on HDD.
+**Type**, **option**, **dump** and **pass** are the options in the fstab file. **Pass** should be 1 for root partition and 2 for all other. **Dump** is usually 0 for all of them.
 
 .. code-block:: bash
 
@@ -262,13 +270,17 @@ Type, option, dump and pass are options in fstab file. Pass should be 1 for root
    dump=( 0 0 0 0 )
    pass=( 1 2 2 2 )
 
-And we need to set some additional devices. First - we need to point out which device's MBR will be used to store grub bootloader. It is usually your drive where root partition is located.
+.. warning::
+
+   **Discard** option is used only for SSD to minimize wear leveling count, do not try to use it on HDD.
+
+And we need to set some additional devices. First - we need to point out which device will be used to store **grub bootloader**. It is usually your drive where root partition is located.
 
 .. code-block:: bash
 
    mbr=/dev/sdb
 
-If you have Windows OS installed on your machine and you want to automatically copy all fonts from c:\windows\fonts to /usr/share/fonts/winfonts and then update fonts cache in your system, set **windows** to your windows partition. Otherwise just delete this option or set it to ''.
+If you have Windows OS installed on your machine and you want to automatically **copy all fonts** from *c:\\windows\\fonts* to */usr/share/fonts/winfonts*, set **windows** to your windows partition. Otherwise just delete this option (or set it to "").
 
 .. code-block:: bash
 
@@ -277,35 +289,43 @@ If you have Windows OS installed on your machine and you want to automatically c
 10. Users configuration
 =======================
 
-Now we need to configure our users. If you have only one user in the system, you can set variables like **user=myusername**. I have two users: ewancoder and lft (linux future tools).
-
-So, users is our usernames declared in bash array.
+Now you need to configure users.
 
 .. code-block:: bash
 
    user=( ewancoder lft )
 
-Shell is array with shells :) which will be set to users correspondingly. If not set, it will stay standard (bash).
+So, users is our usernames declared in bash array.
+
+.. note::
+
+   I have two users: ewancoder (my primary user) and lft (linux future tools, for testing weird stuff).
+
+**Shell** variable is array with shells which will be set to users correspondingly. If not set, it will stay as standard (bash).
 
 .. code-block:: bash
 
    shell=( /bin/zsh /bin/zsh )
 
-Group is a variable with groups which will be added to corresponding user. Groups itself divided by comma. For example, I am adding fuse, lock, uucp and tty groups to my ewancoder user, and only one fuse group to lft user.
+Group is a variable with groups which will be added to corresponding user.
 
 .. code-block:: bash
 
    group=( fuse,lock,uucp,tty fuse )
 
-Main variable serves just as a **reference** to **ewancoder** string. So you can just simply change **ewancoder** to **yourname** and all other in the script will be changed to **yourname**. For example, git repositories will become github.com/**yourname**/something.git.
+Groups itself divided by comma. For example, fuse, lock, uucp and tty groups added to ewancoder user, and only one fuse group added to lft user.
 
-You can also set main to second user like **main=${user[1]}**. Array elements in bash start from 0.
+**Main** variable is needed only as **reference**.
 
 .. code-block:: bash
 
    main=${user[0]}
 
-For each user will be created entry in sudoers file which will allow to use sudo for that user. If you want to add some additional entries in sudoers file (for example, for executing something without password prompt) you can add this additional entry to **sudoers** array. I have 1 entry there which allows me to update system without password prompt.
+It serves just as a **reference** to **ewancoder** string. So you can just simply change **ewancoder** to **yourname** and all other stuff in the script which needs your username will be changed to **yourname**.
+
+You can also set **main** to second user like ``main=${user[1]}``. Array elements in bash start from 0.
+
+For each user will be created an entry in **sudoers** file which will allow to use sudo for that user. If you want to add some additional entries in sudoers file (for example, for executing something without password prompt) you can add this additional entry to **sudoers** array. I have 1 entry there which allows me to update system without password prompt.
 
 .. code-block:: bash
 
@@ -318,6 +338,8 @@ If you have complex arch linux ecosystem, you definitely want to execute some of
 
 12. Git configuration
 =====================
+
+.. _software:
 
 13. Software list
 =================
