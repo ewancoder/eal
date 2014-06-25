@@ -17,6 +17,9 @@
 .. _dotfiles: https://dotfiles.github.io/
 .. _chown: https://en.wikipedia.org/wiki/Chown
 .. _gitignore: https://help.github.com/articles/ignoring-files
+.. _yaourt: https://wiki.archlinux.org/index.php/yaourt
+.. _pacman: https://wiki.archlinux.org/index.php/pacman
+.. _AUR: https://wiki.archlinux.org/index.php/Arch_User_Repository
 
 .. _ceal.sh: https://github.com/ewancoder/eal/blob/master/ceal.sh
 .. _install.sh: https://github.com/ewancoder/eal/blob/master/install.sh
@@ -107,6 +110,10 @@ EAL script can do it automatically if an error was detected. This is useful if y
    timeout=10
 
 Set this variable to **number of seconds** after which the command will be executed again. Set it to 0 if you don't want to use this feature.
+
+.. note::
+
+   The error handling mechanism will print out on which step script was broken. This is achieved by using **step** variable inside **mess** function. Look further to :ref:`dev` in :ref:`stylization` section.
 
 3. Host system or live-cd
 =========================
@@ -454,4 +461,43 @@ And now is the **most interesting part**. If you actually have your dotfiles rep
 13. Software list
 =================
 
-The most funny part is that script actually install software at first and only then goes through all other stuff. But in the configuration file/guide the software goes as the last piece.
+Finally, you need to configure your unique pieces of software. At first, it maybe seems hard to list all the software you use, but when you'd construct your own list of software - it'd be an easy thing to add or to delete something from the list. And you'll be perfectly aware of the software you use.
+
+There we have 3 variables:
+
+* softtitle
+* software
+* service
+
+**Softtitle** and **software** are set correspondingly to each other: first value of **softtitle** is just caption for the first **software** value.
+
+Now, **software** contains just list of the packages, installed by `yaourt`_ (this is analog of `pacman`_, but it installs `AUR`_ packages too). You can list them like ``software="python cron anki ..."`` or you can divide them into *groups* like ``software=( "first group" "second group" ... )``. If you're using second approach, you'd wanna setup some labels on that groups so you can see what you're currently installing: this is **softtitle** variable's responsibility.
+
+You can see an example:
+
+.. literalinclude:: ../ceal.sh
+   :language: bash
+   :start-after: Software configuration
+   :end-before: Services to enable
+
+.. warning::
+
+   If you're using first approach, it is usually safe to include software without any order. But if you're using second approach - set drivers software **before** any other software (look where I've put my mesa, nvidia, nvidia-libgl packages). Because if you wont, there likely to happen a conflict: some software package can require **mesa** OR **mesa-libgl**, it can choose to install **mesa-libgl**, and when you're installing **mesa** in the next chapter - **BOOM**. It's a conflict.
+
+Finally, we've come to the last variable - **service**. Here you can setup services which will be enabled after whole software installation process.
+
+.. code-block:: bash
+
+   service=( cronie deluged deluge-web )
+
+14. The rest
+============
+
+**Interface** secrion in the `ceal.sh` file is not changeable although you can change something there to make different stylization. This section is only responsible for the **mess** function (which is responsible for displaying current states on the screen, **mess** = **message**) and for the stylization of the script (green, red, yellow text, pauses and etc).
+
+This chapter is about **configuration** so I will not discuss stylization here, although you might wanna check :ref:`stylization` page to get some more technical information about stylization.
+
+Troubleshooting
+---------------
+
+If you have encountered an error and could not solve it by just **skipping** or **repeating**, instead of typing (y/n) type ``givemebash`` command. It will give you **bash** session and you then can do whatever you want. After fixing the error, please **report** me about it and **exit** bash to continue installation (after bash ``exit`` command you will be returned to the script again).
