@@ -42,10 +42,3 @@ mess "Copy {eal,ceal,peal}.sh scripts to /arch/root/"
 cp {eal,ceal,peal}.sh /arch/root/
 mess "Chroot into /arch and execute /root/eal.sh"
 chroot /arch /root/eal.sh
-
-mess "Unmount all within /arch"
-umount /arch/proc
-umount /arch/sys
-umount /arch/dev/pts
-umount /arch/dev
-umount /arch

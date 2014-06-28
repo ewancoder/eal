@@ -47,4 +47,7 @@ fi
 cd ..
 rm -r eal
 
+mess "Unmount all within /arch"
+grep /arch /proc/mounts | cut -f2 -d" " | sort -r | xargs umount -n
+
 mess -w "This is it. You can reboot into your working system"
