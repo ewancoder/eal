@@ -125,6 +125,7 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/{data,mtp,usb}"
+        "chown $main:users /mnt/{data,mnt,usb}"
         "rsync -a /mnt/backup/Arch/ /home/$main/"
         "rsync -a /mnt/backup/ArchConfig/ /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
