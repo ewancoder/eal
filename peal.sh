@@ -148,6 +148,12 @@ if ! [ "$gitrepo" == "" ]; then
             mess "SET chown '${gitrule[$i]}'"
             chown -R ${gitrule[$i]} ${gitfolder[$i]}
         fi
+        if ! [ "${gitbranch[$i]}" == "" ]; then
+            mess "Checkout to branch '${gitbranch[$i]}'"
+            cd ${gitfolder[$i]}
+            git checkout ${gitbranch[$i]}
+            cd
+        fi
         if ! [ "${gitlink[$i]}" == "" ]; then
             mess "Merge all files (make symlinks)"
             shopt -s dotglob

@@ -153,6 +153,8 @@ mirror=( Belarus Denmark Russia United France )
     gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp /home/$main/eal )
     #Because all repos cloned as root user, all they are root-owned at the beginning. Here you can setup chown rule which will apply after cloning to all repo content
     gitrule=( $main:users '' $main:users $main:users )
+    #Maybe you want to checkout into another branch
+    gitbranch=( '' '' refactoring '' )
     #Sumbodules to pull (remove if you don't need any)
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merge) from the repo
