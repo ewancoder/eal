@@ -13,6 +13,7 @@ fi
 
 mkdir -p /sfs
 if ! [ "$temp" == "" ]; then
+    mess "Mount $temp temporary partition for unsquashing live-cd (must have 1G+ free space)"
     mount $temp /sfs
 fi
 if ! [ -f root-image.fs.sfs ] && ! [ -f /sfs/squashfs-root/root-image.fs ]; then
