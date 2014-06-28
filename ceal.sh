@@ -67,6 +67,9 @@ mirror=( Belarus Denmark Russia United France )
     dump=( 0 0 0 0 )
     pass=( 1 2 2 2 )
 
+    #Swap options
+    #device=/dev/sdSWAP mount=none type=swap option=defaults dump=0 pass=0
+
 #Additional devices
 
     #Grub MBR device (where to install bootloader)
@@ -75,6 +78,9 @@ mirror=( Belarus Denmark Russia United France )
     #If you have windows installed somewhere (for example, in /dev/sdb1), you can automatically copy fonts from c:\windows\fonts to /usr/share/fonts/winfonts
     #Leave it as '' or remove if you don't want to copy windows fonts
     windows=/dev/sdb1
+    #Temporary partition for unsquashing (1G or bigger)
+    #If you have 1G free on '/' (or you're not installing from host-system), you don't need it
+    #temp=/dev/sda9
 
 #Users configuration
 

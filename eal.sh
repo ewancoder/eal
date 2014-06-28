@@ -8,11 +8,13 @@ echo "# /etc/fstab: static file system information" > fstab
 for (( i = 0; i < ${#device[@]}; i++ )); do
     mess "Create folder /mnt${mount[$i]}"
     mkdir -p /mnt${mount[$i]}
-    mess "Mount ${device[$i]} to /mnt${mount[$i]}"
-    mount ${device[$i]} /mnt${mount[$i]}
-    mess "Add fstab ${description[$i]} partition entry '${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}'"
+    mess "Add ${device[$i]} in fstab mounted to /mnt${mount[$i]}"
     echo -e "\n# ${description[$i]} partition\n${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}" >> fstab
 done
+mess "Create /etc/fstab based on local fstab for mounting"
+awk '$2~"^/"{$2="/mnt"$2}1' fstab > /etc/fstab
+mess "Mount all from /etc/fstab"
+mount -a
 
 mess -t "Form mirrorlist & update pacman"
 for i in "${mirror[@]}"; do
@@ -31,6 +33,10 @@ if [ $hostinstall -eq 1 ]; then
 fi
 
 mess -t "Install system"
+mess "Create /run/shm if not exist [for debian systems]"
+if ! [ -d /run/shm ]; then
+    mkdir /run/shm
+fi
 mess "Install base-system"
 pacstrap /mnt base base-devel
 mess "Move previously created fstab to /mnt/etc/fstab"

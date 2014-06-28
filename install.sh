@@ -1,14 +1,18 @@
 #!/bin/bash
 source ceal.sh
+if [ ! $( id -u ) -eq 0 ]; then
+    mess -w "You have to be ROOT for script to work. Exiting."
+    exit
+fi
 clear
 mess -t "Ewancoder Arch Linux installation script\nVersion $version"
-mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4 + mkswap) and put them into 'ceal.sh' file"
 source ceal.sh
 
 prepare() {
     rm -f $2
     while read -r p; do
-        if ! [[ "$p" == "" ]] && ! [[ ${p:0:1} == "#" ]] && ! [[ ${p:0:3} == "if " ]] && ! [[ ${p:0:2} == "fi" ]] && ! [[ ${p:0:4} == "for " ]] && ! [[ ${p:0:4} == "else" ]] && ! [[ ${p:0:4} == "done" ]] && ! [[ ${p:0:6} == "echo '" ]] && ! [[ ${p:0:5} == "' >> " ]] && ! [[ ${p:0:4} == "' > " ]] && ! [[ ${p:0:5} == "mess " ]]; then
+        if ! [[ "$p" == "" ]] && ! [[ ${p:0:1} == "#" ]] && ! [[ ${p:0:3} == "if " ]] && ! [[ ${p:0:2} == "fi" ]] && ! [[ ${p:0:4} == "for " ]] && ! [[ ${p:0:4} == "else" ]] && ! [[ ${p:0:4} == "done" ]] && ! [[ ${p:0:6} == "echo '" ]] && ! [[ ${p:0:5} == "' >> " ]] && ! [[ ${p:0:4} == "' > " ]] && ! [[ ${p:0:5} == "mess " ]] && ! [[ ${p:0:5} == "elif " ]]; then
             echo "until $p; do" >> $2
             echo -e "\tans=''" >> $2
             echo '    mess -q "Error occured on step [$step]. Retry? (y/n)"' >> $2
