@@ -2,7 +2,7 @@
 source ceal.sh
 
 mess -t "Prepare live-cd"
-if ! which unsquashfs || ! which curl > /dev/null; then
+if ! which unsquashfs > /dev/null || ! which curl > /dev/null; then
     mess "Install squashfs-tools"
     if which pacman > /dev/null; then
         pacman -S --noconfirm squashfs-tools curl
@@ -11,6 +11,7 @@ if ! which unsquashfs || ! which curl > /dev/null; then
     fi
 fi
 
+mkdir -p /sfs
 if ! [ "$temp" == "" ]; then
     mount $temp /sfs
 fi
