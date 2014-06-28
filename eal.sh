@@ -31,6 +31,10 @@ if [ $hostinstall -eq 1 ]; then
 fi
 
 mess -t "Install system"
+mess "Create /run/shm if not exist [for debian systems]"
+if ! [ -d /run/shm ]; then
+    mkdir /run/shm
+fi
 mess "Install base-system"
 pacstrap /mnt base base-devel
 mess "Move previously created fstab to /mnt/etc/fstab"

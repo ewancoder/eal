@@ -1,8 +1,12 @@
 #!/bin/bash
 source ceal.sh
+if [ ! $( id -u ) -eq 0 ]; then
+    mess -w "You have to be ROOT for script to work. Exiting."
+    exit
+fi
 clear
 mess -t "Ewancoder Arch Linux installation script\nVersion $version"
-mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4) and put them into 'ceal.sh' file"
+mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4 + mkswap) and put them into 'ceal.sh' file"
 source ceal.sh
 
 prepare() {
