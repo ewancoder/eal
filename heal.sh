@@ -5,8 +5,10 @@ mess -t "Prepare live-cd"
 if ! which unsquashfs > /dev/null || ! which curl > /dev/null; then
     mess "Install squashfs-tools"
     if which pacman > /dev/null; then
+        pacman -Syy
         pacman -S --noconfirm squashfs-tools curl
     elif which apt-get > /dev/null; then
+        apt-get update
         apt-get -y install squashfs-tools curl
     fi
 fi
