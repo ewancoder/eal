@@ -36,8 +36,8 @@ if [ $hostinstall -eq 1 ]; then
 fi
 
 mess -t "Install system"
-mess "Create /run/shm if not exist [for debian systems]"
 if ! [ -d /run/shm ]; then
+    mess "Create /run/shm if not exist [for debian systems]"
     mkdir /run/shm
 fi
 mess "Install base-system"
