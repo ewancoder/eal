@@ -110,7 +110,9 @@ mirror=( Belarus Denmark Russia United France )
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
         mess 'Install vim plugins' \n
-        vim +BundleInstall +qall"
+        vim +BundleInstall +qall \n
+        mess 'Unmute pulseaudio' \n
+        amixer sset Master unmute"
     )
 
     #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
@@ -166,26 +168,132 @@ mirror=( Belarus Denmark Russia United France )
 
     #Just titles of the installed software - shows during install
     softtitle=(
-        Audio
         Drivers
-        Coding
+        Audio
         Core
-        Internet
+        Styling
+        Web
         Office
-        Art
+        Coding
+        Tools
     )
 
     #Software itself
     #Firstly set drivers software, only then - all other relative to them. Otherwise you can get a conflict error.
+
+    #===== DRIVERS =====
+        #lib32-nvidia-libgl - just 32bit symlinks, needed for Steam
+        #mesa - opensource openGL implementation
+        #nvidia - nvidia drivers for linux
+        #nvidia-libgl - just libraries symlinks
+        #phonon-qt4/5-gstreamer - backend for qt4/5 (currently I need qt4 because qt5 is not fully packaged yet)
+
+    #===== AUDIO =====
+        #alsa-plugins - advanced features like upmixing/downmixing and HQ resampling
+        #alsa-utils - alsamixer and other tools
+        #lib32-alsa-pluginsa - for Steam and Wine
+        #lib32-libpulse - pulseaudio for Steam/Wine
+        #pasystray-git - pulseaudio systray icon and sink/source manager
+        #pavucontrol - pulseaudio control tool (per-application volume)
+        #pulseaudio - pulseaudio itself
+        #pulseaudio-alsa - alsa configuration for pulseaudio (/etc/asoundrc.conf)
+
+    #===== CORE =====
+        #compton - lightweight x-compositor
+        #cronie - cron daemon
+        #devilspie - sets transparency to windows based on ruleset (see transset-df)
+        #dmenu - lightweight menu (see xboomx)
+        #dunst - lightweight notification daemon
+        #feh - image viewer / wallpaper
+        #fuse - FUSE itself
+        #git - version control system
+        #gksu - graphical sudo
+        #gxkb - language indicator
+        #jmtpfs - mtp (android) mount
+        #openssh - ssh server/client
+        #p7zip - universal archiver for 7z packages
+        #rsync - files transfer tool
+        #rxvt-unicode - supercool term (also see urxvt-perls)
+        #screen - this is what I am using instead of TMUX
+        #tig - git pretty viewer
+        #tilda - fullscreen terminal on Mod+F12
+        #transset-df - transparency-setting tool (see devilspie)
+        #xorg-server - xserver
+        #xorg-server-utils - the most important stuff based on current configuration
+        #xorg-xinit - startx tool
+        #wmii-hg - supercool WM (although I am planning on switching to dwm)
+        #unrar, unzip - default archivers
+        #urxvt-perls - for showing/clicking url within urxvt (see urxvt)
+        #wpa_supplicant - connection via wpa2-psk
+        #xboomx - wrapper around dunst based on frequency (see dunst)
+        #xclip - tool to get clipboard content (need for dbss [dropbox screenshoter] script)
+        #zsh - bash alternative
+        
+    #===== STYLING =====
+        #faience-icon-theme - icons
+        #ffmpegthumbnailer - lightweight video thumbnailer
+        #gnome-theme-standard - adwaita theme for gtk2/gtk3 and qt(GTK+)
+        #terminus-font - terminal font
+        #ttf-dejavu - system fonts
+        #tumbler - thumbnails
+
+    #===== WEB =====
+        #canto-curses - canto RSS reader
+        #chromium - web browser
+        #chromium-pepper-flash - lastest google flash support (also chromium-libpdf for pdf)
+        #copy-agent - copy cloud service
+        #deluge - torrent client (although I am planning on switching to rtorrent)
+        #dropbox-experimental - dropbox cloud service
+        #icedtea-web-java - java for chromium (and openjdk7 as well)
+        #net-tools - arp, ifconfig and other net tools
+        #skype - for calls
+
+    #===== OFFICE =====
+        #anki - language learning software
+        #calligra-krita - the best painting edtor ever
+        #geeqie - image viewer
+        #gource - git visualization
+        #gvim - the best editor ever
+        #kdegraphics-okular - the best pdf/djvu/anything viewer
+        #libreoffice-calc, libreoffice-common, libreoffice-impress, libreoffice-math, libreoffice-writer - office software
+        #libreoffice-en-US - language pack
+        #hyphen, hyphen-en, hyphen-ru - hyphenation for libreoffice
+        #hunspell, hunspell-en, hunspell-ru - spellcheck for libreoffice
+        #mc - midnight commander
+        #scrot - screenshots software
+        #thunar - files explorer
+        #vlc - the best player ever
+
+    #===== CODING =====
+        #python - my possession :)
+        #python-matplotlib - python plotting library [sci]
+        #python-numpy - python scientific tools (numbers) [sci]
+        #python-pygame-hg - pygame for python3
+        #python-pyserial - arduino serial communication library
+        #python-scipy - python science/engineering [sci]
+        #python-sphinx - sphinx documentation engine
+        
+    #===== TOOLS =====
+        #dosfstools - formatting fat/ntfs
+        #encfs - encrypted fuse filesystem
+        #gparted - drive partitioning
+        #ntfs-3g - fuse driver to mount ntfs
+        #smartmontools - drive s.m.a.r.t. diagnostics
+
     software=(
-        "alsa-plugins alsa-utils lib32-libpulse lib32-alsa-plugins pulseaudio pulseaudio-alsa"
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
-        "python python-matplotlib python-mock python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx tig"
-        "cron devilspie dmenu dosfstools dunst encfs faience-icon-theme feh ffmpegthumbnailer fuse fuseiso git gksu gnome-themes-standard gxkb jmtpfs icedtea-web-java7 ntfs-3g openssh pasystray-git pavucontrol rsync rxvt-unicode screen terminus-font tilda transset-df ttf-dejavu tumbler xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip xcompmgr zsh"
-        "canto-curses chromium chromium-libpdf chromium-pepper-flash copy-agent deluge djview4 dropbox-experimental net-tools perl-html-parser python2-mako skype"
-        "anki geeqie gource gparted gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot smartmontools thunar"
-        "lmms calligra-krita smplayer"
+        "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray-git pavucontrol pulseaudio pulseaudio-alsa"
+        "compton cronie devilspie dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip zsh"
+        "faience-icon-theme ffmpegthumbnailer gnome-theme-standard terminus-font ttf-dejavu tumbler"
+        "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental icedtea-web-java net-tools skype"
+        "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
+        "python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx"
+        "dosfstools encfs gparted ntfs-3g smartmontools"
     )
+
+    #Removed (and not sure) software:
+        #python2-mako - why did I need this?
+        #perl-html-parser - now irssi on distant server
 
     #Services to enable (systemctl enable $service)
     service=(
