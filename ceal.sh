@@ -193,8 +193,7 @@ mirror=( Belarus Denmark Russia United France )
         #alsa-utils - alsamixer and other tools
         #lib32-alsa-pluginsa - for Steam and Wine
         #lib32-libpulse - pulseaudio for Steam/Wine
-        #pasystray-git - pulseaudio systray icon and sink/source manager
-        #pavucontrol - pulseaudio control tool (per-application volume)
+        #ponymix - cli tools to rule pulseaudio
         #pulseaudio - pulseaudio itself
         #pulseaudio-alsa - alsa configuration for pulseaudio (/etc/asoundrc.conf)
 
@@ -282,7 +281,7 @@ mirror=( Belarus Denmark Russia United France )
 
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
-        "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray-git pavucontrol pulseaudio pulseaudio-alsa"
+        "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse ponymix pulseaudio pulseaudio-alsa"
         "compton cronie devilspie dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip zsh"
         "faience-icon-theme ffmpegthumbnailer gnome-theme-standard terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental icedtea-web-java net-tools skype"
