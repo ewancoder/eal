@@ -127,7 +127,7 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/{data,mtp,usb}"
-        "chown $main:users /mnt/{data,mnt,usb}"
+        "chown $main:users /mnt/{data,mtp,usb,windows}"
         "rsync -a /mnt/backup/Arch/ /home/$main/"
         "rsync -a /mnt/backup/ArchConfig/ /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
@@ -231,7 +231,8 @@ mirror=( Belarus Denmark Russia United France )
     #===== STYLING =====
         #faience-icon-theme - icons
         #ffmpegthumbnailer - lightweight video thumbnailer
-        #gnome-theme-standard - adwaita theme for gtk2/gtk3 and qt(GTK+)
+        #gnome-themes-standard - adwaita theme for gtk2/gtk3 and qt(GTK+)
+        #gtk-theme-flatstudio - dark flat theme the best ever
         #terminus-font - terminal font
         #ttf-dejavu - system fonts
         #tumbler - thumbnails
@@ -243,8 +244,9 @@ mirror=( Belarus Denmark Russia United France )
         #copy-agent - copy cloud service
         #deluge - torrent client (although I am planning on switching to rtorrent)
         #dropbox-experimental - dropbox cloud service
-        #icedtea-web-java - java for chromium (and openjdk7 as well)
+        #icedtea-web-java7- java for chromium (and openjdk7 as well)
         #net-tools - arp, ifconfig and other net tools
+        #pygtk - graphical gui needed for deluge
         #skype - for calls
 
     #===== OFFICE =====
@@ -283,8 +285,8 @@ mirror=( Belarus Denmark Russia United France )
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse ponymix pulseaudio pulseaudio-alsa"
         "compton cronie devilspie dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unzip urxvt-perls wpa_supplicant xboomx xclip zsh"
-        "faience-icon-theme ffmpegthumbnailer gnome-theme-standard terminus-font ttf-dejavu tumbler"
-        "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental icedtea-web-java net-tools skype"
+        "faience-icon-theme ffmpegthumbnailer gnome-themes-standard gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
+        "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental icedtea-web-java7 net-tools pygtk skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx"
         "dosfstools encfs gparted ntfs-3g smartmontools"
