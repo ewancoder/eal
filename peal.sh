@@ -81,8 +81,9 @@ if ! [ "$windows" == "" ]; then
 fi
 
 filename1=/usr/lib/python3.4/site-packages/canto_next/feed.py
-filename2=/usr/share/X11/locale/en_US.UTF-8/Compose
-if [ -f $filename1 ] || [ -f $filename2 ]; then
+filename2=/usr/lib/python3.4/site-packages/canto_curses/guibase.py
+filename3=/usr/share/X11/locale/en_US.UTF-8/Compose
+if [ -f $filename1 ] || [ -f $filename2 ] || [ -f $filename3 ]; then
     mess -t "Fix linux bugs&errors & add features"
 fi
 if [ -f $filename1 ]; then
@@ -96,8 +97,13 @@ if [ -f $filename1 ]; then
     sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename1
 fi
 if [ -f $filename2 ]; then
+    mess "Add canto-curses goto_hook hook"
+    sed -i "/def _goto/aplaceforhook" $filename2
+    sed -i 's/placeforhook/        call_hook("goto_hook", \[self,urls\])/g' $filename2
+fi
+if [ -f $filename3 ]; then
     mess "Fix dead acute error in Compose-keys X11 file"
-    sed -i "s/dead_actute/dead_acute/g" $filename2
+    sed -i "s/dead_actute/dead_acute/g" $filename3
 fi
 
 if ! [ "$service" == "" ]; then
