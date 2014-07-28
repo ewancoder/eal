@@ -126,8 +126,8 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /home/$main/.zshrc /root/"
         "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
-        "mkdir -p /mnt/{data,mtp,usb}"
-        "chown $main:users /mnt/{data,mtp,usb,windows}"
+        "mkdir -p /mnt/data"
+        "chown $main:users /mnt/{data,windows}"
         "rsync -a /mnt/backup/Arch/ /home/$main/"
         "rsync -a /mnt/backup/ArchConfig/ /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
@@ -201,6 +201,7 @@ mirror=( Belarus Denmark Russia United France )
         #cronie - cron daemon
         #cv - util for monitoring current IO usage (used by mine wmii status bar)
         #devilspie - sets transparency to windows based on ruleset (see transset-df)
+        #udevil - for automounting removable devices
         #dmenu - lightweight menu (see xboomx)
         #dunst - lightweight notification daemon
         #feh - image viewer / wallpaper
@@ -284,7 +285,7 @@ mirror=( Belarus Denmark Russia United France )
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xboomx xclip zsh"
+        "compton cronie cv devilspie udevil dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xboomx xclip zsh"
         "faience-icon-theme ffmpegthumbnailer gnome-themes-standard gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental icedtea-web-java7 net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
