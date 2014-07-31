@@ -202,7 +202,7 @@ mirror=( Belarus Denmark Russia United France )
         #cv - util for monitoring current IO usage (used by mine wmii status bar)
         #devilspie - sets transparency to windows based on ruleset (see transset-df)
         #udevil - for automounting removable devices
-        #dmenu - lightweight menu (see xboomx)
+        #dmenu - lightweight menu
         #dunst - lightweight notification daemon
         #feh - image viewer / wallpaper
         #fuse - FUSE itself
@@ -226,7 +226,6 @@ mirror=( Belarus Denmark Russia United France )
         #unrar, unzip - default archivers
         #urxvt-perls - for showing/clicking url within urxvt (see urxvt)
         #wpa_supplicant - connection via wpa2-psk
-        #xboomx - wrapper around dunst based on frequency (see dunst)
         #xclip - tool to get clipboard content (need for dbss [dropbox screenshoter] script)
         #zsh - bash alternative
         
@@ -285,7 +284,7 @@ mirror=( Belarus Denmark Russia United France )
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie udevil dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xboomx xclip zsh"
+        "compton cronie cv devilspie udevil dmenu dunst feh fuse git gksu gxkb jmtpfs openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip zsh"
         "faience-icon-theme ffmpegthumbnailer gnome-themes-standard gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental icedtea-web-java7 net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
