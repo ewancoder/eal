@@ -110,9 +110,7 @@ mirror=( Belarus Denmark Russia United France )
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
         mess 'Install vim plugins' \n
-        vim +BundleInstall +qall \n
-        mess 'Unmute pulseaudio' \n
-        amixer sset Master unmute"
+        vim +BundleInstall +qall"
     )
 
     #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
