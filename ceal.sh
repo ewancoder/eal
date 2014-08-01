@@ -299,7 +299,6 @@ mirror=( Belarus Denmark Russia United France )
     service=(
         cronie
         deluged
-        dropbox@ewancoder
     )
 
 #===== INTERFACE =====
