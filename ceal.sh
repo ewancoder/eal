@@ -189,7 +189,7 @@ mirror=( Belarus Denmark Russia United France )
     #===== AUDIO =====
         #alsa-plugins - advanced features like upmixing/downmixing and HQ resampling
         #alsa-utils - alsamixer and other tools
-        #lib32-alsa-pluginsa - for Steam and Wine
+        #lib32-alsa-plugins - for Steam and Wine
         #lib32-libpulse - pulseaudio for Steam/Wine
         #pulseaudio - pulseaudio itself
         #pulseaudio-alsa - alsa configuration for pulseaudio (/etc/asoundrc.conf)
