@@ -1,14 +1,14 @@
 #!/bin/bash
-#Ewancoder Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
+#Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
 #2014 Ewancoder <ewancoder@gmail.com>
-version="1.9.5 Error-Handled, 2014"
+version="2.0 Final, 2014"
 
 #If an error is detected while script is running, you will be prompted for action: repeat this command (which caused the error) or skip it and go further
 #If timeout=0, script will wait for your decision. If you set $timeout variable to something, script will wait this time (in seconds) and then try to repeat failed command
 timeout=10  #If an error happened, wait 10 seconds and try again
 
-#Set hostinstall=1 if you want to install linux from within your already installed (arch) linux (yep, that's real)
-#If you're already under live-cd and wanna install old-way, set it to 0
+#Set hostinstall=1 if you want to install linux from within your already installed (arch) linux
+#If you're already under live-cd and wanna install it old-way, set $hostinstall to 0
 hostinstall=1
 #This is needed only for host-install (installing from within your already working linux)
 #Set it to downloadable url path to live-cd ROOT (extension should be fs.sfs) arch linux image
@@ -16,7 +16,7 @@ iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.s
 
 #With auto=0 script will pause on the each step and let you continue by pressing [RETURN] (useful for debugging)
 #If you want to install in a totally automatical way, set this to 1
-#Be AWARE: setting auto=1 means that script will very FAST execute lots of commands and will pause ONLY if an error would be detected
+#Be AWARE: setting auto=1 means that script will very FAST execute lots of commands and will pause ONLY if an error would be detected or your prompt needed
 auto=0
 
 #Console font (cyr-sun16 for russian symbols)
@@ -80,7 +80,7 @@ mirror=( Belarus Denmark Russia United France )
     windows=/dev/sdb1
     #Temporary partition for unsquashing (1G or bigger)
     #If you have 1G free on '/' (or you're not installing from host-system), you don't need it
-    #temp=/dev/sda9
+    #temp=/dev/sda10
 
 #Users configuration
 
@@ -89,7 +89,7 @@ mirror=( Belarus Denmark Russia United France )
     user=( ewancoder lft )
     #Shells for users (leave as '' for standard)
     #Shell must be a full-path name
-    shell=( /bin/zsh /bin/zsh )
+    shell=( /bin/zsh /bin/bash )
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
     group=( fuse,lock,uucp,tty fuse ) #I am adding groups "fuse,lock,uucp,tty" to my first user (ewancoder) and only one group "fuse" to my second user (lft). Both will be also added in the group "users"
@@ -155,7 +155,7 @@ mirror=( Belarus Denmark Russia United France )
     #Because all repos cloned as root user, all they are root-owned at the beginning. Here you can setup chown rule which will apply after cloning to all repo content
     gitrule=( $main:users '' $main:users $main:users )
     #Maybe you want to checkout into another branch
-    gitbranch=( '' '' refactoring '' )
+    gitbranch=( '' '' dev '' )
     #Sumbodules to pull (remove if you don't need any)
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" )
     #Where to link ALL content (merge) from the repo
@@ -287,10 +287,6 @@ mirror=( Belarus Denmark Russia United France )
         "python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
-
-    #Removed (and not sure) software:
-        #python2-mako - why did I need this?
-        #perl-html-parser - now irssi on distant server
 
     #Services to enable (systemctl enable $service)
     service=(

@@ -1,9 +1,8 @@
 #!/bin/bash
 source ceal.sh
-
 mess -t "Prepare live-cd"
 if ! which unsquashfs > /dev/null || ! which curl > /dev/null; then
-    mess "Install squashfs-tools"
+    mess "Install squashfs-tools and curl"
     if which pacman > /dev/null; then
         pacman -Syy
         pacman -S --noconfirm squashfs-tools curl
@@ -23,10 +22,11 @@ if ! [ -f root-image.fs.sfs ] && ! [ -f /sfs/squashfs-root/root-image.fs ]; then
     curl -o root-image.fs.sfs $iso
 fi
 if ! [ -f /sfs/squashfs-root/root-image.fs ]; then
-    mess "Unsquash root live-cd image"
+    mess "Unsquash root live-cd image to /sfs/squashfs-root/root-image.fs"
     unsquashfs -d /sfs/squashfs-root root-image.fs.sfs
+else
+    mess "Root live-cd image already exists at /sfs/squashfs-root/root-image.fs"
 fi
-mess "Live-cd placed to /sfs/squashfs-root/root-image.fs"
 
 mess -t "Prepare chroot-environment"
 mess "Make /arch folder"
@@ -39,7 +39,7 @@ mount -o bind /dev /arch/dev
 mount -o bind /dev/pts /arch/dev/pts
 cp -L /etc/resolv.conf /arch/etc
 
-mess -t "Chroot into live-cd environment and execute eal.sh"
+mess -t "Chroot into live-cd environment and execute eal.sh (start regular installation)"
 mess "Copy {eal,ceal,peal}.sh scripts to /arch/root/"
 cp {eal,ceal,peal}.sh /arch/root/
 mess "Chroot into /arch and execute /root/eal.sh"

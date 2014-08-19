@@ -1,6 +1,5 @@
 #!/bin/bash
 source /root/ceal.sh
-
 mess -t "Setup hostname & timezone"
 mess "Set hostname ($hostname)"
 echo $hostname > /etc/hostname
@@ -32,12 +31,7 @@ if [ $netctl -eq 1 ]; then
     mess "Copy $profile template"
     cp /etc/netctl/examples/$profile /etc/netctl/
     mess "Configure network"
-    sed -i "s/eth0/$interface/" /etc/netctl/$profile
-    sed -i "s/wlan0/$interface/" /etc/netctl/$profile
-    sed -i "s/^Address=.*/Address='$ip\/24'/" /etc/netctl/$profile
-    sed -i "s/192.168.1.1/$dns/" /etc/netctl/$profile
-    sed -i "s/^ESSID=.*/ESSID='$essid'/" /etc/netctl/$profile
-    sed -i "s/^Key=.*/Key='$key'/" /etc/netctl/$profile
+    sed -i -e "s/eth0/$interface/" -e "s/wlan0/$interface/" -e "s/^Address=.*/Address='$ip\/24'/" -e "s/192.168.1.1/$dns/" -e "s/^ESSID=.*/ESSID='$essid'/" -e "s/^Key=.*/Key='$key'/" /etc/netctl/$profile
     mess "Enable netctl $profile"
     netctl enable $profile
 else
@@ -47,7 +41,7 @@ else
     mess -w "Wait several seconds to make sure that connection is up [RETURN]"
 fi
 
-mess -t "Install essential software"
+mess -t "Prepare for software installation"
 mess "Install yaourt"
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
@@ -88,18 +82,11 @@ if [ -f $filename1 ] || [ -f $filename2 ] || [ -f $filename3 ]; then
 fi
 if [ -f $filename1 ]; then
     mess "Add canto-next daemon_new_item hook"
-    sed -i "/from .tag import alltags/afrom .hooks import call_hook" $filename1
-    sed -i "/item\[key\] = olditem/aplaceforbreak" $filename1
-    sed -i "/placeforbreak/aplaceforelse" $filename1
-    sed -i "/placeforelse/aplaceforcall" $filename1
-    sed -i 's/placeforbreak/                    break/g' $filename1
-    sed -i 's/placeforelse/            else:/g' $filename1
-    sed -i 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename1
+    sed -i -e "/from .tag import alltags/afrom .hooks import call_hook" -e "/item\[key\] = olditem/aplaceforbreak" -e "/placeforbreak/aplaceforelse" -e "/placeforelse/aplaceforcall" -e 's/placeforbreak/                    break/g' -e 's/placeforelse/            else:/g' -e 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename1
 fi
 if [ -f $filename2 ]; then
     mess "Add canto-curses goto_hook hook"
-    sed -i "/def _goto/aplaceforhook" $filename2
-    sed -i 's/placeforhook/        call_hook("goto_hook", \[self,urls\])/g' $filename2
+    sed -i -e "/def _goto/aplaceforhook" -e 's/placeforhook/        call_hook("goto_hook", \[self,urls\])/g' $filename2
 fi
 if [ -f $filename3 ]; then
     mess "Fix dead acute error in Compose-keys X11 file"

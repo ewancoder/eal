@@ -1,7 +1,6 @@
 #!/bin/bash
-cd $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $(dirname "$BASH_SOURCE")
 source ceal.sh
-
 mess -t "Mount all partitions and create fstab"
 mess "Create local fstab file (prepare)"
 echo "# /etc/fstab: static file system information" > fstab
@@ -37,7 +36,7 @@ fi
 
 mess -t "Install system"
 if ! [ -d /run/shm ]; then
-    mess "Create /run/shm if not exist [for debian systems]"
+    mess "Create /run/shm cause it doesn't exist [for debian systems]"
     mkdir /run/shm
 fi
 mess "Install base-system"
@@ -46,9 +45,8 @@ mess "Move previously created fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
 
 mess -t "Chroot to system"
-mess "Create root folder (just in case)"
-mkdir -p /mnt/root
 mess "Copy {ceal,peal}.sh to /mnt/root"
+mkdir -p /mnt/root
 cp {ceal,peal}.sh /mnt/root/
 mess "Go to arch-chroot and execute peal.sh"
 arch-chroot /mnt /root/peal.sh
