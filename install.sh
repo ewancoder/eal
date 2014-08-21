@@ -12,18 +12,18 @@ source ceal.sh
 prepare() {
     rm -f $2
     while read -r p; do
-        if ! [ "$p" == "" -a \
-        "${p:0:1}" == "#" -a \
-        "${p:0:2}" == "fi" -a \
-        "${p:0:3}" == "if " -a \
-        "${p:0:4}" == "for " -a \
-        "${p:0:4}" == "else" -a \
-        "${p:0:4}" == "done" -a \
-        "${p:0:4}" == "' > " -a \
-        "${p:0:5}" == "' >> " -a \
-        "${p:0:5}" == "mess " -a \
-        "${p:0:5}" == "elif " -a \
-        "${p:0:6}" == "echo '"; then
+        if ! [ "$p" == "" -o \
+        "${p:0:1}" == "#" -o \
+        "${p:0:2}" == "fi" -o \
+        "${p:0:3}" == "if " -o \
+        "${p:0:4}" == "for " -o \
+        "${p:0:4}" == "else" -o \
+        "${p:0:4}" == "done" -o \
+        "${p:0:4}" == "' > " -o \
+        "${p:0:5}" == "' >> " -o \
+        "${p:0:5}" == "mess " -o \
+        "${p:0:5}" == "elif " -o \
+        "${p:0:6}" == "echo '" ]; then
             echo "until $p; do" >> $2
             echo -e '    ans=""\n    mess -q "Error occured on step [$step]. Retry? (y/n)"' >> $2
             if [ $timeout -eq 0 ]; then
@@ -65,6 +65,8 @@ mess "Remove temporary 'eal' directory"
 cd ..
 rm -r eal
 mess "Unmount all within /arch"
-grep /arch /proc/mounts | cut -d " " -f2 | sort -r | xargs umount -n
+if ! `umount -R /arch` > /dev/null; then
+    grep /arch /proc/mounts | cut -d " " -f2 | sort -r | xargs umount -n
+fi
 
 mess -w "This is it. You can reboot into your working system"

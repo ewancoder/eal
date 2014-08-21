@@ -165,8 +165,7 @@ mirror=( Belarus Denmark Russia United France )
 
 #Yaourt configuration
 
-    #If you want to configure makepkg (aur) to store it's packages in /var/cache/packages/pkg folder (for future use) - set this to 1 [be AWARE: this sets your /var/cache/packages/pkg folder to 666 permissions]
-    #If this is set to 0, pkgsymlink won't be created (only cachedinstall will work if set)
+    #If you want to configure makepkg (aur) to store it's packages in /var/cache/packages/pkg folder (for future use) - set this to 1 [be AWARE: this sets your /var/cache/packages/pkg folder to 777 permissions]
     cachedpkg=1
     #If your /var/cache/pacman/pkg directory is a symlink to another location, set it here; otherwise you can also set it in 'devices' section to use another partition or just leave it alone for storing all packages at /
     #For example, I have /mnt/backup mounted in 'devices' section and I have "ln -fs /mnt/backup/pkg /var/cache/pacman/pkg" set below

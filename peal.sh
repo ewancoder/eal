@@ -16,32 +16,9 @@ locale-gen
 mess "Set font as $font"
 setfont $font
 
-if [ $cachedpkg -eq 1 ]; then
-    mess -t "Prepare /var/cache/pacman/pkg folder to include aur (makepkg) archives"
-    if ! [ "$pkgsymlink" == "" ]; then
-        mess "Set symlink from $pkgsymlink to /var/cache/pacman/pkg"
-        ln -fs $pkgsymlink /var/cache/pacman/pkg
-    elif ! [ -e /var/cache/pacman/pkg ]; then
-        mess "Create /var/cache/pacman/pkg folder"
-        mkdir -p /var/cache/pacman/pkg
-    fi
-    mess "Give 666 rights to /var/cache/pacman/pkg"
-    chmod 666 /var/cache/pacman/pkg
-    mess "Edit PKGDEST value in /etc/makepkg.conf file"
-    sed -i '/#PKGDEST/aPKGDEST=/var/cache/pacman/pkg' /etc/makepkg.conf
-    mess "Edit EXPORT value in /etc/yaourtrc file"
-    sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
-fi
-
-if [ $cachedinstall -eq 1 ]; then
-    mess -t "Prepare cached install from /var/cache/pacman/pkg directory (configure pacman)"
-    mess "Edit pacman.conf to include local repositories"
-    echo -e "[local64]\nServer = file:///var/cache/pacman/pkg\n[local32]\nServer = file:///var/cache/pacman/pkg\n[local]\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
-    mess "Update pacman databases"
-    pacman -Syy
-fi
-
 mess -t "Install grub"
+mess "Relink /var/cache/pacman/pkg folder properly"
+ln -fs $pkgsymlink /var/cache/pacman/pkg
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
 mess "Install grub bootloader to $mbr mbr"
@@ -72,6 +49,10 @@ curl -O aur.sh/aur.sh
 chmod +x aur.sh
 ./aur.sh -si --asroot --noconfirm package-query yaourt
 rm -r aur.sh package-query yaourt
+mess "Edit PKGDEST value in /etc/makepkg.conf file"
+sed -i '/#PKGDEST/aPKGDEST=/var/cache/pacman/pkg' /etc/makepkg.conf
+mess "Edit EXPORT value in /etc/yaourtrc file"
+sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"
