@@ -18,27 +18,18 @@ for (( i = 0; i < ${#device[@]}; i++ )); do
     echo -e "\n# ${description[$i]} partition\n${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}" >> fstab
 done
 
-if [ $cachedpkg -eq 1 ]; then
-    mess -t "Prepare /var/cache/pacman/pkg folder to include aur (makepkg) archives"
-    if ! [ "$pkgsymlink" == "" ]; then
-        mess "Set symlink from $pkgsymlink to /var/cache/pacman/pkg"
-        rm -rf /var/cache/pacman/pkg
-        ln -fs /mnt$pkgsymlink /var/cache/pacman/pkg
-    elif ! [ -e /mnt/var/cache/pacman/pkg ]; then
-        mess "Create /var/cache/pacman/pkg folder"
-        mkdir -p /mnt/var/cache/pacman/pkg
-    fi
-    mess "Give 666 rights to /var/cache/pacman/pkg"
-    chmod 777 /mnt/var/cache/pacman/pkg
+if [ ! "$pkgsymlink" == "" -o $localinstall -eq 1 ]; then
+    mess -t "Prepare local package cache"
 fi
-
-if [ $cachedinstall -eq 1 ]; then
-    mess -t "Prepare cached install from /var/cache/pacman/pkg directory (configure pacman)"
-    mess "Edit pacman.conf to include local repositories"
-    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
-    mess "Update pacman databases"
-    pacman -Syy
+if ! [ "$pkgsymlink" == "" ]; then
+    mess "Create symlink to /var/cache/pacman/pkg ($pkgsymlink)"
+    rm -rf /var/cache/pacman/pkg
+    ln -fs /mnt$pkgsymlink /var/cache/pacman/pkg
 fi
+#if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
+#    mess "Edit pacman.conf to include local repositories"
+#    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
+#fi
 
 mess -t "Form mirrorlist & update pacman"
 for i in "${mirror[@]}"; do

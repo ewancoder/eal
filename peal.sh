@@ -16,9 +16,32 @@ locale-gen
 mess "Set font as $font"
 setfont $font
 
+mess -t "Prepare for software installation"
+if ! [ "$pkgsymlink" == "" ]; then
+    mess "Relink /var/cache/pacman/pkg folder properly"
+    rm -rf /var/cache/pacman/pkg
+    ln -fs $pkgsymlink /var/cache/pacman/pkg
+fi
+mess "Install yaourt"
+curl -O aur.sh/aur.sh
+chmod +x aur.sh
+./aur.sh -si --asroot --noconfirm package-query yaourt
+rm -r aur.sh package-query yaourt
+if [ $localaur -eq 1 ]; then
+    mess "Give 777 rights to /var/cache/pacman/pkg"
+    mkdir -p /mnt/var/cache/pacman/pkg
+    chmod 777 /mnt/var/cache/pacman/pkg
+    mess "Edit PKGDEST value in /etc/makepkg.conf file"
+    sed -i '/#PKGDEST/aPKGDEST=/var/cache/pacman/pkg' /etc/makepkg.conf
+    mess "Edit EXPORT value in /etc/yaourtrc file"
+    sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
+fi
+mess "Add multilib via sed"
+sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
+mess "Update packages including multilib"
+yaourt -Syy
+
 mess -t "Install grub"
-mess "Relink /var/cache/pacman/pkg folder properly"
-ln -fs $pkgsymlink /var/cache/pacman/pkg
 mess "Install grub to /boot"
 pacman -S --noconfirm grub
 mess "Install grub bootloader to $mbr mbr"
@@ -28,7 +51,7 @@ pacman -S --noconfirm os-prober
 mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
-mess -t "Activate and setup network connection"
+mess -t "Setup network connection"
 if [ $netctl -eq 1 ]; then
     mess "Copy $profile template"
     cp /etc/netctl/examples/$profile /etc/netctl/
@@ -37,26 +60,9 @@ if [ $netctl -eq 1 ]; then
     mess "Enable netctl $profile"
     netctl enable $profile
 else
-    mess "Enable and start dhcpcd"
+    mess "Enable dhcpcd"
     systemctl enable dhcpcd
-    dhcpcd
-    mess -w "Wait several seconds to make sure that connection is up [RETURN]"
 fi
-
-mess -t "Prepare for software installation"
-mess "Install yaourt"
-curl -O aur.sh/aur.sh
-chmod +x aur.sh
-./aur.sh -si --asroot --noconfirm package-query yaourt
-rm -r aur.sh package-query yaourt
-mess "Edit PKGDEST value in /etc/makepkg.conf file"
-sed -i '/#PKGDEST/aPKGDEST=/var/cache/pacman/pkg' /etc/makepkg.conf
-mess "Edit EXPORT value in /etc/yaourtrc file"
-sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
-mess "Add multilib via sed"
-sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
-mess "Update packages including multilib"
-yaourt -Syy
 
 mess -t "Install all software"
 for (( i = 0; i < ${#software[@]}; i++ )); do
