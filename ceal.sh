@@ -292,6 +292,8 @@ mirror=( Belarus Denmark Russia United France )
     service=(
         cronie
         deluged
+        systemd-networkd
+        systemd-timesyncd
     )
 
 #===== INTERFACE =====
