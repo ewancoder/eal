@@ -36,6 +36,10 @@ if [ $localaur -eq 1 ]; then
     mess "Edit EXPORT value in /etc/yaourtrc file"
     sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
 fi
+if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
+    mess "Edit pacman.conf to include local repositories"
+    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
+fi
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"

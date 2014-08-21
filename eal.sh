@@ -26,10 +26,10 @@ if ! [ "$pkgsymlink" == "" ]; then
     rm -rf /var/cache/pacman/pkg
     ln -fs /mnt$pkgsymlink /var/cache/pacman/pkg
 fi
-#if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
-#    mess "Edit pacman.conf to include local repositories"
-#    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
-#fi
+if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
+    mess "Edit pacman.conf to include local repositories"
+    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
+fi
 
 mess -t "Form mirrorlist & update pacman"
 for i in "${mirror[@]}"; do
