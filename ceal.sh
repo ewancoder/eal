@@ -173,7 +173,8 @@ mirror=( Belarus Denmark Russia United France )
     #Path is relative to final chroot environment of your installed system (so / is your future / directory of installed system)
     pkgsymlink=/mnt/backup/pkg
     #If you want to use already existing packages DURING INSTALLATION PROCESS, set this to 1. Cached packages will be looked for in your /var/cache/pacman/pkg folder if $localrep variable is not set
-    localinstall=1
+    #DANGEROUS: this option will break the installation if there's broken or incomplete list of packages in cache directory (of course, you can also debug it using 'givemebash' feature)
+    localinstall=0
     #If you want to specify your local repository location, set this to your folder
     #You can go even furthermore and configure an ultimate live-cd which will install all the software without an internet connection available (just from local packages)
     #Path is relative to your live-cd root '/' folder (or to unsquashed live-cd root which is mounted while installing from host-install)
