@@ -2,6 +2,7 @@
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
 #2014 Ewancoder <ewancoder@gmail.com>
 version="2.0 Final, 2014"
+release="2.0.5 Cached Install"
 
 #If an error is detected while script is running, you will be prompted for action: repeat this command (which caused the error) or skip it and go further
 #If timeout=0, script will wait for your decision. If you set $timeout variable to something, script will wait this time (in seconds) and then try to repeat failed command
@@ -161,6 +162,17 @@ mirror=( Belarus Denmark Russia United France )
     #Where to link ALL content (merge) from the repo
     #This is the sweetest peace from the whole script. All the files from your $gitfolder directories will be symlinked to $gitlink directories
     gitlink=( /home/$main /etc )
+
+#Yaourt configuration
+
+    #If you want to configure makepkg (aur) to store it's packages in /var/cache/packages/pkg folder (for future use) - set this to 1 [be AWARE: this sets your /var/cache/packages/pkg folder to 666 permissions]
+    #If this is set to 0, pkgsymlink won't be created (only cachedinstall will work if set)
+    cachedpkg=1
+    #If your /var/cache/pacman/pkg directory is a symlink to another location, set it here; otherwise you can also set it in 'devices' section to use another partition or just leave it alone for storing all packages at /
+    #For example, I have /mnt/backup mounted in 'devices' section and I have "ln -fs /mnt/backup/pkg /var/cache/pacman/pkg" set below
+    pkgsymlink=/mnt/backup/pkg
+    #If you want to use already existing packages DURING INSTALLATION PROCESS, set this to 1. Cached packages will be looked for in your /var/cache/pacman/pkg folder (set it in 'devices' folder or here in 'pkgsymlink' variable, othervise /var/cache/pacman/pkg folder will be empty)
+    cachedinstall=1
 
 #Software configuration
 
