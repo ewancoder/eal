@@ -1,11 +1,11 @@
 #!/bin/bash
 source ceal.sh
-if [ ! $(id -u) -eq 0 ]; then
+if [ ! `id -u` -eq 0 ]; then
     mess -w "You have to be ROOT to run this script. Exiting."
     exit
 fi
 clear
-mess -t "Effective & Easy (Ewancoder) Arch Linux installation script\nVersion $version"
+mess -t "Effective & Easy (Ewancoder) Arch Linux installation script\nVersion $version\nRelease $release"
 mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4 + mkswap) and put them into 'ceal.sh' file"
 source ceal.sh
 
@@ -31,7 +31,7 @@ prepare() {
             else
                 echo -e "    mess -q 'Auto-repeating in $timeout seconds'\n    read -t $timeout ans" >> $2
             fi
-            echo -e '    if [ "$ans" == "n" ] || [ "$ans" == "N" ]; then\n        break\n    elif [ "$ans" == "givemebash" ]; then\n        /bin/bash\n    fi\ndone' >> $2
+            echo -e '    if [ "$ans" == "n" -o "$ans" == "N" ]; then\n        break\n    elif [ "$ans" == "givemebash" ]; then\n        /bin/bash\n    fi\ndone' >> $2
         else
             echo $p >> $2
         fi
@@ -47,6 +47,7 @@ mess "Prepare heal.sh"
 prepare heal.sh eal/heal.sh
 mess "Prepare peal.sh"
 prepare peal.sh eal/peal.sh
+mess "Copy ceal.sh"
 cp ceal.sh eal/
 cd eal
 
@@ -65,7 +66,7 @@ mess "Remove temporary 'eal' directory"
 cd ..
 rm -r eal
 mess "Unmount all within /arch"
-if ! `umount -R /arch` > /dev/null; then
+if ! umount -R /arch > /dev/null; then
     grep /arch /proc/mounts | cut -d " " -f2 | sort -r | xargs umount -n
 fi
 

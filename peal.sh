@@ -17,7 +17,7 @@ mess "Set font as $font"
 setfont $font
 
 mess -t "Prepare for software installation"
-if ! [ "$pkgsymlink" == "" ]; then
+if [ ! "$pkgsymlink" == "" ]; then
     mess "Relink /var/cache/pacman/pkg folder properly"
     rm -rf /var/cache/pacman/pkg
     ln -fs $pkgsymlink /var/cache/pacman/pkg
@@ -74,9 +74,9 @@ for (( i = 0; i < ${#software[@]}; i++ )); do
     yaourt -S --noconfirm ${software[$i]}
 done
 mess "Clean mess - remove orphans recursively"
-pacman -Rns $(pacman -Qtdq) --noconfirm || true
+pacman -Rns `pacman -Qtdq` --noconfirm || true
 
-if ! [ "$windows" == "" ]; then
+if [ ! "$windows" == "" ]; then
     mess -t "Copy windows fonts to linux"
     mess "Mount windows partition to /mnt/windows"
     mkdir -p /mnt/windows
@@ -93,7 +93,7 @@ fi
 filename1=/usr/lib/python3.4/site-packages/canto_next/feed.py
 filename2=/usr/lib/python3.4/site-packages/canto_curses/guibase.py
 filename3=/usr/share/X11/locale/en_US.UTF-8/Compose
-if [ -f $filename1 ] || [ -f $filename2 ] || [ -f $filename3 ]; then
+if [ -f $filename1 -o -f $filename2 -o -f $filename3 ]; then
     mess -t "Fix linux bugs&errors & add features"
 fi
 if [ -f $filename1 ]; then
@@ -109,7 +109,7 @@ if [ -f $filename3 ]; then
     sed -i "s/dead_actute/dead_acute/g" $filename3
 fi
 
-if ! [ "$service" == "" ]; then
+if [ ! "$service" == "" ]; then
     mess -t "Enable services"
     for s in ${service[@]}; do
         mess "Enable $s service"
@@ -117,7 +117,7 @@ if ! [ "$service" == "" ]; then
     done
 fi
 
-if ! [ "$group" == "" ]; then
+if [ ! "$group" == "" ]; then
     mess -t "Create non-existing groups"
     for i in "${group[@]}"; do
         IFS=',' read -a grs <<< "$i"
@@ -136,12 +136,12 @@ for i in ${user[@]}; do
     useradd -m -g users -s /bin/bash $i
 done
 
-if ! [ "$gitrepo" == "" ]; then
+if [ ! "$gitrepo" == "" ]; then
     mess -t "Clone github repositories"
     for (( i = 0; i < ${#gitrepo[@]}; i++ )); do
         mess "Clone ${gitrepo[$i]} repo"
         git clone https://github.com/${gitrepo[$i]}.git ${gitfolder[$i]}
-        if ! [ "${gitmodule[$i]}" == "" ]; then
+        if [ ! "${gitmodule[$i]}" == "" ]; then
             mess "Pull submodules ${gitmodule[$i]}"
             cd ${gitfolder[$i]}
             git submodule update --init --recursive ${gitmodule[$i]}
@@ -153,17 +153,17 @@ if ! [ "$gitrepo" == "" ]; then
             done
             cd
         fi
-        if ! [ "${gitrule[$i]}" == "" ]; then
+        if [ ! "${gitrule[$i]}" == "" ]; then
             mess "SET chown '${gitrule[$i]}'"
             chown -R ${gitrule[$i]} ${gitfolder[$i]}
         fi
-        if ! [ "${gitbranch[$i]}" == "" ]; then
+        if [ ! "${gitbranch[$i]}" == "" ]; then
             mess "Checkout to branch '${gitbranch[$i]}'"
             cd ${gitfolder[$i]}
             git checkout ${gitbranch[$i]}
             cd
         fi
-        if ! [ "${gitlink[$i]}" == "" ]; then
+        if [ ! "${gitlink[$i]}" == "" ]; then
             mess "Merge all files (make symlinks)"
             shopt -s dotglob
             for f in $(ls -A ${gitfolder[$i]}/ | grep -v .git); do
@@ -188,14 +188,14 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     usermod -G ${group[$i]} ${user[$i]}
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    if ! [ "${gitname[$i]}" == "" ] || ! [ "${execs[$i]}" == "" ]; then
+    if ! [ "${gitname[$i]}" == "" -a "${execs[$i]}" == "" ]; then
         cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
         echo '
         source ceal.sh
         mess -t "User executed script for ${user[$i]} user"
         ' > user.sh
-        if ! [ "${gitname[$i]}" == "" ]; then
+        if [ ! "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
             echo '
             mess "Configure git for ${user[$i]}"
@@ -209,7 +209,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             git config --global core.editor ${giteditor[$i]}
             ' >> user.sh
         fi
-        if ! [ "${execs[$i]}" == "" ]; then
+        if [ ! "${execs[$i]}" == "" ]; then
             mess "Add user-based execs to user-executed script"
             echo -e ${execs[$i]} >> user.sh
         fi
@@ -229,7 +229,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     chsh -s ${shell[$i]} ${user[$i]}
 done
 
-if ! [ "$sudoers" == "" ]; then
+if [ ! "$sudoers" == "" ]; then
     mess -t "Add additional entries into /etc/sudoers"
     echo -e "\n## Additional configuration" >> /etc/sudoers
     for i in "${sudoers[@]}"; do
@@ -238,7 +238,7 @@ if ! [ "$sudoers" == "" ]; then
     done
 fi
 
-if ! [ "$rootexec" == "" ]; then
+if [ ! "$rootexec" == "" ]; then
     mess -t "Execute all root commands"
     shopt -s dotglob
     for (( i = 0; i < ${#rootexec[@]}; i++ )); do

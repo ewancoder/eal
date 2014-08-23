@@ -1,11 +1,11 @@
 #!/bin/bash
-cd $(dirname "$BASH_SOURCE")
+cd `dirname "$BASH_SOURCE"`
 source ceal.sh
 mess -t "Mount all partitions and create fstab"
 mess "Create local fstab file (prepare)"
 echo "# /etc/fstab: static file system information" > fstab
 for (( i = 0; i < ${#device[@]}; i++ )); do
-    if ! [ "${type[$i]}" == "swap" ]; then
+    if [ ! "${type[$i]}" == "swap" ]; then
         mess "Create folder /mnt${mount[$i]}"
         mkdir -p /mnt${mount[$i]}
         mess "Mount ${device[$i]} to /mnt${mount[$i]}"
@@ -21,7 +21,7 @@ done
 if [ ! "$pkgsymlink" == "" -o $localinstall -eq 1 ]; then
     mess -t "Prepare local package cache"
 fi
-if ! [ "$pkgsymlink" == "" ]; then
+if [ ! "$pkgsymlink" == "" ]; then
     mess "Create symlink to /var/cache/pacman/pkg ($pkgsymlink)"
     rm -rf /var/cache/pacman/pkg
     ln -fs /mnt$pkgsymlink /var/cache/pacman/pkg
@@ -48,7 +48,7 @@ if [ $hostinstall -eq 1 ]; then
 fi
 
 mess -t "Install system"
-if ! [ -d /run/shm ]; then
+if [ ! -d /run/shm ]; then
     mess "Create /run/shm cause it doesn't exist [for debian systems]"
     mkdir /run/shm
 fi
