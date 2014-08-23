@@ -129,6 +129,7 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/data /media"
         "chown $main:users /mnt/{data,windows}"
+        "chown $main:users /etc/.dotfiles/.git"
         "rsync -a /mnt/backup/Arch/ /home/$main/"
         "rsync -a /mnt/backup/ArchConfig/ /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
