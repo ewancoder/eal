@@ -110,6 +110,8 @@ mirror=( Belarus Denmark Russia United France )
     execs=(
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
+        mess 'Make .kde4 directory for further un-backup-ing' \n
+        mkdir -p /home/$main/.kde4/share/apps/okular/part.rc \n
         mess 'Install vim plugins' \n
         vim +BundleInstall +qall"
     )
@@ -130,6 +132,7 @@ mirror=( Belarus Denmark Russia United France )
         "rsync -a /mnt/backup/Arch/ /home/$main/"
         "rsync -a /mnt/backup/ArchConfig/ /home/$main/.config/"
         "rsync -a /mnt/backup/Other/cron /var/spool/"
+        "rsync -a /mnt/backup/Other/part.rc /home/$main/.kde4/share/apps/okular/part.rc"
         "modprobe fuse"
         "chmod -x /etc/grub.d/10_linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
