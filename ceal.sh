@@ -319,6 +319,7 @@ mirror=( Belarus Denmark Russia United France )
         deluged
         systemd-networkd
         systemd-timesyncd
+        irssiscreen@ewancoder.service
     )
 
 #===== INTERFACE =====
