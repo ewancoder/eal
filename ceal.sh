@@ -231,6 +231,7 @@ mirror=( Belarus Denmark Russia United France )
         #gxkb - language indicator
         #jmtpfs - mtp (android) mount
         #libnotify - need for notify-send command (apparently not any package dependencies it)
+        #mpg123 - playing and converting mp3
         #openssh - ssh server/client
         #p7zip - universal archiver for 7z packages
         #rsync - files transfer tool
@@ -304,7 +305,7 @@ mirror=( Belarus Denmark Russia United France )
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie udevil dmenu dunst feh fuse git gksu gxkb jmtpfs libnotify openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip zsh"
+        "compton cronie cv devilspie udevil dmenu dunst feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen tig tilda transset-df xorg-server xorg-server-utils xorg-xinit wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot vlc"
