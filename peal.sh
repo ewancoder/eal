@@ -90,24 +90,9 @@ if [ ! "$windows" == "" ]; then
     umount $windows
 fi
 
-filename1=/usr/lib/python3.4/site-packages/canto_next/feed.py
-filename2=/usr/lib/python3.4/site-packages/canto_curses/guibase.py
-filename3=/usr/share/X11/locale/en_US.UTF-8/Compose
-if [ -f $filename1 -o -f $filename2 -o -f $filename3 ]; then
-    mess -t "Fix linux bugs&errors & add features"
-fi
-if [ -f $filename1 ]; then
-    mess "Add canto-next daemon_new_item hook"
-    sed -i -e "/from .tag import alltags/afrom .hooks import call_hook" -e "/item\[key\] = olditem/aplaceforbreak" -e "/placeforbreak/aplaceforelse" -e "/placeforelse/aplaceforcall" -e 's/placeforbreak/                    break/g' -e 's/placeforelse/            else:/g' -e 's/placeforcall/                call_hook("daemon_new_item", \[self, item\])/g' $filename1
-fi
-if [ -f $filename2 ]; then
-    mess "Add canto-curses goto_hook hook"
-    sed -i -e "/def _goto/aplaceforhook" -e 's/placeforhook/        call_hook("goto_hook", \[self,urls\])/g' $filename2
-fi
-if [ -f $filename3 ]; then
-    mess "Fix dead acute error in Compose-keys X11 file"
-    sed -i "s/dead_actute/dead_acute/g" $filename3
-fi
+mess -t "Fix linux errors"
+mess "Fix dead acute error in Compose-keys X11 file"
+sed -i "s/dead_actute/dead_acute/g" $filename
 
 if [ ! "$service" == "" ]; then
     mess -t "Enable services"
