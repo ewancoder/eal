@@ -146,6 +146,7 @@ if [ ! "$gitrepo" == "" ]; then
             mess "Checkout to branch '${gitbranch[$i]}'"
             cd ${gitfolder[$i]}
             git checkout ${gitbranch[$i]}
+            git remote set-url origin git@github.com:${gitrepo[$i]}.git
             cd
         fi
         if [ ! "${gitlink[$i]}" == "" ]; then
