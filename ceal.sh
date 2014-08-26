@@ -87,19 +87,19 @@ mirror=( Belarus Denmark Russia United France )
 
     #User login
     #I am using 2 users. You can always set only one user like [user=myname] or [user=( myname )]
-    user=( ewancoder lft )
+    user=ewancoder
     #Shells for users (leave as '' for standard)
     #Shell must be a full-path name
-    shell=( /bin/zsh /bin/bash )
+    shell=/bin/zsh
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
     #Leave it as '' if you don't need one
-    group=( fuse,lock,uucp,tty fuse ) #I am adding groups "fuse,lock,uucp,tty" to my first user (ewancoder) and only one group "fuse" to my second user (lft). Both will be also added in the group "users"
+    group=fuse,lock,uucp,tty #I am adding groups "fuse,lock,uucp,tty" to my first user (ewancoder) and only one group "fuse" to my second user (lft). Both will be also added in the group "users"
     #Main user - this variable is set just for referring to my nickname (ewancoder) only once per script. Then my nickname placed in a $main constant. You can set your "main" user as your second user doing so: 'main=${user[1]}'
     main=${user[0]} #I am setting this as 'ewancoder'
 
     #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${user[0]} for first user and ${user[1]} for the second (count begins with zero)
     #If not needed, set it to sudoers='' or remove
-    sudoers=( "$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" ) #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
+    sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
 
 #Executable commands and links
 
