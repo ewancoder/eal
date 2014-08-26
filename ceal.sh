@@ -175,7 +175,7 @@ mirror=( Belarus Denmark Russia United France )
     #If you configured your /var/cache/pacman/pkg folder to be a mountpoint (in 'devices' sextion), $pkgsymlink SHOULD be '' (or commented)
     #For example, I have /mnt/backup mounted in 'devices' section and I have "ln -fs /mnt/backup/pkg /var/cache/pacman/pkg" set below
     #Path is relative to final chroot environment of your installed system (so / is your future / directory of installed system)
-    pkgsymlink=/mnt/backup/pkg
+    #pkgsymlink=/mnt/backup/pkg
     #If you want to use already existing packages DURING INSTALLATION PROCESS, set this to 1. Cached packages will be looked for in your /var/cache/pacman/pkg folder if $localrep variable is not set
     #DANGEROUS: this option will break the installation if there's broken or incomplete list of packages in cache directory (of course, you can also debug it using 'givemebash' feature)
     localinstall=0
