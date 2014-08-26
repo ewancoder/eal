@@ -90,10 +90,6 @@ if [ ! "$windows" == "" ]; then
     umount $windows
 fi
 
-mess -t "Fix linux errors"
-mess "Fix dead acute error in Compose-keys X11 file"
-sed -i "s/dead_actute/dead_acute/g" $filename
-
 if [ ! "$service" == "" ]; then
     mess -t "Enable services"
     for s in ${service[@]}; do
