@@ -10,7 +10,7 @@ timeout=10  #If an error happened, wait 10 seconds and try again
 
 #Set hostinstall=1 if you want to install linux from within your already installed (arch) linux
 #If you're already under live-cd and wanna install it old-way, set $hostinstall to 0
-hostinstall=1
+hostinstall=0
 #This is needed only for host-install (installing from within your already working linux)
 #Set it to downloadable url path to live-cd ROOT (extension should be fs.sfs) arch linux image
 iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
