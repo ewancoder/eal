@@ -251,6 +251,7 @@ mirror=( Belarus Denmark Russia United France )
         #urxvt-perls - for showing/clicking url within urxvt (see urxvt)
         #wpa_supplicant - connection via wpa2-psk
         #xclip - tool to get clipboard content (need for dbss [dropbox screenshoter] script)
+        #xflux - temperature of the screen control
         #zsh - bash alternative
         
     #===== STYLING =====
@@ -307,7 +308,7 @@ mirror=( Belarus Denmark Russia United France )
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie udevil dmenu dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
+        "compton cronie cv devilspie udevil dmenu dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot vlc"
