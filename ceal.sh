@@ -287,6 +287,7 @@ mirror=( Belarus Denmark Russia United France )
         #hunspell, hunspell-en, hunspell-ru - spellcheck for libreoffice
         #mc - midnight commander
         #scrot - screenshots software
+        #thunar - for "open directory" command and fancy icons :)
         #vlc - the best player ever
 
     #===== CODING =====
@@ -311,7 +312,7 @@ mirror=( Belarus Denmark Russia United France )
         "compton cronie cv devilspie udevil dmenu dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
-        "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot vlc"
+        "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
