@@ -1,8 +1,8 @@
 #!/bin/bash
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
 #2014 Ewancoder <ewancoder@gmail.com>
-version="2.0 Final, 2014"
-release="2.0.6 Local Install"
+version="2.1 Verbosed, 2014"
+release="2.1.0 Verbose Output"
 
 #If an error is detected while script is running, you will be prompted for action: repeat this command (which caused the error) or skip it and go further
 #If timeout=0, script will wait for your decision. If you set $timeout variable to something, script will wait this time (in seconds) and then try to repeat failed command
@@ -10,15 +10,17 @@ timeout=10  #If an error happened, wait 10 seconds and try again
 
 #Set hostinstall=1 if you want to install linux from within your already installed (arch) linux
 #If you're already under live-cd and wanna install it old-way, set $hostinstall to 0
-hostinstall=0
+hostinstall=1
 #This is needed only for host-install (installing from within your already working linux)
 #Set it to downloadable url path to live-cd ROOT (extension should be fs.sfs) arch linux image
-iso=http://ftp.byfly.by/pub/archlinux/iso/2014.06.01/arch/x86_64/root-image.fs.sfs
+iso=http://ftp.byfly.by/pub/archlinux/iso/2014.09.03/arch/x86_64/airootfs.sfs
+
 
 #With auto=0 script will pause on the each step and let you continue by pressing [RETURN] (useful for debugging)
 #If you want to install in a totally automatical way, set this to 1
 #Be AWARE: setting auto=1 means that script will very FAST execute lots of commands and will pause ONLY if an error would be detected or your prompt needed
 auto=0
+verbose=1
 
 #Console font (cyr-sun16 for russian symbols)
 font=cyr-sun16
@@ -168,9 +170,10 @@ mirror=( Belarus Denmark Russia United France )
     gitlink=( /home/$main /etc )
 
 #Yaourt configuration
+#DANGEROUS: DO NOT UNCOMMENT - SECTION IS OBSOLETE
 
     #If you want to configure makepkg (aur) to store it's packages in /var/cache/packages/pkg folder (for future use) - set this to 1 [be AWARE: this sets your /var/cache/packages/pkg folder to 777 permissions]
-    localaur=1
+    #localaur=0
     #If your /var/cache/pacman/pkg directory is a symlink to another location, set it here; otherwise you can also set it in 'devices' section to use another partition
     #If you configured your /var/cache/pacman/pkg folder to be a mountpoint (in 'devices' sextion), $pkgsymlink SHOULD be '' (or commented)
     #For example, I have /mnt/backup mounted in 'devices' section and I have "ln -fs /mnt/backup/pkg /var/cache/pacman/pkg" set below
@@ -178,7 +181,7 @@ mirror=( Belarus Denmark Russia United France )
     #pkgsymlink=/mnt/backup/pkg
     #If you want to use already existing packages DURING INSTALLATION PROCESS, set this to 1. Cached packages will be looked for in your /var/cache/pacman/pkg folder if $localrep variable is not set
     #DANGEROUS: this option will break the installation if there's broken or incomplete list of packages in cache directory (of course, you can also debug it using 'givemebash' feature)
-    localinstall=0
+    #localinstall=0
     #If you want to specify your local repository location, set this to your folder
     #You can go even furthermore and configure an ultimate live-cd which will install all the software without an internet connection available (just from local packages)
     #Path is relative to your live-cd root '/' folder (or to unsquashed live-cd root which is mounted while installing from host-install)
@@ -263,7 +266,7 @@ mirror=( Belarus Denmark Russia United France )
         #tumbler - thumbnails
 
     #===== WEB =====
-        #canto-curses - canto RSS reader
+        #canto-curses-git - canto RSS reader
         #chromium - web browser
         #chromium-pepper-flash - lastest google flash support (also chromium-libpdf for pdf)
         #copy-agent - copy cloud service
@@ -311,7 +314,7 @@ mirror=( Belarus Denmark Russia United France )
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
-        "canto-curses chromium chromium-pepper-flash copy-agent deluge dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
+        "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx"
         "dosfstools encfs gparted ntfs-3g smartmontools"
@@ -329,11 +332,12 @@ mirror=( Belarus Denmark Russia United France )
 #All below is just styling stuff. You do NOT need to configure it. Just don't touch it :)
 
 #Output styling
-    Green=$(tput setaf 2)
-    Yellow=$(tput setaf 3)
-    Red=$(tput setaf 1)
-    Bold=$(tput bold)
-    Def=$(tput sgr0)
+    Green=`tput setaf 2`
+    Yellow=`tput setaf 3`
+    Red=`tput setaf 1`
+    Blue=`tput setaf 6`
+    Bold=`tput bold`
+    Def=`tput sgr0`
 
 #Message function - shows a message and pauses process if 'auto=0'
 mess(){
@@ -369,6 +373,10 @@ mess(){
             Style="$Bold$Red$m$Def"
             Pause=0
             ;;
+        "-v")
+            Style="$Blue-> $m$Def"
+            Pause=0
+            ;;
         "")
             Style="$Bold$Green\n-> $Def$Bold$m$Def"
             Pause=0
@@ -376,10 +384,17 @@ mess(){
             ;;
     esac
 
-    echo -e $Style
-    if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
-        if ! [ "$o" == "-t" ] && ! [ "$o" == "-q" ]; then
-            read -p $Bold$Yellow"Continue [ENTER]"$Def
+    if [ "$o" == "-v" ]; then
+        echo -en $Style
+        if [ $auto -eq 0 ]; then
+            read
+        fi
+    else
+        echo -e $Style
+        if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
+            if ! [ "$o" == "-t" ] && ! [ "$o" == "-q" ]; then
+                read -p $Bold$Yellow"Continue [ENTER]"$Def
+            fi
         fi
     fi
 }

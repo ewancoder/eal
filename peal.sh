@@ -17,29 +17,29 @@ mess "Set font as $font"
 setfont $font
 
 mess -t "Prepare for software installation"
-if [ ! "$pkgsymlink" == "" ]; then
-    mess "Relink /var/cache/pacman/pkg folder properly"
-    rm -rf /var/cache/pacman/pkg
-    ln -fs $pkgsymlink /var/cache/pacman/pkg
-fi
+#if [ ! "$pkgsymlink" == "" ]; then
+#    mess "Relink /var/cache/pacman/pkg folder properly"
+#    rm -rf /var/cache/pacman/pkg
+#    ln -fs $pkgsymlink /var/cache/pacman/pkg
+#fi
 mess "Install yaourt"
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
 ./aur.sh -si --asroot --noconfirm package-query yaourt
 rm -r aur.sh package-query yaourt
-if [ $localaur -eq 1 ]; then
-    mess "Give 777 rights to /var/cache/pacman/pkg"
-    mkdir -p /mnt/var/cache/pacman/pkg
-    chmod 777 /mnt/var/cache/pacman/pkg
-    mess "Edit PKGDEST value in /etc/makepkg.conf file"
-    sed -i '/#PKGDEST/aPKGDEST=/var/cache/pacman/pkg' /etc/makepkg.conf
-    mess "Edit EXPORT value in /etc/yaourtrc file"
-    sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
-fi
-if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
-    mess "Edit pacman.conf to include local repositories"
-    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
-fi
+#if [ $localaur -eq 1 ]; then
+#    mess "Give 777 rights to /var/cache/pacman/pkg"
+#    mkdir -p /mnt/var/cache/pacman/pkg
+#    chmod 777 /mnt/var/cache/pacman/pkg
+#    mess "Edit PKGDEST value in /etc/makepkg.conf file"
+#    sed -i '/#PKGDEST/aPKGDEST=/var/cache/pacman/pkg' /etc/makepkg.conf
+#    mess "Edit EXPORT value in /etc/yaourtrc file"
+#    sed -i '/#EXPORT=/aEXPORT=1' /etc/yaourtrc
+#fi
+#if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
+#    mess "Edit pacman.conf to include local repositories"
+#    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
+#fi
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"
@@ -173,13 +173,13 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     if ! [ "${gitname[$i]}" == "" -a "${execs[$i]}" == "" ]; then
         cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
-        echo '
+        echo $'
         source ceal.sh
         mess -t "User executed script for ${user[$i]} user"
         ' > user.sh
         if [ ! "${gitname[$i]}" == "" ]; then
             mess "Add git configuration to user-executed script"
-            echo '
+            echo $'
             mess "Configure git for ${user[$i]}"
             mess "Configure git user.name as ${gitname[$i]}"
             git config --global user.name ${gitname[$i]}

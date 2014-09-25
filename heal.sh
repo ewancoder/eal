@@ -17,11 +17,11 @@ if [ ! "$temp" == "" ]; then
     mess "Mount $temp temporary partition for unsquashing live-cd (must have 1G+ free space)"
     mount $temp /sfs
 fi
-if ! [ -f root-image.fs.sfs -o -f /sfs/squashfs-root/root-image.fs ]; then
+if ! [ -f root-image.fs.sfs -o -f /sfs/squashfs-root/airootfs.img ]; then
     mess "Download root live-cd image"
     curl -o root-image.fs.sfs $iso
 fi
-if [ ! -f /sfs/squashfs-root/root-image.fs ]; then
+if [ ! -f /sfs/squashfs-root/airootfs.img ]; then
     mess "Unsquash root live-cd image to /sfs/squashfs-root/root-image.fs"
     unsquashfs -d /sfs/squashfs-root root-image.fs.sfs
 else
@@ -32,7 +32,7 @@ mess -t "Prepare chroot-environment"
 mess "Make /arch folder"
 mkdir -p /arch
 mess "Mount all needed things to /arch"
-mount -o loop /sfs/squashfs-root/root-image.fs /arch
+mount -o loop /sfs/squashfs-root/airootfs.img /arch
 mount -t proc none /arch/proc
 mount -t sysfs none /arch/sys
 mount -o bind /dev /arch/dev

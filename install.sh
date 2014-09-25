@@ -6,10 +6,11 @@ if [ ! `id -u` -eq 0 ]; then
 fi
 clear
 mess -t "Effective & Easy (Ewancoder) Arch Linux installation script\nVersion $version\nRelease $release"
-mess -w "Before proceeding, MAKE SURE that\n\t1) You have changed all constants in 'ceal.sh' file\n\t2) You have formatted your partitions as needed (fdisk + mkfs.ext4 + mkswap) and put them into 'ceal.sh' file"
+mess -w "Before proceeding:\n\t1) Change constants in 'ceal.sh' configuration file\n\t2) Format your partitions as needed (fdisk + mkfs.ext4 + mkswap)"
 source ceal.sh
 
 prepare() {
+    inside=0
     rm -f $2
     while read -r p; do
         if ! [ "$p" == "" -o \
@@ -20,16 +21,38 @@ prepare() {
         "${p:0:4}" == "else" -o \
         "${p:0:4}" == "done" -o \
         "${p:0:4}" == "' > " -o \
-        "${p:0:5}" == "' >> " -o \
         "${p:0:5}" == "mess " -o \
-        "${p:0:5}" == "elif " -o \
-        "${p:0:6}" == "echo '" ]; then
+        "${p:0:5}" == "elif " ]; then
+            if [ $verbose -eq 1 ]; then
+                str=`echo $p | sed "s/'/'\"'\"'/g"`
+                if [ "${p:0:7}" == "source " -o "${p:0:11}" == "cd \`dirname" ]; then
+                    if [ $auto -eq 1 ]; then
+                        echo "tput setaf 6; echo -n \"-> $str\"; tput sgr0" >> $2
+                    else
+                        echo "tput setaf 6; echo -n \"-> $str\"; tput sgr0; read" >> $2
+                    fi
+                elif [ "${p:0:7}" == "echo $'" ]; then
+                    inside=1
+                    echo $p >> $2
+                    continue
+                elif [ "${p:0:5}" == "' >> " ]; then
+                    inside=0
+                    echo $p >> $2
+                    continue
+                else
+                    if [ $inside -eq 1 ]; then
+                        echo "mess -v \\'$str\\'" >> $2
+                    else
+                        echo "mess -v '$str'" >> $2
+                    fi
+                fi
+            fi
             echo "until $p; do" >> $2
             echo -e '    ans=""\n    mess -q "Error occured on step [$step]. Retry? (y/n)"' >> $2
             if [ $timeout -eq 0 ]; then
                 echo -e "    read ans" >> $2
             else
-                echo -e "    mess -q 'Auto-repeating in $timeout seconds'\n    read -t $timeout ans" >> $2
+                echo -e "    mess -q \"Auto-repeating in $timeout seconds\"\n    read -t $timeout ans" >> $2
             fi
             echo -e '    if [ "$ans" == "n" -o "$ans" == "N" ]; then\n        break\n    elif [ "$ans" == "givemebash" ]; then\n        /bin/bash\n    fi\ndone' >> $2
         else
@@ -38,7 +61,7 @@ prepare() {
     done < $1
 }
 
-mess -t "Prepare installation script - add error handling"
+mess -t "Prepare installation script (add error handling)"
 mess "Make temporary 'eal' directory where all installation files will be put"
 mkdir -p eal
 mess "Prepare eal.sh"
@@ -70,4 +93,4 @@ if ! umount -R /arch > /dev/null; then
     grep /arch /proc/mounts | cut -d " " -f2 | sort -r | xargs umount -n
 fi
 
-mess -w "This is it. You can reboot into your working system"
+mess -w "Installation complete. You can reboot into your working system"
