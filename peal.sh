@@ -224,12 +224,8 @@ if [ ! "$rootexec" == "" ]; then
     mess -t "Execute all root commands"
     shopt -s dotglob
     for (( i = 0; i < ${#rootexec[@]}; i++ )); do
-        echo "source /root/ceal.sh" > root.sh
-        echo "mess \"Execute '${rootexec[$i]}'\"" >> root.sh
-        echo ${rootexec[$i]} >> root.sh
-        chmod +x root.sh
-        ./root.sh
-        rm root.sh
+        mess "Execute '${rootexec[$i]}'"
+        eval ${rootexec[$i]}
     done
     shopt -u dotglob
 fi

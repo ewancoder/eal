@@ -22,16 +22,12 @@ prepare() {
         "${p:0:4}" == "done" -o \
         "${p:0:4}" == "' > " -o \
         "${p:0:5}" == "mess " -o \
+        "${p:0:7}" == "source " -o \
+        "${p:0:11}" == "cd \`dirname" -o \
         "${p:0:5}" == "elif " ]; then
             if [ $verbose -eq 1 ]; then
                 str=`echo $p | sed "s/'/'\"'\"'/g"`
-                if [ "${p:0:7}" == "source " -o "${p:0:11}" == "cd \`dirname" ]; then
-                    if [ $auto -eq 1 ]; then
-                        echo "tput setaf 6; echo -n \"-> $str\"; tput sgr0" >> $2
-                    else
-                        echo "tput setaf 6; echo -n \"-> $str\"; tput sgr0; read" >> $2
-                    fi
-                elif [ "${p:0:7}" == "echo $'" ]; then
+                if [ "${p:0:7}" == "echo $'" ]; then
                     inside=1
                     echo $p >> $2
                     continue

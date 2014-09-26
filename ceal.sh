@@ -2,7 +2,7 @@
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
 #2014 Ewancoder <ewancoder@gmail.com>
 version="2.1 Verbosed, 2014"
-release="2.1.0 Verbose Output"
+release="2.1.5 Variables Verbosed"
 
 #If an error is detected while script is running, you will be prompted for action: repeat this command (which caused the error) or skip it and go further
 #If timeout=0, script will wait for your decision. If you set $timeout variable to something, script will wait this time (in seconds) and then try to repeat failed command
@@ -14,7 +14,6 @@ hostinstall=1
 #This is needed only for host-install (installing from within your already working linux)
 #Set it to downloadable url path to live-cd ROOT (extension should be fs.sfs) arch linux image
 iso=http://ftp.byfly.by/pub/archlinux/iso/2014.09.03/arch/x86_64/airootfs.sfs
-
 
 #With auto=0 script will pause on the each step and let you continue by pressing [RETURN] (useful for debugging)
 #If you want to install in a totally automatical way, set this to 1
@@ -375,6 +374,13 @@ mess(){
             ;;
         "-v")
             Style="$Blue-> $m$Def"
+            echo $m | grep -oP '(?<!\[)\$[{(]?[^"\s\/\047.\\]+[})]?' | uniq > vars
+            if [ ! "`cat vars`" == "" ]; then
+                while read -r p; do
+                    value=`eval echo $p`
+                    Style=`echo -e "$Style\n\t$Green$p = $value$Def"`
+                done < vars
+            fi
             Pause=0
             ;;
         "")
@@ -385,12 +391,12 @@ mess(){
     esac
 
     if [ "$o" == "-v" ]; then
-        echo -en $Style
+        echo -en "$Style"
         if [ $auto -eq 0 ]; then
             read
         fi
     else
-        echo -e $Style
+        echo -e "$Style"
         if [ $Pause -eq 1 ] || [ $auto -eq 0 ]; then
             if ! [ "$o" == "-t" ] && ! [ "$o" == "-q" ]; then
                 read -p $Bold$Yellow"Continue [ENTER]"$Def
