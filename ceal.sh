@@ -131,13 +131,15 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/data /media"
         "chown $main:users /mnt/{data,windows}"
-        "chown $main:users /etc/.dotfiles/.git"
-        "rsync -a /mnt/backup/Arch/ /home/$main/"
-        "rsync -a /mnt/backup/Other/cron /var/spool/"
         "modprobe fuse"
         "chmod -x /etc/grub.d/10_linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
     )
+    backupexec=(
+        "rsync -a /mnt/backup/Arch/ /home/$main/"
+        "rsync -a /mnt/backup/Other/cron /var/spool/"
+    )
+
 
 #Git configuration - make sure you have 'git' package in 'software' section below
 #You can setup git for each user like 'gitname=( $main lolseconduser )' but I am using only one user
@@ -269,7 +271,6 @@ mirror=( Belarus Denmark Russia United France )
         #chromium - web browser
         #chromium-pepper-flash - lastest google flash support (also chromium-libpdf for pdf)
         #copy-agent - copy cloud service
-        #deluge - torrent client (although I am planning on switching to rtorrent)
         #dropbox-experimental - dropbox cloud service
         #jre8-openjdk - opensource jre implementation of java 8
         #icedtea-web- java for chromium (and openjdk7 as well)
@@ -313,7 +314,7 @@ mirror=( Belarus Denmark Russia United France )
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen sshfs tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
-        "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
+        "canto-curses-git chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx"
         "dosfstools encfs gparted ntfs-3g smartmontools"
@@ -322,7 +323,6 @@ mirror=( Belarus Denmark Russia United France )
     #Services to enable (systemctl enable $service)
     service=(
         cronie
-        deluged
         systemd-networkd
         systemd-timesyncd
     )

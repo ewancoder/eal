@@ -117,6 +117,16 @@ for i in ${user[@]}; do
     useradd -m -g users -s /bin/bash $i
 done
 
+if [ ! "$rootexec" == "" ]; then
+    mess -t "Execute all BACKUP commands before messing with GIT"
+    shopt -s dotglob
+    for (( i = 0; i < ${#backupexec[@]}; i++ )); do
+        mess "Execute '${backupexec[$i]}'"
+        eval ${backupexec[$i]}
+    done
+    shopt -u dotglob
+fi
+
 if [ ! "$gitrepo" == "" ]; then
     mess -t "Clone github repositories"
     for (( i = 0; i < ${#gitrepo[@]}; i++ )); do
@@ -137,6 +147,7 @@ if [ ! "$gitrepo" == "" ]; then
         if [ ! "${gitrule[$i]}" == "" ]; then
             mess "SET chown '${gitrule[$i]}'"
             chown -R ${gitrule[$i]} ${gitfolder[$i]}
+	    chown -R $main:users ${gitfolder[$i]}/.git
         fi
         if [ ! "${gitbranch[$i]}" == "" ]; then
             mess "Checkout to branch '${gitbranch[$i]}'"
