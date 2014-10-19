@@ -386,6 +386,7 @@ mess(){
                     Style=`echo -e "$Style\n\t$Green$p = $value$Def"`
                 done < vars
             fi
+            rm vars
             Pause=0
             ;;
         "")
