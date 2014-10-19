@@ -39,11 +39,12 @@ mirror=( Belarus Denmark Russia United France )
     #If you set netctl=0, you don't need any of other settings in internet section, because dhcpcd doesn't use them
     netctl=1
     #Choose netctl profile to use (ethernet-static, wireless-wpa-static, etc...)
-    profile=wireless-wpa-static
+    #profile=wireless-wpa-static
+    profile=ethernet-static
 
     #Network interface which is used for internet connection (enp2s0, wlp7s4, wlan0, etc...)
     #You can discover your network interface by typing [ip link] command
-    interface=wlan
+    interface=enp2s0
     #Static IP address to use
     ip=192.168.100.22
     #DNS to use (usually, your router address)
@@ -51,8 +52,8 @@ mirror=( Belarus Denmark Russia United France )
     dns=192.168.100.1
 
     #Settings for wireless connection
-    essid=TTT
-    key=192837465
+    #essid=TTT
+    #key=192837465
 
 #All devices - in the order of mounting ('/' goes before '/home'). No slash in the end ('/home', not '/home/')
 
