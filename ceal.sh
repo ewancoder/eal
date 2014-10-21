@@ -294,6 +294,7 @@ mirror=( Belarus Denmark Russia United France )
         #vlc - the best player ever
 
     #===== CODING =====
+        #latex-beamer - for presentations
         #latex-pscyr - latex russian pscyr fonts
         #python - my possession :)
         #python-matplotlib - python plotting library [sci]
@@ -306,6 +307,7 @@ mirror=( Belarus Denmark Russia United France )
         #texlive-langcyrillic - T2A fontenc
         #texlive-latexextra - numprint (need it somehow)
         #texlive-pictures - tikz pictures
+        #texlive-science - for karnaugh
         
     #===== TOOLS =====
         #dosfstools - formatting fat/ntfs
@@ -321,7 +323,7 @@ mirror=( Belarus Denmark Russia United France )
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
-        "latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures"
+        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
 
