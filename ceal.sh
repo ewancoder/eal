@@ -114,6 +114,10 @@ mirror=( Belarus Denmark Russia United France )
         mkdir -p /home/$main/.vim/{swap,backup} \n
         mess 'Make .kde4 directory for further un-backup-ing' \n
         mkdir -p /home/$main/.kde4/share/apps/okular/part.rc \n
+        mess 'Install minted (latex)' \n
+        mkdir -p /home/$main/texmf/tex/latex/minted \n
+        curl -O https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
+        mv minted.sty /home/$main/texmf/tex/latex/minted/ \n
         mess 'Install vim plugins' \n
         vim +BundleInstall +qall"
     )
@@ -303,6 +307,7 @@ mirror=( Belarus Denmark Russia United France )
         #python-pyserial - arduino serial communication library
         #python-scipy - python science/engineering [sci]
         #python-sphinx - sphinx documentation engine
+        #python2-pygments - for minted (latex) depencency
         #texlive-core - latex + pdflatex itself
         #texlive-langcyrillic - T2A fontenc
         #texlive-latexextra - numprint (need it somehow)
@@ -323,7 +328,7 @@ mirror=( Belarus Denmark Russia United France )
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
-        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science"
+        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pytments texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
 
