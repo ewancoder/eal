@@ -266,6 +266,8 @@ mirror=( Belarus Denmark Russia United France )
         #faience-icon-theme - icons
         #ffmpegthumbnailer - lightweight video thumbnailer
         #gtk-theme-flatstudio - dark flat theme the best ever
+        #sddm - cool qt login manager
+        #sddm-archlinux-theme-git - archlinux theme for sddm
         #terminus-font - terminal font
         #ttf-dejavu - system fonts
         #tumbler - thumbnails
@@ -325,7 +327,7 @@ mirror=( Belarus Denmark Russia United France )
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen sshfs tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
-        "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio terminus-font ttf-dejavu tumbler"
+        "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio sddm sddm-archlinux-theme-git terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pytments texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science"
