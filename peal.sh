@@ -149,13 +149,14 @@ if [ ! "$gitrepo" == "" ]; then
             chown -R ${gitrule[$i]} ${gitfolder[$i]}
 	    chown -R $main:users ${gitfolder[$i]}/.git
         fi
+        mess "Set remote to SSH"
+        cd ${gitfolder[$i]}
+        git remote set-url origin git@github.com:${gitrepo[$i]}.git
         if [ ! "${gitbranch[$i]}" == "" ]; then
             mess "Checkout to branch '${gitbranch[$i]}'"
-            cd ${gitfolder[$i]}
             git checkout ${gitbranch[$i]}
-            git remote set-url origin git@github.com:${gitrepo[$i]}.git
-            cd
         fi
+        cd
         if [ ! "${gitlink[$i]}" == "" ]; then
             mess "Merge all files (make symlinks)"
             shopt -s dotglob
