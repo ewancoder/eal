@@ -332,7 +332,7 @@ mirror=( Belarus Denmark Russia United France )
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio sddm sddm-archlinux-theme-git terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
-        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pytments texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science"
+        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
 
@@ -341,6 +341,7 @@ mirror=( Belarus Denmark Russia United France )
         cronie
         systemd-networkd
         systemd-timesyncd
+        sddm
     )
 
 #===== INTERFACE =====
