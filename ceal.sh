@@ -89,7 +89,7 @@ mirror=( Belarus Denmark Russia United France )
 
     #User login
     #I am using 2 users. You can always set only one user like [user=myname] or [user=( myname )]
-    user=ewancoder
+    user=(ewancoder mich)
     #Shells for users (leave as '' for standard)
     #Shell must be a full-path name
     shell=/bin/zsh
@@ -112,8 +112,6 @@ mirror=( Belarus Denmark Russia United France )
     execs=(
         "mess 'Make vim swap&backup dirs' \n
         mkdir -p /home/$main/.vim/{swap,backup} \n
-        mess 'Make .kde4 directory for further un-backup-ing' \n
-        mkdir -p /home/$main/.kde4/share/apps/okular/part.rc \n
         mess 'Install minted (latex)' \n
         mkdir -p /home/$main/texmf/tex/latex/minted \n
         curl -O https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
@@ -135,7 +133,6 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/data /media"
         "chown $main:users /mnt/{data,windows}"
-        "modprobe fuse"
         "chmod -x /etc/grub.d/10_linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
     )

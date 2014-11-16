@@ -178,8 +178,10 @@ mess -t "Setup users"
 mess "Prepare sudoers file for pasting entries"
 echo -e "\n## Users configuration" >> /etc/sudoers
 for (( i = 0; i < ${#user[@]}; i++ )); do
-    mess "Add user ${user[$i]} to groups: '${group[$i]}'"
-    usermod -G ${group[$i]} ${user[$i]}
+    if [ ! "${group[$i]}" == "" ]; then
+        mess "Add user ${user[$i]} to groups: '${group[$i]}'"
+        usermod -G ${group[$i]} ${user[$i]}
+    fi
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     if ! [ "${gitname[$i]}" == "" -a "${execs[$i]}" == "" ]; then
@@ -219,8 +221,10 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         rm {user,ceal}.sh
         cd
     fi
-    mess "Set ${user[$i]} shell to ${shell[$i]}"
-    chsh -s ${shell[$i]} ${user[$i]}
+    if [ ! "${shell[$i]}" == "" ]; then
+        mess "Set ${user[$i]} shell to ${shell[$i]}"
+        chsh -s ${shell[$i]} ${user[$i]}
+    fi
 done
 
 if [ ! "$sudoers" == "" ]; then
