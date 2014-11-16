@@ -162,7 +162,7 @@ if [ ! "$gitrepo" == "" ]; then
             for f in $(ls -A ${gitfolder[$i]}/ | grep -v .git); do
                 if [ -d ${gitlink[$i]}/$f ]; then
                     mess "Move $f folder from ${gitlink[$i]} to ${gitfolder[$i]} becaus it exists"
-                    cp -nr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/ 2>/dev/null
+                    cp -npr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/ 2>/dev/null
                     rm -r ${gitlink[$i]}/$f
                 fi
                 mess "Make symlink from ${gitfolder[$i]}/$f to ${gitlink[$i]}/"
