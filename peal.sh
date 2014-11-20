@@ -147,7 +147,9 @@ if [ ! "$gitrepo" == "" ]; then
         if [ ! "${gitrule[$i]}" == "" ]; then
             mess "SET chown '${gitrule[$i]}'"
             chown -R ${gitrule[$i]} ${gitfolder[$i]}
-	    chown -R $main:users ${gitfolder[$i]}/.git
+        else
+            mess "SET chown '$main' for '.git' folder"
+            chown -R $main:users ${gitfolder[$i]}/.git
         fi
         mess "Set remote to SSH"
         cd ${gitfolder[$i]}
