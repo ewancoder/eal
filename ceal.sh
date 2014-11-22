@@ -310,6 +310,7 @@ mirror=( Belarus Denmark Russia United France )
         #python-sphinx - sphinx documentation engine
         #python2-pygments - for minted (latex) depencency
         #texlive-core - latex + pdflatex itself
+        #texlive-humanities - ?
         #texlive-langcyrillic - T2A fontenc
         #texlive-latexextra - numprint (need it somehow)
         #texlive-pictures - tikz pictures
@@ -330,7 +331,7 @@ mirror=( Belarus Denmark Russia United France )
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio sddm sddm-archlinux-theme-git terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
-        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
+        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
 
