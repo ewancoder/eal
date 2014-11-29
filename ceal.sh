@@ -244,6 +244,7 @@ mirror=( Belarus Denmark Russia United France )
         #rxvt-unicode - supercool term (also see urxvt-perls)
         #screen - this is what I am using instead of TMUX
         #sshfs - for virtual ssh filesystem
+        #the_silver_searcher - faster search engine for vim's ctrlp plugin
         #tig - git pretty viewer
         #tilda - fullscreen terminal on Mod+F12
         #transset-df - transparency-setting tool (see devilspie)
@@ -299,6 +300,7 @@ mirror=( Belarus Denmark Russia United France )
         #vlc - the best player ever
 
     #===== CODING =====
+        #ino - for arduino commandline compilation
         #latex-beamer - for presentations
         #latex-pscyr - latex russian pscyr fonts
         #python - my possession :)
@@ -327,11 +329,11 @@ mirror=( Belarus Denmark Russia United France )
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen sshfs tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
+        "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio sddm sddm-archlinux-theme-git terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
-        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
+        "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
 
