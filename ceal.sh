@@ -342,7 +342,7 @@ mirror=( Belarus Denmark Russia United France )
         cronie
         systemd-networkd
         systemd-timesyncd
-        sddm
+        #sddm
     )
 
 #===== INTERFACE =====
