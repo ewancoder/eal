@@ -277,7 +277,7 @@ mirror=( Belarus Denmark Russia United France )
         #chromium - web browser
         #chromium-pepper-flash - lastest google flash support (also chromium-libpdf for pdf)
         #copy-agent - copy cloud service
-        #dropbox-experimental - dropbox cloud service
+        #dropbox - dropbox cloud service
         #jre8-openjdk - opensource jre implementation of java 8
         #icedtea-web- java for chromium (and openjdk7 as well)
         #net-tools - arp, ifconfig and other net tools
@@ -332,7 +332,7 @@ mirror=( Belarus Denmark Russia United France )
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 openssh p7zip rsync rxvt-unicode screen sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit xscreensaver-arch-logo zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio sddm sddm-archlinux-theme-git terminus-font ttf-dejavu tumbler"
-        "canto-curses chromium chromium-pepper-flash copy-agent dropbox-experimental jre8-openjdk icedtea-web net-tools skype"
+        "canto-curses chromium chromium-pepper-flash copy-agent dropbox jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
