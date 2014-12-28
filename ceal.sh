@@ -210,7 +210,7 @@ mirror=( Belarus Denmark Russia United France )
         #mesa - opensource openGL implementation
         #nvidia - nvidia drivers for linux
         #nvidia-libgl - just libraries symlinks
-        #phonon-qt4/5-gstreamer - backend for qt4/5 (currently I need qt4 because qt5 is not fully packaged yet)
+        #phonon-qt4-gstreamer - backend for qt4 (qt5 is not fully packaged yet)
 
     #===== AUDIO =====
         #alsa-plugins - advanced features like upmixing/downmixing and HQ resampling
@@ -279,7 +279,7 @@ mirror=( Belarus Denmark Russia United France )
         #copy-agent - copy cloud service
         #dropbox - dropbox cloud service
         #jre8-openjdk - opensource jre implementation of java 8
-        #icedtea-web- java for chromium (and openjdk7 as well)
+        #icedtea-web - java for chromium (and openjdk7 as well)
         #net-tools - arp, ifconfig and other net tools
         #skype - for calls
 
@@ -313,7 +313,7 @@ mirror=( Belarus Denmark Russia United France )
         #python-sphinx - sphinx documentation engine
         #python2-pygments - for minted (latex) depencency
         #texlive-core - latex + pdflatex itself
-        #texlive-humanities - ?
+        #texlive-humanities - social latex
         #texlive-langcyrillic - T2A fontenc
         #texlive-latexextra - numprint (need it somehow)
         #texlive-pictures - tikz pictures
