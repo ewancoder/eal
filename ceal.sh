@@ -6,11 +6,11 @@ release="2.1.5 Variables Verbosed"
 
 #If an error is detected while script is running, you will be prompted for action: repeat this command (which caused the error) or skip it and go further
 #If timeout=0, script will wait for your decision. If you set $timeout variable to something, script will wait this time (in seconds) and then try to repeat failed command
-timeout=10  #If an error happened, wait 10 seconds and try again
+timeout=30  #If an error happened, wait 10 seconds and try again
 
 #Set hostinstall=1 if you want to install linux from within your already installed (arch) linux
 #If you're already under live-cd and wanna install it old-way, set $hostinstall to 0
-hostinstall=1
+hostinstall=0
 #This is needed only for host-install (installing from within your already working linux)
 #Set it to downloadable url path to live-cd ROOT (extension should be fs.sfs) arch linux image
 iso=http://ftp.byfly.by/pub/archlinux/iso/2014.09.03/arch/x86_64/airootfs.sfs
@@ -89,7 +89,7 @@ mirror=( Belarus Denmark Russia United France )
 
     #User login
     #I am using 2 users. You can always set only one user like [user=myname] or [user=( myname )]
-    user=(ewancoder mich)
+    user=ewancoder
     #Shells for users (leave as '' for standard)
     #Shell must be a full-path name
     shell=/bin/zsh
