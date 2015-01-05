@@ -241,6 +241,7 @@ mirror=( Belarus Denmark Russia United France )
         #mplayer - for other apps
         #openssh - ssh server/client
         #p7zip - universal archiver for 7z packages
+        #pygtk - for deluge
         #rsync - files transfer tool
         #rxvt-unicode - supercool term (also see urxvt-perls)
         #screen - this is what I am using instead of TMUX
@@ -273,10 +274,11 @@ mirror=( Belarus Denmark Russia United France )
         #tumbler - thumbnails
 
     #===== WEB =====
-        #canto-curses - canto RSS reader
+        #canto-curses-git - canto RSS reader
         #chromium - web browser
         #chromium-pepper-flash - lastest google flash support (also chromium-libpdf for pdf)
         #copy-agent - copy cloud service
+        #deluge - torrent client
         #dropbox - dropbox cloud service
         #jre8-openjdk - opensource jre implementation of java 8
         #icedtea-web - java for chromium (and openjdk7 as well)
@@ -330,9 +332,9 @@ mirror=( Belarus Denmark Russia United France )
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 mplayer openssh p7zip rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
+        "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
-        "canto-curses chromium chromium-pepper-flash copy-agent dropbox jre8-openjdk icedtea-web net-tools skype"
+        "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
