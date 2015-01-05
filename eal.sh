@@ -61,6 +61,7 @@ mess -t "Chroot to system"
 mess "Copy {ceal,peal}.sh to /mnt/root"
 mkdir -p /mnt/root
 cp {ceal,peal}.sh /mnt/root/
+cp makepkg.patch /mnt/root/
 mess "Go to arch-chroot and execute peal.sh"
 arch-chroot /mnt /root/peal.sh
 

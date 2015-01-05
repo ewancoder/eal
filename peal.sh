@@ -22,6 +22,9 @@ mess -t "Prepare for software installation"
 #    rm -rf /var/cache/pacman/pkg
 #    ln -fs $pkgsymlink /var/cache/pacman/pkg
 #fi
+mess "Apply patch to makepkg in order to return '--asroot' parameter"
+patch /usr/bin/makepkg < makepkg.patch
+rm makepkg.patch
 mess "Install yaourt"
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
