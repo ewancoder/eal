@@ -267,8 +267,7 @@ mirror=( Belarus Denmark Russia United France )
         #faience-icon-theme - icons
         #ffmpegthumbnailer - lightweight video thumbnailer
         #gtk-theme-flatstudio - dark flat theme the best ever
-        #sddm - cool qt login manager
-        #sddm-archlinux-theme-git - archlinux theme for sddm
+        #slim-archlinux-solarized-spiral - coolest theme for slimlock
         #terminus-font - terminal font
         #ttf-dejavu - system fonts
         #tumbler - thumbnails
@@ -332,7 +331,7 @@ mirror=( Belarus Denmark Russia United France )
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mpg123 mplayer openssh p7zip rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
-        "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio sddm sddm-archlinux-theme-git terminus-font ttf-dejavu tumbler"
+        "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
         "canto-curses chromium chromium-pepper-flash copy-agent dropbox jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
@@ -344,7 +343,6 @@ mirror=( Belarus Denmark Russia United France )
         cronie
         systemd-networkd
         systemd-timesyncd
-        #sddm
     )
 
 #===== INTERFACE =====
