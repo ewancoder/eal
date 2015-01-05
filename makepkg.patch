@@ -1,0 +1,42 @@
+--- makepkg	2015-01-05 23:22:47.313546720 +0300
++++ newpkg	2015-01-05 23:23:59.000861856 +0300
+@@ -3367,7 +3367,7 @@
+           'help' 'holdver' 'ignorearch' 'install' 'key:' 'log' 'noarchive' 'nobuild'
+           'nocolor' 'nocheck' 'nodeps' 'noextract' 'noprepare' 'nosign' 'pkg:' 'repackage'
+           'rmdeps' 'sign' 'skipchecksums' 'skipinteg' 'skippgpcheck' 'source' 'syncdeps'
+-          'verifysource' 'version')
++          'verifysource' 'version' 'asroot')
+ 
+ # Pacman Options
+ OPT_LONG+=('asdeps' 'noconfirm' 'needed' 'noprogressbar')
+@@ -3574,18 +3574,18 @@
+ PACKAGER=${_PACKAGER:-$PACKAGER}
+ CARCH=${_CARCH:-$CARCH}
+ 
+-if (( ! INFAKEROOT )); then
+-	if (( EUID == 0 )); then
+-		error "$(gettext "Running %s as root is not allowed as it can cause permanent,\n\
+-catastrophic damage to your system.")" "makepkg"
+-		exit 1 # $E_USER_ABORT
+-	fi
+-else
+-	if [[ -z $FAKEROOTKEY ]]; then
+-		error "$(gettext "Do not use the %s option. This option is only for use by %s.")" "'-F'" "makepkg"
+-		exit 1 # TODO: error code
+-	fi
+-fi
++#if (( ! INFAKEROOT )); then
++#	if (( EUID == 0 )); then
++#		error "$(gettext "Running %s as root is not allowed as it can cause permanent,\n\
++#catastrophic damage to your system.")" "makepkg"
++#		exit 1 # $E_USER_ABORT
++#	fi
++#else
++#	if [[ -z $FAKEROOTKEY ]]; then
++#		error "$(gettext "Do not use the %s option. This option is only for use by %s.")" "'-F'" "makepkg"
++#		exit 1 # TODO: error code
++#	fi
++#fi
+ 
+ unset pkgname pkgbase pkgver pkgrel epoch pkgdesc url license groups provides
+ unset md5sums replaces depends conflicts backup source install changelog build
