@@ -76,6 +76,8 @@ for (( i = 0; i < ${#software[@]}; i++ )); do
     mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
     yaourt -S --noconfirm ${software[$i]}
 done
+mess "Reinstall pacman (remove makepkg patch)"
+pacman -S pacman --noconfirm
 mess "Clean mess - remove orphans recursively"
 pacman -Rns `pacman -Qtdq` --noconfirm || true
 
