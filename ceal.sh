@@ -101,7 +101,7 @@ mirror=( Belarus Denmark Russia United France )
 
     #Sudoers additional entries - these entries will be added to the SUDOERS file. You can use relative intercourse like ${user[0]} for first user and ${user[1]} for the second (count begins with zero)
     #If not needed, set it to sudoers='' or remove
-    sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/yaourt -Syua --noconfirm" #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
+    sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" #I need these lines for using some commands without a need for password typing (NOPASSWD option does the trick)
 
 #Executable commands and links
 
