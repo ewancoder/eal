@@ -68,6 +68,7 @@ mess "Prepare peal.sh"
 prepare peal.sh eal/peal.sh
 mess "Copy ceal.sh"
 cp ceal.sh eal/
+cp makepkg.patch eal/
 cd eal
 
 mess -t "Start installation"
