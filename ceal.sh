@@ -124,6 +124,8 @@ mirror=( Belarus Denmark Russia United France )
     rootexec=(
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
+        "mkdir /home/$main/.config"
+        "ln -fs /home/$main/.config/mc /root/.config/"
         "ln -fs /home/$main/.gitconfig /root/"
         "ln -fs /home/$main/.mtoolsrc /root/"
         "ln -fs /home/$main/.vim /root/"
