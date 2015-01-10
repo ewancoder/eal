@@ -172,22 +172,9 @@ mirror=( Belarus Denmark Russia United France )
     #This is the sweetest peace from the whole script. All the files from your $gitfolder directories will be symlinked to $gitlink directories
     gitlink=( /home/$main /etc )
 
-#Yaourt configuration
-#DANGEROUS: DO NOT UNCOMMENT - SECTION IS OBSOLETE
-
-    #If you want to configure makepkg (aur) to store it's packages in /var/cache/packages/pkg folder (for future use) - set this to 1 [be AWARE: this sets your /var/cache/packages/pkg folder to 777 permissions]
     #localaur=0
-    #If your /var/cache/pacman/pkg directory is a symlink to another location, set it here; otherwise you can also set it in 'devices' section to use another partition
-    #If you configured your /var/cache/pacman/pkg folder to be a mountpoint (in 'devices' sextion), $pkgsymlink SHOULD be '' (or commented)
-    #For example, I have /mnt/backup mounted in 'devices' section and I have "ln -fs /mnt/backup/pkg /var/cache/pacman/pkg" set below
-    #Path is relative to final chroot environment of your installed system (so / is your future / directory of installed system)
     #pkgsymlink=/mnt/backup/pkg
-    #If you want to use already existing packages DURING INSTALLATION PROCESS, set this to 1. Cached packages will be looked for in your /var/cache/pacman/pkg folder if $localrep variable is not set
-    #DANGEROUS: this option will break the installation if there's broken or incomplete list of packages in cache directory (of course, you can also debug it using 'givemebash' feature)
     #localinstall=0
-    #If you want to specify your local repository location, set this to your folder
-    #You can go even furthermore and configure an ultimate live-cd which will install all the software without an internet connection available (just from local packages)
-    #Path is relative to your live-cd root '/' folder (or to unsquashed live-cd root which is mounted while installing from host-install)
     #localrep=/mylocalrepo
 
 #Software configuration

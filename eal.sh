@@ -18,19 +18,6 @@ for (( i = 0; i < ${#device[@]}; i++ )); do
     echo -e "\n# ${description[$i]} partition\n${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}" >> fstab
 done
 
-#if [ ! "$pkgsymlink" == "" -o $localinstall -eq 1 ]; then
-#    mess -t "Prepare local package cache"
-#fi
-#if [ ! "$pkgsymlink" == "" ]; then
-#    mess "Create symlink to /var/cache/pacman/pkg ($pkgsymlink)"
-#    rm -rf /var/cache/pacman/pkg
-#    ln -fs /mnt$pkgsymlink /var/cache/pacman/pkg
-#fi
-#if [ $localinstall -eq 1 -a "`grep '\[local64\]' /etc/pacman.conf`" == "" ]; then
-#    mess "Edit pacman.conf to include local repositories"
-#    echo -e "[local64]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local32]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg\n[local]\nSigLevel = PackageRequired\nServer = file:///var/cache/pacman/pkg" >> /etc/pacman.conf
-#fi
-
 mess -t "Form mirrorlist & update pacman"
 for i in "${mirror[@]}"; do
     mess "Place $i in mirrorlist"
