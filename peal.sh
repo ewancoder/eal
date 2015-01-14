@@ -192,6 +192,8 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             git config --global merge.tool ${gittool[$i]}
             mess "Configure git core.editor as ${giteditor[$i]}"
             git config --global core.editor ${giteditor[$i]}
+            mess "Adopt new push behaviour (simple)"
+            git config --global push.default simple
             ' >> user.sh
         fi
         if [ ! "${execs[$i]}" == "" ]; then
