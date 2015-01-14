@@ -122,8 +122,6 @@ mirror=( Belarus Denmark Russia United France )
 
     #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
     rootexec=(
-        "cp /mnt/cloud/Copy/Underdog-Regular.ttf /usr/share/fonts/TTF/"
-        "fc-cache -fv"
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
         "mkdir /home/$main/.config"
