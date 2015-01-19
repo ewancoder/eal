@@ -133,6 +133,7 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /home/$main/.vim /root/"
         "ln -fs /home/$main/.oh-my-zsh /root/"
         "ln -fs /home/$main/.zshrc /root/"
+        "ln -fs /home/$main/.zsh_aliases /root/"
         "ln -fs /mnt/backup/Cloud/Copy/ca\(fr\).png /usr/share/gxkb/flags/"
         "ln -fs /home/$main/Copy/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/data /media"
