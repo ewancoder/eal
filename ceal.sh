@@ -122,6 +122,7 @@ mirror=( Belarus Denmark Russia United France )
 
     #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
     rootexec=(
+        "pacman -U /mnt/cloud/Copy/vlc-2.0.8.a-1-x86_64.pkg.tar.xz"
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
         "mkdir /home/$main/.config"
@@ -288,7 +289,7 @@ mirror=( Belarus Denmark Russia United France )
         #mc - midnight commander
         #scrot - screenshots software
         #thunar - for "open directory" command and fancy icons :)
-        #vlc - the best player ever
+        #vlc - the best player ever [2.0.8 version from pkg file]
 
     #===== CODING =====
         #ino - for arduino commandline compilation
@@ -323,7 +324,7 @@ mirror=( Belarus Denmark Russia United France )
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox jre8-openjdk icedtea-web net-tools skype"
-        "anki calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar vlc"
+        "anki calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot thunar"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
