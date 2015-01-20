@@ -338,6 +338,7 @@ mirror=( Belarus Denmark Russia United France )
         systemd-networkd
         systemd-timesyncd
         syncplay
+        deluge
     )
 
 #===== INTERFACE =====
