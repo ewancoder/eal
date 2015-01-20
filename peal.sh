@@ -18,8 +18,8 @@ setfont $font
 
 mess -t "Prepare for software installation"
 mess "Apply patch to makepkg in order to return '--asroot' parameter"
-patch /usr/bin/makepkg < makepkg.patch
-rm makepkg.patch
+patch /usr/bin/makepkg < /root/makepkg.patch
+rm /root/makepkg.patch
 mess "Install yaourt"
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
@@ -151,7 +151,7 @@ if [ ! "$gitrepo" == "" ]; then
             shopt -s dotglob
             for f in $(ls -A ${gitfolder[$i]}/ | grep -v .git); do
                 if [ -d ${gitlink[$i]}/$f ]; then
-                    mess "Move $f folder from ${gitlink[$i]} to ${gitfolder[$i]} becaus it exists"
+                    mess "Move $f folder from ${gitlink[$i]} to ${gitfolder[$i]} because it exists"
                     cp -npr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/ 2>/dev/null
                     rm -r ${gitlink[$i]}/$f
                 fi
