@@ -123,10 +123,10 @@ mirror=( Belarus Denmark Russia United France )
     #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
     rootexec=(
         "mkinitcpio -p linux" #For removing floppy
-        "pacman -U /mnt/cloud/Copy/vlc-2.0.8.a-1-x86_64.pkg.tar.xz"
+        "pacman -U --noconfirm /mnt/cloud/Copy/vlc-2.0.8.a-1-x86_64.pkg.tar.xz"
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
-        "mkdir /home/$main/.config"
+        "mkdir -p /home/$main/.config"
         "ln -fs /home/$main/.config/mc /root/.config/"
         "ln -fs /home/$main/.gitconfig /root/"
         "ln -fs /home/$main/.mtoolsrc /root/"
