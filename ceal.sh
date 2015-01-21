@@ -275,9 +275,13 @@ mirror=( Belarus Denmark Russia United France )
         #icedtea-web - java for chromium (and openjdk7 as well)
         #net-tools - arp, ifconfig and other net tools
         #skype - for calls
+        #wiznote - chinese analog of Evernote, the best knowledge organizing tool
 
     #===== OFFICE =====
         #anki - language learning software
+        #calligra-braindump - awesome tool for skype collaboration ala white board
+        #calligra-flow - awesome schemes/electric/block/etc drawing software
+        #calligra-karbon - quick vector drawing (instead of heavy inkscape)
         #calligra-krita - the best painting edtor ever
         #geeqie - image viewer
         #gource - git visualization
@@ -326,8 +330,8 @@ mirror=( Belarus Denmark Russia United France )
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
-        "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox jre8-openjdk icedtea-web net-tools skype"
-        "anki calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar"
+        "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox jre8-openjdk icedtea-web net-tools skype wiznote"
+        "anki calligra-braindump calligra-flow calligra-carbon calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
