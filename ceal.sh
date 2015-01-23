@@ -202,7 +202,7 @@ mirror=( Belarus Denmark Russia United France )
         #mesa - opensource openGL implementation
         #nvidia - nvidia drivers for linux
         #nvidia-libgl - just libraries symlinks
-        #phonon-qt4-gstreamer - backend for qt4 (qt5 is not fully packaged yet)
+        #phonon-qt5-gstreamer - backend for qt5
 
     #===== AUDIO =====
         #alsa-plugins - advanced features like upmixing/downmixing and HQ resampling
@@ -268,7 +268,7 @@ mirror=( Belarus Denmark Russia United France )
         #canto-curses-git - canto RSS reader
         #chromium - web browser
         #chromium-pepper-flash - lastest google flash support (also chromium-libpdf for pdf)
-        #copy-agent - copy cloud service
+        #megasync - mega cloud service
         #deluge - torrent client
         #dropbox - dropbox cloud service
         #jre8-openjdk - opensource jre implementation of java 8
@@ -281,14 +281,13 @@ mirror=( Belarus Denmark Russia United France )
         #anki - language learning software
         #calligra-braindump - awesome tool for skype collaboration ala white board
         #calligra-flow - awesome schemes/electric/block/etc drawing software
-        #calligra-karbon - quick vector drawing (instead of heavy inkscape)
         #calligra-krita - the best painting edtor ever
         #geeqie - image viewer
         #gource - git visualization
         #gvim - the best editor ever
         #kdegraphics-okular - the best pdf/djvu/anything viewer
         #kdeutils-filelight - cool util to view biggest files
-        #libreoffice-calc, libreoffice-common, libreoffice-impress, libreoffice-math, libreoffice-writer - office software
+        #libreoffice-fresh - office package
         #libreoffice-en-US - language pack
         #hyphen, hyphen-en, hyphen-ru - hyphenation for libreoffice
         #hunspell, hunspell-en, hunspell-ru - spellcheck for libreoffice
@@ -330,8 +329,8 @@ mirror=( Belarus Denmark Russia United France )
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
-        "canto-curses-git chromium chromium-pepper-flash copy-agent deluge dropbox jre8-openjdk icedtea-web net-tools skype wiznote"
-        "anki calligra-braindump calligra-flow calligra-carbon calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-calc libreoffice-common libreoffice-impress libreoffice-math libreoffice-writer libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar"
+        "canto-curses-git chromium chromium-pepper-flash megasync deluge dropbox jre8-openjdk icedtea-web net-tools skype wiznote"
+        "anki calligra-braindump calligra-flow calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
