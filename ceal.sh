@@ -123,10 +123,10 @@ mirror=( Belarus Denmark Russia United France )
     #These commands will be executed consecutively by root user after all installation process is finished. You can paste here whatever stuff you need to do. For example, I am linking some config from my $main (ewancoder) user to root directory, linking my downloads folder, rsyncing some files and etc.
     rootexec=(
         "mkinitcpio -p linux" #For removing floppy
-        "pacman -U --noconfirm /mnt/cloud/Copy/vlc-2.0.8.a-1-x86_64.pkg.tar.xz"
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
         "mkdir -p /home/$main/.config"
+        "mkdir -p /root/.config"
         "ln -fs /home/$main/.config/mc /root/.config/"
         "ln -fs /home/$main/.gitconfig /root/"
         "ln -fs /home/$main/.mtoolsrc /root/"
@@ -330,7 +330,7 @@ mirror=( Belarus Denmark Russia United France )
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash megasync deluge dropbox jre8-openjdk icedtea-web net-tools skype wiznote"
-        "anki calligra-braindump calligra-flow calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar"
+        "anki calligra-braindump calligra-flow calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar vlc"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools"
     )
@@ -341,7 +341,7 @@ mirror=( Belarus Denmark Russia United France )
         systemd-networkd
         systemd-timesyncd
         syncplay
-        deluge
+        deluged
     )
 
 #===== INTERFACE =====
