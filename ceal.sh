@@ -295,7 +295,7 @@ mirror=( Belarus Denmark Russia United France )
         #scrot - screenshots software
         #syncplay - for syncing remote vlc clients
         #thunar - for "open directory" command and fancy icons :)
-        #vlc - the best player ever [2.0.8 version from pkg file]
+        #vlc - the best player ever
 
     #===== CODING =====
         #ino - for arduino commandline compilation
