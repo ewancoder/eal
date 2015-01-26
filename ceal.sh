@@ -323,6 +323,7 @@ mirror=( Belarus Denmark Russia United France )
         #gparted - drive partitioning
         #ntfs-3g - fuse driver to mount ntfs
         #smartmontools - drive s.m.a.r.t. diagnostics
+        #virtualbox - I NEED it for WizNote Windows version
 
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
@@ -332,7 +333,7 @@ mirror=( Belarus Denmark Russia United France )
         "canto-curses-git chromium chromium-pepper-flash megasync deluge dropbox jre8-openjdk icedtea-web net-tools skype wiznote"
         "anki calligra-braindump calligra-flow calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar vlc"
         "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
-        "dosfstools encfs gparted ntfs-3g smartmontools"
+        "dosfstools encfs gparted ntfs-3g smartmontools virtualbox"
     )
 
     #Services to enable (systemctl enable $service)
