@@ -1,6 +1,8 @@
 Ewancoder Arch Linux install script
 ===================================
 
+![splash](https://raw.githubusercontent.com/ewancoder/eal/master/splash.png)
+
 This is useful tool for reinstalling your arch linux and setting up all the programs automatically
 
 It consists of 5 parts:
