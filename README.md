@@ -29,5 +29,5 @@ Quick-install
 You don't have to clone this git repo either. I've wrote a script which will curl (download) all 5 scripts to the current folder (I uploaded it onto my github site). Just run
 
 ```bash
-bash <(ewancoder.github.io/al.sh)
+bash <(curl ewancoder.github.io/al.sh)
 ```
