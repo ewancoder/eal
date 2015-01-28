@@ -135,7 +135,6 @@ mirror=( Belarus Denmark Russia United France )
         "ln -fs /home/$main/.zshrc /root/"
         "ln -fs /home/$main/.zsh_aliases /root/"
         "ln -fs /mnt/backup/Cloud/Mega/ca\(fr\).png /usr/share/gxkb/flags/"
-        "ln -fs /home/$main/Mega/Games/Minecraft/Feed\ The\ Beast/.ftblauncher /home/$main/"
         "mkdir -p /mnt/data /media"
         "chown $main:users /mnt/{data,windows}"
         "chmod -x /etc/grub.d/10_linux"
