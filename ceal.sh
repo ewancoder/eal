@@ -201,7 +201,7 @@ mess(){
         fi
     else
         echo -e "$Style"
-        if [ $Pause -eq 1 ] && [ $auto -eq 0 ]; then
+        if [ $Pause -eq 1 -a $auto -eq 0 ] || [ "$o" == "" ]; then
             read -p $Bold$Yellow"Continue [ENTER]"$Def
         fi
     fi
