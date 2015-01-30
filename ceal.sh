@@ -158,22 +158,18 @@ mess(){
     case $o in
         "-p")
             Style="$Bold$Yellow\n-> $m [MANUAL]$Def"
-            Pause=1
-            step=$m
-            ;;
-        "-t")
-            Line="$(printf "%$(tput cols)s\n"|tr ' ' '-')"
-            Style="\n$Line$Bold$Green\n-> $m$Def\n$Line"
-            Pause=0
             step=$m
             ;;
         "-w")
             Style="\n$Bold$Red! $m$Def"
-            Pause=1
+            ;;
+        "-t")
+            Line="$(printf "%$(tput cols)s\n"|tr ' ' '-')"
+            Style="\n$Line$Bold$Green\n-> $m$Def\n$Line"
+            step=$m
             ;;
         "-q")
             Style="$Bold$Red$m$Def"
-            Pause=0
             ;;
         "-v")
             Style="$Blue-> $m$Def"
@@ -183,25 +179,27 @@ mess(){
                     value=`eval echo $p`
                     Style=`echo -e "$Style\n\t$Green$p = $value$Def"`
                 done < vars
+                rm vars
             fi
-            rm vars
-            Pause=0
             ;;
         *)
             Style="$Bold$Green\n-> $Def$Bold$m$Def"
-            Pause=0
             step=$m
             ;;
     esac
 
+    #Print message
     if [ "$o" == "-v" ]; then
         echo -en "$Style"
         if [ $auto -eq 0 ]; then
             read
         fi
+    elif [ "$o" == "-p" ]; then
+        echo -en "$Style"
+        read
     else
         echo -e "$Style"
-        if [ $Pause -eq 1 -a $auto -eq 0 ] || [ "$o" == "" ]; then
+        if [ "$o" == "-w" -o "$o" == "-p" ] || [ "$o" == "" -a $auto -eq 0 ]; then
             read -p $Bold$Yellow"Continue [ENTER]"$Def
         fi
     fi
