@@ -8,12 +8,12 @@ This is useful tool for reinstalling your arch linux and setting up all the prog
 It includes 5 parts:
 
 * *eal.sh* - installs base system and goes into *chroot* (peal.sh)
-* *ceal.sh* - (configuration) file with all the settings, unique for each user and machine: you **should** edit it
+* *ceal.sh* - (configuration) file with all the settings, unique for each user and machine: you **should edit** it
 * *heal.sh* - (host) a bridge between *install.sh* and *eal.sh* for installing from working linux distro
 * *peal.sh* - (post) configures system under *chroot* and sets up all software (from your *dotfiles*)
 * *install.sh* - starts the installation
 
-Also, it includes ***makepkg.patch***, which enables [--asroot option](https://projects.archlinux.org/pacman.git/commit/?id=61ba5c961e4a3536c4bbf41edb348987a9993fdb) during installation. Don't worry, the option is removed once installation is complete.
+Also, it includes *makepkg.patch*, which enables [--asroot option](https://projects.archlinux.org/pacman.git/commit/?id=61ba5c961e4a3536c4bbf41edb348987a9993fdb) during installation. Don't worry, the option is removed once installation is complete.
 
 How to install?
 ---------------
@@ -28,13 +28,13 @@ You can find [more documentation here](http://eal.readthedocs.org).
 Quick-install
 -------------
 
-You don't have to clone this git repo. I have written a script which will curl (download) all 5 scripts to the current folder and uploaded it to my github site. Just run
+You don't have to clone this git repo. I have written a script which will curl (download) all 5 scripts to the current folder and uploaded it to my github website. Just run
 
 ```bash
 bash <(curl ewancoder.github.io/al.sh)
 ```
 
-or the same command with ***wget***. You could also download [al.sh](http://ewancoder.github.io/al.sh), set +x (execution) flag and execute it like this:
+or the same command with *wget*. You could also download [al.sh](http://ewancoder.github.io/al.sh), set +x (execution) flag and execute it like this:
 
 ```bash
 curl -O ewancoder.github.io/al.sh
