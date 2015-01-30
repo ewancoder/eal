@@ -104,12 +104,12 @@ for i in ${user[@]}; do
     useradd -m -g users -s /bin/bash $i
 done
 
-if [ ! "$rootexec" == "" ]; then
+if [ ! "$backupexecs" == "" ]; then
     mess -t "Execute all BACKUP commands before messing with GIT"
     shopt -s dotglob
-    for (( i = 0; i < ${#backupexec[@]}; i++ )); do
-        mess "Execute '${backupexec[$i]}'"
-        eval ${backupexec[$i]}
+    for (( i = 0; i < ${#backupexecs[@]}; i++ )); do
+        mess "Execute '${backupexecs[$i]}'"
+        eval ${backupexecs[$i]}
     done
     shopt -u dotglob
 fi
@@ -173,7 +173,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     fi
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    if ! [ "${gitname[$i]}" == "" -a "${execs[$i]}" == "" ]; then
+    if ! [ "${gitname[$i]}" == "" -a "${userexecs[$i]}" == "" ]; then
         cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
         echo $'
@@ -196,9 +196,9 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             git config --global push.default simple
             ' >> user.sh
         fi
-        if [ ! "${execs[$i]}" == "" ]; then
+        if [ ! "${userexecs[$i]}" == "" ]; then
             mess "Add user-based execs to user-executed script"
-            echo -e ${execs[$i]} >> user.sh
+            echo -e ${userexecs[$i]} >> user.sh
         fi
         mess "Make executable (+x)"
         chmod +x user.sh
@@ -227,12 +227,12 @@ if [ ! "$sudoers" == "" ]; then
     done
 fi
 
-if [ ! "$rootexec" == "" ]; then
+if [ ! "$rootexecs" == "" ]; then
     mess -t "Execute all root commands"
     shopt -s dotglob
-    for (( i = 0; i < ${#rootexec[@]}; i++ )); do
-        mess "Execute '${rootexec[$i]}'"
-        eval ${rootexec[$i]}
+    for (( i = 0; i < ${#rootexecs[@]}; i++ )); do
+        mess "Execute '${rootexecs[$i]}'"
+        eval ${rootexecs[$i]}
     done
     shopt -u dotglob
 fi
