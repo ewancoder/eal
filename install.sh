@@ -50,7 +50,7 @@ prepare() {
             else
                 echo -e "    mess -q \"Auto-repeating in $timeout seconds\"\n    read -t $timeout ans" >> $2
             fi
-            echo -e '    if [ "$ans" == "n" -o "$ans" == "N" ]; then\n        break\n    elif [ "$ans" == "givemebash" ]; then\n        /bin/bash\n    fi\ndone' >> $2
+            echo -e '    if [ "$ans" == "n" -o "$ans" == "N" ]; then\n        break\n    elif [ "$ans" == "givemebash" ]; then\n        /bin/bash\n        ans=""\n        mess -q "Retry [$step]? (y/n)"\n        read ans\n        if [ "$ans" == "n" -o "$ans" == "N" ]; then\n            break\n        fi\n    fi\ndone' >> $2
         else
             echo $p >> $2
         fi
@@ -66,7 +66,7 @@ mess "Prepare heal.sh"
 prepare heal.sh eal/heal.sh
 mess "Prepare peal.sh"
 prepare peal.sh eal/peal.sh
-mess "Copy ceal.sh"
+mess "Copy ceal.sh and makepkg.patch"
 cp ceal.sh eal/
 cp makepkg.patch eal/
 cd eal
@@ -90,4 +90,4 @@ if ! umount -R /arch > /dev/null; then
     grep /arch /proc/mounts | cut -d " " -f2 | sort -r | xargs umount -n
 fi
 
-mess -w "Installation complete. You can reboot into your working system"
+mess -w "Installation complete. You can reboot into your new working system"
