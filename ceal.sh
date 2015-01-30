@@ -1,6 +1,6 @@
 #!/bin/bash
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
-#2014 Ewancoder <ewancoder@gmail.com>
+#Copyright (c) 2015 Ewancoder (Ewan Zyryanov) <ewancoder@gmail.com>
 version="2.1 Verbosed, 2014"
 release="2.1.5 Variables Verbosed"
 
