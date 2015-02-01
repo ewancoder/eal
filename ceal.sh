@@ -27,7 +27,7 @@ release="2.2.0 Refreshing Indeed"
 
 #Devices: place them in the order of mounting ('/' goes before '/home'), no slash in the end ('/home', not '/home/')
     description=( Root Home Cloud Backup ) #Just text info which will display during install
-    device=( /dev/sdb5 /dev/sdb6 /dev/sdb4 /dev/sda5 ) #Devices which is to mount to corresponding mount points
+    device=( /dev/Linux/ArchRoot /dev/Linux/ArchHome /dev/sdb2 /dev/sda5 ) #Devices which is to mount to corresponding mount points
     mount=( / /home /mnt/cloud /mnt/backup ) #Mount points starting from '/'
     type=( ext4 ext4 ext4 ext4 ) #Filesystem
     option=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime ) #Options (discard works only for SSD)
