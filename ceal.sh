@@ -179,8 +179,8 @@ mess(){
                     value=`eval echo $p`
                     Style=`echo -e "$Style\n\t$Green$p = $value$Def"`
                 done < vars
-                rm vars
             fi
+            rm vars
             ;;
         *)
             Style="$Bold$Green\n-> $Def$Bold$m$Def"
