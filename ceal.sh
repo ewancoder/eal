@@ -119,7 +119,7 @@ release="2.2.0 Refreshing Indeed"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash megasync deluge dropbox jre8-openjdk icedtea-web net-tools skype wiznote"
         "anki calligra-braindump calligra-flow calligra-krita geeqie gource gvim kdegraphics-okular kdeutils-filelight libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc scrot syncplay thunar vlc"
-        "ino latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
+        "latex-beamer latex-pscyr python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools virtualbox"
     )
     #Services to enable
