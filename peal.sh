@@ -151,9 +151,12 @@ if [ ! "$gitrepo" == "" ]; then
             shopt -s dotglob
             for f in $(ls -A ${gitfolder[$i]}/ | grep -v .git); do
                 if [ -d ${gitlink[$i]}/$f ]; then
-                    mess "Move $f folder from ${gitlink[$i]} to ${gitfolder[$i]} because it exists"
-                    cp -npr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/ 2>/dev/null
-                    rm -r ${gitlink[$i]}/$f
+                    if [ "`ls -A ${gitlink[$i]}/$f`" ]; then
+                        mess "Copy files from $f folder to ${gitfolder[$i]}"
+                        cp -npr ${gitlink[$i]}/$f/* ${gitfolder[$i]}/$f/ 2>/dev/null
+                    fi
+                    mess "Remove $f folder (before linking)"
+                    rm -rf ${gitlink[$i]}/$f
                 fi
                 mess "Make symlink from ${gitfolder[$i]}/$f to ${gitlink[$i]}/"
                 ln -fs ${gitfolder[$i]}/$f ${gitlink[$i]}/
