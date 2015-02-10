@@ -14,8 +14,6 @@ for (( i = 0; i < ${#device[@]}; i++ )); do
         mess "Swapon ${device[$i]}"
         swapon ${device[$i]}
     fi
-    mess "Remove annoying 'lost+found' folder"
-    rm -rf /mnt${mount[$i]}/lost+found
     mess "Add ${device[$i]} in fstab mounted to ${mount[$i]}"
     echo -e "\n# ${description[$i]} partition\n${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}" >> fstab
 done

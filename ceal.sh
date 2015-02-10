@@ -82,6 +82,7 @@ release="2.2.0 Refreshing Indeed"
     #Commands executed by root after installation
     rootexecs=(
         "mkinitcpio -p linux"
+        "grub-mkconfig -o /boot/grub/grub.cfg"
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
         "mkdir -p /home/$main/.config"
