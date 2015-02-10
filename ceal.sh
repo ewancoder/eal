@@ -49,7 +49,6 @@ release="2.2.0 Refreshing Indeed"
     main=${user[0]} #Main user of the system: used later as reference. I am setting it as 'ewancoder'
     sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" #Sudoers additional entries
 
-
 #Git configuration
     gitname=$main #Git user name
     gitemail=$main@gmail.com #Git email
@@ -99,7 +98,6 @@ release="2.2.0 Refreshing Indeed"
         "chown $main:users /mnt/{data,windows}"
         "chmod -x /etc/grub.d/10_linux"
     )
-
 
 #Software configuration
     #Titles shows during install
