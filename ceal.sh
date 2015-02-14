@@ -26,11 +26,11 @@ release="2.2.0 Refreshing Indeed"
     key=192837465 #Key for wireless connection
 
 #Devices: place them in the order of mounting ('/' goes before '/home'), no slash in the end ('/home', not '/home/')
-    description=( Root Home Cloud Backup ) #Just text info which will display during install
-    device=( /dev/Linux/ArchRoot /dev/Linux/ArchHome /dev/sdb2 /dev/sda5 ) #Devices which is to mount to corresponding mount points
-    mount=( / /home /mnt/cloud /mnt/backup ) #Mount points starting from '/'
+    description=( Root Home Backup Cloud ) #Just text info which will display during install
+    device=( /dev/Linux/ArchRoot /dev/Linux/ArchHome /dev/Linux/Backup /dev/sdb5 ) #Devices which is to mount to corresponding mount points
+    mount=( / /home /mnt/backup /mnt/cloud ) #Mount points starting from '/'
     type=( ext4 ext4 ext4 ext4 ) #Filesystem
-    option=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime ) #Options (discard works only for SSD)
+    option=( rw,relatime,discard rw,relatime,discard rw,relatime rw,relatime,discard ) #Options (discard works only for SSD)
     dump=( 0 0 0 0 ) #Make backup if 1 provided (usually 0)
     pass=( 1 2 2 2 ) #Used by fsck to check partitions in order (usually root = 1, other = 2)
     #Example of SWAP options:
@@ -55,10 +55,10 @@ release="2.2.0 Refreshing Indeed"
     gittool=vimdiff #Tool to use as diff
     giteditor=vim #Default editor
 
-    gitrepo=( $main/dotfiles $main/etc $main/btp $main/eal $main/${main}.github.io ) #All these repos will be cloned from github to corresponding folders
-    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/btp /home/$main/eal /home/$main/site ) #Set corresponding folders without '/' at the end
-    gitrule=( $main:users '' $main:users $main:users $main:users ) #CHOWN rule for whole folder content ('root' as default)
-    gitbranch=( '' '' dev '' '' ) #Branch to checkout
+    gitrepo=( $main/dotfiles $main/etc $main/eal $main/${main}.github.io ) #All these repos will be cloned from github to corresponding folders
+    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/eal /home/$main/site ) #Set corresponding folders without '/' at the end
+    gitrule=( $main:users '' $main:users $main:users ) #CHOWN rule for whole folder content ('root' as default)
+    gitbranch=( '' '' '' '' ) #Branch to checkout
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" ) #Sumbodules to pull (remove if you don't need any)
     gitlink=( /home/$main /etc ) #Where to link ALL content from the repo [DOTFILES automation]
 
@@ -76,8 +76,7 @@ release="2.2.0 Refreshing Indeed"
         mkdir -p /home/$main/texmf/tex/latex/minted \n
         curl -o /home/$main/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
         mess 'Install vim plugins' \n
-        vim +BundleInstall +qall \n
-        cat '192.168.100.110' > ~/.rpi"
+        vim +BundleInstall +qall"
     )
     #Commands executed by root after installation
     rootexecs=(
