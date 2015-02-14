@@ -115,7 +115,7 @@ release="2.2.0 Refreshing Indeed"
     )
     #Packages (set drivers first for no-conflict)
     software=(
-        "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt4-gstreamer"
+        "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt5-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pasystray pavucontrol pulseaudio pulseaudio-alsa"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-flatstudio slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
