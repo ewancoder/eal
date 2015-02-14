@@ -66,7 +66,6 @@ release="2.2.0 Refreshing Indeed"
     #You need to restore your BACKUPS BEFORE symlinking DOTFILES
     backupexecs=(
         "rsync -a /mnt/backup/Arch/ /home/$main/"
-        "rsync -a /mnt/backup/Other/cron /var/spool/"
     )
     #Commands executed by corresponding user after installation
     userexecs=(
@@ -80,6 +79,7 @@ release="2.2.0 Refreshing Indeed"
     )
     #Commands executed by root after installation
     rootexecs=(
+        "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
         "mkinitcpio -p linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
         "ln -fs /mnt/backup/Downloads /home/$main/"
