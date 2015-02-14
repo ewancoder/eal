@@ -45,7 +45,7 @@ release="2.2.0 Refreshing Indeed"
     user=ewancoder #User login. Could be more than 1 like this: user=( ewancoder seconduser )
     shell=/bin/zsh #Default shell
     #Each 'groups' entry is for separate user, the groups itself divided by comma (','). Group 'user' added to all users automatically (there's no need to include it here)
-    group=fuse,lock,uucp,tty #Add user in these groups, separate by comma (,)
+    group=fuse #Add user in these groups, separate by comma (,)
     main=${user[0]} #Main user of the system: used later as reference. I am setting it as 'ewancoder'
     sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" #Sudoers additional entries
 
