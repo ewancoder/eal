@@ -12,7 +12,7 @@ release="2.2.0 Refreshing Indeed"
     timeout=10  #When error occurred, wait 10 seconds and try again. Set this to 0 if you don't want script to repeat automatically: it will wait for your input
     font=cyr-sun16 #Console font [maybe this is deprecated]
     locale=( en_US.UTF-8 ru_RU.UTF-8 ) #Locales which you need
-    hostname=ewanhost #Hostname of the PC
+    hostname=ewanpc #Hostname of the PC
     timezone=Europe/Minsk #Your timezone in /usr/share/zoneinfo
     mirror=( Belarus Denmark Russia United France ) #List of repository countries in the order of importance
 
@@ -76,7 +76,8 @@ release="2.2.0 Refreshing Indeed"
         mkdir -p /home/$main/texmf/tex/latex/minted \n
         curl -o /home/$main/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
         mess 'Install vim plugins' \n
-        vim +BundleInstall +qall"
+        vim +BundleInstall +qall \n
+        cat '192.168.100.110' > ~/.rpi"
     )
     #Commands executed by root after installation
     rootexecs=(
