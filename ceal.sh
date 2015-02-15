@@ -70,12 +70,14 @@ release="2.2.0 Refreshing Indeed"
     #Commands executed by corresponding user after installation
     userexecs=(
         "mess 'Make vim swap&backup dirs' \n
-        mkdir -p /home/$main/.vim/{swap,backup} \n
+        mkdir -p ~/.vim/{swap,backup} \n
         mess 'Install minted (latex)' \n
-        mkdir -p /home/$main/texmf/tex/latex/minted \n
-        curl -o /home/$main/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
+        mkdir -p ~/texmf/tex/latex/minted \n
+        curl -o ~/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
         mess 'Install vim plugins' \n
-        vim +BundleInstall +qall"
+        vim +BundleInstall +qall \n
+        mess 'Setup initial RPI ip address' \n
+        echo 192.168.100.110 > ~/.rpi"
     )
     #Commands executed by root after installation
     rootexecs=(
