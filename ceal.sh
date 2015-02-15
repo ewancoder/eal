@@ -79,6 +79,7 @@ release="2.2.0 Refreshing Indeed"
     )
     #Commands executed by root after installation
     rootexecs=(
+        "sed -i 's/^\(style=\).*/\1GTK+/' /home/$main/.config/Trolltech.conf"
         "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
         "mkinitcpio -p linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
