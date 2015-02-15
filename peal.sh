@@ -13,6 +13,8 @@ for i in ${locale[@]}; do
 done
 mess "Generate locales"
 locale-gen
+mess "Set up default locale (${locale[0]})"
+echo "LANG=${locale[0]}" > /etc/locale.conf
 mess "Set font as $font"
 setfont $font
 
