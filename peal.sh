@@ -151,7 +151,7 @@ if [ ! "$gitrepo" == "" ]; then
         if [ ! "${gitlink[$i]}" == "" ]; then
             mess "Merge all files (make symlinks)"
             shopt -s dotglob
-            for f in $(ls -A ${gitfolder[$i]}/ | grep -v .git); do
+            for f in $(ls -A ${gitfolder[$i]}/ | egrep -v ".git|README"); do
                 if [ -d ${gitlink[$i]}/$f ]; then
                     if [ "`ls -A ${gitlink[$i]}/$f`" ]; then
                         mess "Copy files from $f folder to ${gitfolder[$i]}"
