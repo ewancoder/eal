@@ -84,6 +84,7 @@ release="2.2.0 Refreshing Indeed"
         "sed -i 's/^\(style=\).*/\1GTK+/' /home/$main/.config/Trolltech.conf"
         "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
         "mkinitcpio -p linux"
+        "chmod -x /etc/grub.d/10_linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
         "ln -fs /mnt/backup/Downloads /home/$main/"
         "ln -fs /mnt/cloud/* /home/$main/"
@@ -101,7 +102,6 @@ release="2.2.0 Refreshing Indeed"
         "ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/"
         "mkdir -p /mnt/data /media"
         "chown $main:users /mnt/{data,windows}"
-        "chmod -x /etc/grub.d/10_linux"
     )
 
 #Software configuration
