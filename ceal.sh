@@ -81,6 +81,7 @@ release="2.2.0 Refreshing Indeed"
     )
     #Commands executed by root after installation
     rootexecs=(
+        "ln -fs ~/Mega/Backup/ewancoder.zsh-theme ~/.oh-my-zsh/themes/"
         "echo 'rate=1.2' > /home/$main/.config/vlc/vlcrc"
         "sed -i 's/^\(style=\).*/\1GTK+/' /home/$main/.config/Trolltech.conf"
         "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
