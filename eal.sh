@@ -50,7 +50,6 @@ mkdir -p /mnt/root
 cp {ceal,peal}.sh /mnt/root/
 cp makepkg.patch /mnt/root/
 mess "Go to arch-chroot and execute peal.sh"
-mount --bind /run /mnt/run #Supposedly fixing grub errors problem
 arch-chroot /mnt /root/peal.sh
 
 mess "Unmount all within /mnt (unmount installed system)"
