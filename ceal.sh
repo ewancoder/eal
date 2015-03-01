@@ -55,10 +55,10 @@ release="2.2.0 Refreshing Indeed"
     gittool=vimdiff #Tool to use as diff
     giteditor=vim #Default editor
 
-    gitrepo=( $main/dotfiles $main/etc $main/eal $main/${main}.github.io ) #All these repos will be cloned from github to corresponding folders
-    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/eal /home/$main/site ) #Set corresponding folders without '/' at the end
-    gitrule=( $main:users '' $main:users $main:users ) #CHOWN rule for whole folder content ('root' as default)
-    gitbranch=( '' '' '' '' ) #Branch to checkout
+    gitrepo=( $main/dotfiles $main/etc $main/eal $main/${main}.github.io $main/adroit ) #All these repos will be cloned from github to corresponding folders
+    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/eal /home/$main/site /home/$main/adroit ) #Set corresponding folders without '/' at the end
+    gitrule=( $main:users '' $main:users $main:users $main:users ) #CHOWN rule for whole folder content ('root' as default)
+    gitbranch=( '' '' '' '' '' ) #Branch to checkout
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" ) #Sumbodules to pull (remove if you don't need any)
     gitlink=( /home/$main /etc ) #Where to link ALL content from the repo [DOTFILES automation]
 
