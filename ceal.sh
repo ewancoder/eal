@@ -77,13 +77,16 @@ release="2.2.0 Refreshing Indeed"
         mess 'Install vim plugins' \n
         vim +BundleInstall +qall \n
         mess 'Setup initial RPI ip address' \n
-        echo 192.168.100.110 > ~/.rpi"
+        echo 192.168.100.110 > ~/.rpi \n
+        mess 'Setup vlc playback speed to 1.2' \n
+        mkdir /home/$main/.config/vlc \n
+        echo 'rate=1.2' > /home/$main/.config/vlc/vlcrc \n
+        mess 'Setup Qt style equal to GTK+' \n
+        echo \"[Qt]\\nstyle=GTK+\""
     )
     #Commands executed by root after installation
     rootexecs=(
         "ln -fs ~/Mega/Backup/ewancoder.zsh-theme ~/.oh-my-zsh/themes/"
-        "echo 'rate=1.2' > /home/$main/.config/vlc/vlcrc"
-        "sed -i 's/^\(style=\).*/\1GTK+/' /home/$main/.config/Trolltech.conf"
         "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
         "mkinitcpio -p linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
