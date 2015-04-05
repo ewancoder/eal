@@ -53,7 +53,7 @@ release="2.2.0 Refreshing Indeed"
     gitname=$main #Git user name
     gitemail=$main@gmail.com #Git email
     gittool=vimdiff #Tool to use as diff
-    giteditor=vim #Default editor
+    giteditor=gvim #Default editor
 
     gitrepo=( $main/dotfiles $main/etc $main/eal $main/${main}.github.io $main/adroit ) #All these repos will be cloned from github to corresponding folders
     gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/eal /home/$main/site /home/$main/adroit ) #Set corresponding folders without '/' at the end
