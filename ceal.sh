@@ -6,7 +6,7 @@ release="2.2.0 Refreshing Indeed"
 
 #Common settings
     hostinstall=0 #Install from within already running distro
-    iso=http://ftp.byfly.by/pub/archlinux/iso/2015.01.01/arch/x86_64/airootfs.sfs #Path to Arch linux ROOT (fs.sfs) image, need for $hostinstall=1
+    iso=http://ftp.byfly.by/pub/archlinux/iso/`date +%Y.%m.01`/arch/x86_64/airootfs.sfs #Path to Arch linux ROOT (fs.sfs) image, need for $hostinstall=1
     auto=0 #Install automatically, pause only when error occurs. If $auto=0, the script will pause at the each step and let you continue by pressing [RETURN]
     verbose=1 #Show each executed command and values of used variables
     timeout=10  #When error occurred, wait 10 seconds and try again. Set this to 0 if you don't want script to repeat automatically: it will wait for your input
