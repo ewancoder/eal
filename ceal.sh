@@ -84,7 +84,7 @@ release="2.2.0 Refreshing Indeed"
     )
     #Commands executed by root after installation
     rootexecs=(
-        "ln -fs ~/Mega/Backup/ewancoder.zsh-theme ~/.oh-my-zsh/themes/"
+        "ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/"
         "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
         "mkinitcpio -p linux"
         "grub-mkconfig -o /boot/grub/grub.cfg"
