@@ -26,15 +26,13 @@ release="2.2.0 Refreshing Indeed"
     key=192837465 #Key for wireless connection
 
 #Devices: place them in the order of mounting ('/' goes before '/home'), no slash in the end ('/home', not '/home/')
-    description=( Root Home Backup Cloud ) #Just text info which will display during install
-    device=( /dev/Linux/ArchRoot /dev/Linux/ArchHome /dev/sda5 /dev/sdb5 ) #Devices which is to mount to corresponding mount points
-    mount=( / /home /mnt/backup /mnt/cloud ) #Mount points starting from '/'
-    type=( ext4 ext4 ext4 ext4 ) #Filesystem
-    option=( rw,relatime,discard rw,relatime,discard rw,relatime rw,relatime,discard ) #Options (discard works only for SSD)
-    dump=( 0 0 0 0 ) #Make backup if 1 provided (usually 0)
-    pass=( 1 2 2 2 ) #Used by fsck to check partitions in order (usually root = 1, other = 2)
-    #Example of SWAP options:
-    #device=/dev/sdSWAP mount=none type=swap option=defaults dump=0 pass=0
+    description=( Root Home Backup Cloud Swap ) #Just text info which will display during install
+    device=( /dev/Linux/ArchRoot /dev/Linux/ArchHome /dev/sda5 /dev/sdb5 /dev/Linux/Swap ) #Devices which is to mount to corresponding mount points
+    mount=( / /home /mnt/backup /mnt/cloud none ) #Mount points starting from '/'
+    type=( ext4 ext4 ext4 ext4 swap ) #Filesystem
+    option=( rw,relatime,discard rw,relatime,discard rw,relatime rw,relatime,discard defaults ) #Options (discard works only for SSD)
+    dump=( 0 0 0 0 0 ) #Make backup if 1 provided (usually 0)
+    pass=( 1 2 2 2 0 ) #Used by fsck to check partitions in order (usually root = 1, other = 2)
 
 #Additional devices
     mbr=/dev/sdb #Grub MBR device (where to install bootloader)
