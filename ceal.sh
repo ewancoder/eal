@@ -9,7 +9,7 @@ release="2.2.0 Refreshing Indeed"
     iso=http://ftp.byfly.by/pub/archlinux/iso/`date +%Y.%m.01`/arch/x86_64/airootfs.sfs #Path to Arch linux ROOT (fs.sfs) image, need for $hostinstall=1
     auto=0 #Install automatically, pause only when error occurs. If $auto=0, the script will pause at the each step and let you continue by pressing [RETURN]
     verbose=1 #Show each executed command and values of used variables
-    timeout=10  #When error occurred, wait 10 seconds and try again. Set this to 0 if you don't want script to repeat automatically: it will wait for your input
+    timeout=0  #When error occurred, wait N seconds and try again. Set this to 0 if you don't want script to repeat automatically: it will wait for your input
     font=cyr-sun16 #Console font [maybe this is deprecated]
     locale=( en_US.UTF-8 ru_RU.UTF-8 ) #Locales which you need. System locale will be the first
     hostname=ewanpc #Hostname of the PC
