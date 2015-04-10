@@ -199,6 +199,10 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             git config --global core.editor ${giteditor[$i]}
             mess "Adopt new push behaviour (simple)"
             git config --global push.default simple
+            mess "Configure newlines instead of carriage returns"
+            git config --global core.autocrlf input
+            mess "Setup git to remember password for current session"
+            git config --global credential.helper cache
             ' >> user.sh
         fi
         if [ ! "${userexecs[$i]}" == "" ]; then
