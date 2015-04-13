@@ -80,7 +80,7 @@ release="2.2.0 Refreshing Indeed"
         mkdir /home/$main/.config/vlc \n
         echo 'rate=1.2' > /home/$main/.config/vlc/vlcrc \n
         mess 'Setup Qt style equal to GTK+' \n
-        echo \"[Qt]\\nstyle=GTK+\""
+        echo \"[Qt]\\nstyle=GTK+\" > /home/$main/.config/Trolltech.conf"
     )
     #Commands executed by root after installation
     rootexecs=(
