@@ -31,7 +31,6 @@ if [ $hostinstall -eq 1 ]; then
     mess "Initializing pacman keyring"
     pacman-key --init
     pacman-key --populate archlinux
-    pacman-key --keyserver hkp://pgp.mit.edu -r B02854ED753E0F1F
 fi
 
 mess -t "Install system"
