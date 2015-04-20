@@ -125,7 +125,7 @@ release="2.2.0 Refreshing Indeed"
         "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs keychain libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer gtk-theme-espresso slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
         "canto-curses-git chromium chromium-pepper-flash megasync deluge dropbox jre8-openjdk icedtea-web net-tools skype"
-        "anki calligra-braindump calligra-flow calligra-krita gcalcli geeqie gource gvim impressive kdegraphics-okular kdeutils-filelight libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc pencil scrot syncplay thunar vlc"
+        "anki calligra-braindump calligra-flow calligra-krita filelight gcalcli geeqie gource gvim impressive kdegraphics-okular libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc pencil scrot syncplay thunar vlc"
         "arduino ctags latex-beamer latex-pscyr mono pygmentize python python-matplotlib python-numpy python-pygame-hg python-pyserial python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools thefuck virtualbox"
     )
