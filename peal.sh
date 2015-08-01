@@ -15,8 +15,8 @@ mess "Generate locales"
 locale-gen
 mess "Set up default locale (${locale[0]})"
 echo "LANG=${locale[0]}" > /etc/locale.conf
-mess "Set font as $font"
-setfont $font
+#mess "Set font as $font"
+#setfont $font
 
 mess -t "Prepare for software installation"
 mess "Apply patch to makepkg in order to return '--asroot' parameter"
@@ -43,14 +43,14 @@ mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
 mess -t "Setup network connection"
-if [ $netctl -eq 1 ]; then
+if [ $network -eq 1 ]; then
     mess "Copy $profile template"
     cp /etc/netctl/examples/$profile /etc/netctl/
     mess "Configure network"
     sed -i -e "s/eth0/$interface/" -e "s/wlan0/$interface/" -e "s/^Address=.*/Address='$ip\/24'/" -e "s/192.168.1.1/$dns/" -e "s/^ESSID=.*/ESSID='$essid'/" -e "s/^Key=.*/Key='$key'/" /etc/netctl/$profile
     mess "Enable netctl $profile"
     netctl enable $profile
-else
+elif [ $network -eq 2 ]; then
     mess "Enable dhcpcd"
     systemctl enable dhcpcd
 fi
@@ -59,6 +59,11 @@ mess -t "Install all software"
 for (( i = 0; i < ${#software[@]}; i++ )); do
     mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
     yaourt -S --noconfirm ${software[$i]}
+done
+mess -t "Build AUR software"
+for (( i = 0; i < ${#buildbefore[@]}; i++ )); do
+    mess "Build ${buildbefore[$i]} ($((i+1))/${#buildbefore[@]})"
+    yaourt -S --noconfirm ${buildbefore[$i]}
 done
 mess "Reinstall pacman (remove makepkg patch)"
 pacman -S pacman --noconfirm
