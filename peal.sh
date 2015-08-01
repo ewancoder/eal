@@ -111,12 +111,12 @@ for i in ${user[@]}; do
     useradd -m -g users -s /bin/bash $i
 done
 
-if [ ! "$backupexecs" == "" ]; then
-    mess -t "Execute all BACKUP commands before messing with GIT"
+if [ ! "$backup" == "" ]; then
+    mess -t "Restore system backup"
     shopt -s dotglob
-    for (( i = 0; i < ${#backupexecs[@]}; i++ )); do
-        mess "Execute '${backupexecs[$i]}'"
-        eval ${backupexecs[$i]}
+    for (( i = 0; i < ${#backup[@]}; i++ )); do
+        mess "Restore backup '${backup[$i]}'"
+        rsync -a ${backup[$i]}
     done
     shopt -u dotglob
 fi

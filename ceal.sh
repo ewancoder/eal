@@ -64,8 +64,10 @@ release="2.3.0 Reworked"
 
 #Execute commands after install
     #You need to restore your BACKUPS BEFORE symlinking DOTFILES
-    backupexecs=(
-        "rsync -a /mnt/backup/Arch/ /home/$main/"
+    #Use "folder/" path with trailing slash to restore all the folders within
+    #This option is parsed as [rsync -a $backup]
+    backup=(
+        "/mnt/backup/Arch/ /Home/$main/"
     )
     #Commands executed by corresponding user after installation
     userexecs=(
