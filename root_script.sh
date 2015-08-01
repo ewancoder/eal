@@ -16,5 +16,5 @@ ln -fs /home/$main/.zsh_aliases /root/
 ln -fs /usr/share/gxkb/flags/fr.png /usr/share/gxkb/flags/ca\(fr\).png
 ln -fs /mnt/cloud/Mega/Backup/Arch/spell /home/$main/.vim/
 ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/
-mkdir -p /mnt/data /media
+mkdir -p /mnt/{data,windows} /media
 chown $main:users /mnt/{data,windows}
