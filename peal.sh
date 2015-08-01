@@ -116,7 +116,7 @@ if [ ! "$backup" == "" ]; then
     shopt -s dotglob
     for (( i = 0; i < ${#backup[@]}; i++ )); do
         mess "Restore backup '${backup[$i]}'"
-        rsync -a ${backup[$i]}
+        eval "rsync -a ${backup[$i]}"
     done
     shopt -u dotglob
 fi
