@@ -83,7 +83,7 @@ release="2.3.0 Reworked"
         Tools
     )
     #Essential AUR software, installed before system boot
-    buildbefore=( canto-next-git compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg xflux )
+    buildbefore=( canto-next-git compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg )
     #Long-builded AUR software, installed after system boot
     buildafter=( canto-curses-git chromium-pepper-flash hyphen-ru hunspell-ru jmtpfs latex-beamer latex-pscyr pencil popcorntime-bin python-pygame-hg syncplay pasystray-git )
     term="urxvt -e" #Terminal to install $buildafter software within
@@ -91,7 +91,7 @@ release="2.3.0 Reworked"
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt5-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
-        "cronie devilspie udevil feh fuse git gksu keychain libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen sshfs tig tilda transset-df unrar unclutter unzip urxvt-perls wpa_supplicant xclip xdotool xorg-server xorg-server-utils xorg-xinit zsh"
+        "cronie devilspie udevil feh fuse git gksu keychain libnotify mplayer openssh p7zip pygtk redshift rsync rxvt-unicode screen sshfs tig tilda transset-df unrar unclutter unzip urxvt-perls wpa_supplicant xclip xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer terminus-font ttf-dejavu tumbler"
         "chromium deluge jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita filelight geeqie gource gvim impressive kdegraphics-okular libreoffice-fresh hyphen hyphen-en hunspell hunspell-en mc scrot thunar vlc"
