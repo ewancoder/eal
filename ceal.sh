@@ -48,7 +48,7 @@ release="2.3.0 Reworked"
     group=fuse,uucp #Add user in these groups, separate by comma (,)
     main=${user[0]} #Main user of the system: used later as reference. I am setting it as 'ewancoder'
     sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" #Sudoers additional entries
-    userscript=( userscript.sh ) #Script to execute as user after install
+    userscript=( ewancoder_script.sh ) #Script to execute as user after install
 
 #Git configuration
     gitname=$main #Git user name
@@ -68,7 +68,7 @@ release="2.3.0 Reworked"
     backup=(
         "/mnt/backup/Arch/ /Home/$main/"
     )
-    rootscript=rootscript.sh #Script executed after install
+    rootscript=root_script.sh #Script executed after install
 
 #Software configuration
     #Titles shows during install

@@ -64,6 +64,8 @@ prepare() {
             echo -e '        if [ "$ans" == "n" -o "$ans" == "N" ]; then'       >> $2
             echo -e '            break'                                         >> $2
             echo -e '        fi'                                                >> $2
+            echo -e '    elif [ "$ans" == "EXIT" ]; then'                       >> $2
+            echo -e '        exit'                                              >> $2
             echo -e '    fi'                                                    >> $2
             echo -e 'done'                                                      >> $2
         fi
@@ -74,10 +76,8 @@ mess -t "Prepare installation script (add error handling)"
 mess "Make temporary 'eal' directory where all installation files will be put"
 mkdir -p eal
 
-#Copy all scripts, including root.sh and /user/.sh, and ceal.sh
 mess "Copy ceal.sh and makepkg.patch"
-cp *.sh eal/
-cp makepkg.patch eal/
+cp ceal.sh makepkg.patch eal/
 
 mess "Prepare eal.sh"
 prepare eal.sh eal/eal.sh
@@ -85,6 +85,48 @@ mess "Prepare heal.sh"
 prepare heal.sh eal/heal.sh
 mess "Prepare peal.sh"
 prepare peal.sh eal/peal.sh
+
+if [ ! "$rootscript" == "" ]; then
+    mess "Prepare root (post-install) script"
+    echo $'
+    source ceal.sh
+    mess -t "ROOT executed script after installation"
+    ' > root.sh
+    cat root.sh $rootscript > temp && mv temp $rootscript
+    rm root.sh
+    prepare $rootscript eal/$rootscript
+fi
+
+mess "Prepare user-executed scripts"
+for (( i = 0; i < ${#user[@]}; i++ )); do
+    if ! [ "${gitname[$i]}" == "" -a "${userscript[$i]}" == "" ]; then
+        mess "Prepare script for user ${user[$i]}"
+        echo $'
+        source ceal.sh
+        mess -t "User executed script for ${user[$i]} user"
+        ' > user.sh
+        if [ ! "${gitname[$i]}" == "" ]; then
+            mess "Add git configuration to user-executed script"
+            echo $'
+            mess "Configure git for ${user[$i]}"
+            mess "Configure git user.name as ${gitname[$i]}"
+            git config --global user.name ${gitname[$i]}
+            mess "Configure git user.email as ${gitemail[$i]}"
+            git config --global user.email ${gitemail[$i]}
+            mess "Configure git merge.tool as ${gittool[$i]}"
+            git config --global merge.tool ${gittool[$i]}
+            mess "Configure git core.editor as ${giteditor[$i]}"
+            git config --global core.editor ${giteditor[$i]}
+            ' >> user.sh
+        fi
+        if [ ! "${userscript[$i]}" == "" ]; then
+            mess "Assemble user-defined script (${userscript[$i]})"
+            cat user.sh ${userscript[$i]} > temp && mv temp ${userscript[$i]}
+            rm user.sh
+            prepare ${userscript[$i]} eal/${userscript[$i]}
+        fi
+    fi
+done
 
 cd eal
 

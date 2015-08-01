@@ -185,30 +185,8 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
     if ! [ "${gitname[$i]}" == "" -a "${userscript[$i]}" == "" ]; then
         cd /home/${user[$i]}
-        mess "Prepare user-executed script for ${user[$i]} user"
-        echo $'
-        source ceal.sh
-        mess -t "User executed script for ${user[$i]} user"
-        ' > user.sh
-        if [ ! "${gitname[$i]}" == "" ]; then
-            mess "Add git configuration to user-executed script"
-            echo $'
-            mess "Configure git for ${user[$i]}"
-            mess "Configure git user.name as ${gitname[$i]}"
-            git config --global user.name ${gitname[$i]}
-            mess "Configure git user.email as ${gitemail[$i]}"
-            git config --global user.email ${gitemail[$i]}
-            mess "Configure git merge.tool as ${gittool[$i]}"
-            git config --global merge.tool ${gittool[$i]}
-            mess "Configure git core.editor as ${giteditor[$i]}"
-            git config --global core.editor ${giteditor[$i]}
-            ' >> user.sh
-        fi
-        if [ ! "${userscript[$i]}" == "" ]; then
-            mess "Assemble user-defined script"
-            cat user.sh /root/${userscript[$i]} > temp
-            mv temp > user.sh
-        fi
+        mess "Place user-defined script in home directory"
+        cp /root/${userscript[$i]} user.sh
         mess "Make executable (+x)"
         chmod +x user.sh
         mess "Copy ceal.sh there"
@@ -237,16 +215,9 @@ if [ ! "$sudoers" == "" ]; then
 fi
 
 if [ ! "$rootscript" == "" ]; then
-    mess "Prepare root (post-install) script"
-    echo $'
-    source ceal.sh
-    mess -t "ROOT executed script after installation
-    ' > root.sh
-    cat root.sh rootscript.sh > temp
-    mv temp root.sh
     mess -t "Execute root script ($rootscript)"
-    su -c ./root.sh -s /bin/bash root
-    rm root.sh
+    chmod +x $rootscript
+    /bin/bash $rootscript
 fi
 
 mess -t "Setup all passwords"

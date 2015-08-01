@@ -1,16 +1,3 @@
-#!/bin/bash
-
-#mess "Configure git user.name as ${gitname[$i]}"
-#git config --global user.name ${gitname[$i]}
-#mess "Configure git user.email as ${gitemail[$i]}"
-#git config --global user.email ${gitemail[$i]}
-#mess "Configure git merge.tool as ${gittool[$i]}"
-#git config --global merge.tool ${gittool[$i]}
-#mess "Configure git core.editor as ${giteditor[$i]}"
-#git config --global core.editor ${giteditor[$i]}
-
-
-
 mess "Adopt new push behaviour (simple)"
 git config --global push.default simple
 mess "Configure newlines instead of carriage returns"
