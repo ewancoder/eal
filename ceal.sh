@@ -48,6 +48,7 @@ release="2.3.0 Reworked"
     group=fuse,uucp #Add user in these groups, separate by comma (,)
     main=${user[0]} #Main user of the system: used later as reference. I am setting it as 'ewancoder'
     sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" #Sudoers additional entries
+    userscript=( userscript.sh ) #Script to execute as user after install
 
 #Git configuration
     gitname=$main #Git user name
@@ -63,52 +64,11 @@ release="2.3.0 Reworked"
     gitlink=( /home/$main /etc ) #Where to link ALL content from the repo [DOTFILES automation]
 
 #Execute commands after install
-    #You need to restore your BACKUPS BEFORE symlinking DOTFILES
-    #Use "folder/" path with trailing slash to restore all the folders within
-    #This option is parsed as [rsync -a $backup]
+    #Restore backup [FROM] [TO]
     backup=(
         "/mnt/backup/Arch/ /Home/$main/"
     )
-    #Commands executed by corresponding user after installation
-    userexecs=(
-        "mess 'Make vim swap&backup dirs' \n
-        mkdir -p ~/.vim/{swap,backup} \n
-        mess 'Install minted (latex)' \n
-        mkdir -p ~/texmf/tex/latex/minted \n
-        curl -o ~/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
-        mess 'Install vim plugins' \n
-        vim +BundleInstall +qall \n
-        mess 'Setup initial RPI ip address' \n
-        echo 192.168.100.110 > ~/.rpi \n
-        mess 'Setup vlc playback speed to 1.2' \n
-        mkdir /home/$main/.config/vlc \n
-        echo 'rate=1.2' > /home/$main/.config/vlc/vlcrc \n
-        mess 'Setup Qt style equal to GTK+' \n
-        echo \"[Qt]\\nstyle=GTK+\" > /home/$main/.config/Trolltech.conf"
-    )
-    #Commands executed by root after installation
-    rootexecs=(
-        "ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/"
-        "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
-        "mkinitcpio -p linux"
-        "grub-mkconfig -o /boot/grub/grub.cfg"
-        "ln -fs /mnt/backup/Downloads /home/$main/"
-        "ln -fs /mnt/cloud/* /home/$main/"
-        "mkdir -p /home/$main/.config"
-        "mkdir -p /root/.config"
-        "ln -fs /home/$main/.config/mc /root/.config/"
-        "ln -fs /home/$main/.gitconfig /root/"
-        "ln -fs /home/$main/.mtoolsrc /root/"
-        "ln -fs /home/$main/.vim /root/"
-        "ln -fs /home/$main/.oh-my-zsh /root/"
-        "ln -fs /home/$main/.zshrc /root/"
-        "ln -fs /home/$main/.zsh_aliases /root/"
-        "ln -fs /usr/share/gxkb/flags/fr.png /usr/share/gxkb/flags/ca\(fr\).png"
-        "ln -fs /mnt/cloud/Mega/Backup/Arch/spell /home/$main/.vim/"
-        "ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/"
-        "mkdir -p /mnt/data /media"
-        "chown $main:users /mnt/{data,windows}"
-    )
+    rootscript=rootscript.sh #Script executed after install
 
 #Software configuration
     #Titles shows during install

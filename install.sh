@@ -73,15 +73,19 @@ prepare() {
 mess -t "Prepare installation script (add error handling)"
 mess "Make temporary 'eal' directory where all installation files will be put"
 mkdir -p eal
+
+#Copy all scripts, including root.sh and /user/.sh, and ceal.sh
+mess "Copy ceal.sh and makepkg.patch"
+cp *.sh eal/
+cp makepkg.patch eal/
+
 mess "Prepare eal.sh"
 prepare eal.sh eal/eal.sh
 mess "Prepare heal.sh"
 prepare heal.sh eal/heal.sh
 mess "Prepare peal.sh"
 prepare peal.sh eal/peal.sh
-mess "Copy ceal.sh and makepkg.patch"
-cp ceal.sh eal/
-cp makepkg.patch eal/
+
 cd eal
 
 mess -t "Start installation"

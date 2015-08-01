@@ -183,7 +183,7 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     fi
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    if ! [ "${gitname[$i]}" == "" -a "${userexecs[$i]}" == "" ]; then
+    if ! [ "${gitname[$i]}" == "" -a "${userscript[$i]}" == "" ]; then
         cd /home/${user[$i]}
         mess "Prepare user-executed script for ${user[$i]} user"
         echo $'
@@ -202,23 +202,18 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
             git config --global merge.tool ${gittool[$i]}
             mess "Configure git core.editor as ${giteditor[$i]}"
             git config --global core.editor ${giteditor[$i]}
-            mess "Adopt new push behaviour (simple)"
-            git config --global push.default simple
-            mess "Configure newlines instead of carriage returns"
-            git config --global core.autocrlf input
-            mess "Setup git to remember password for current session"
-            git config --global credential.helper cache
             ' >> user.sh
         fi
-        if [ ! "${userexecs[$i]}" == "" ]; then
-            mess "Add user-based execs to user-executed script"
-            echo -e ${userexecs[$i]} >> user.sh
+        if [ ! "${userscript[$i]}" == "" ]; then
+            mess "Assemble user-defined script"
+            cat user.sh /root/${userscript[$i]} > temp
+            mv temp > user.sh
         fi
         mess "Make executable (+x)"
         chmod +x user.sh
         mess "Copy ceal.sh there"
         cp /root/ceal.sh .
-        mess "Execute user-executed script by ${user[$i]} user"
+        mess "Execute user-defined script by ${user[$i]} user"
         mv .bash_profile .bash_profilecopy 2>/dev/null
         su -c ./user.sh -s /bin/bash ${user[$i]}
         mv .bash_profilecopy .bash_profile 2>/dev/null
@@ -241,14 +236,17 @@ if [ ! "$sudoers" == "" ]; then
     done
 fi
 
-if [ ! "$rootexecs" == "" ]; then
-    mess -t "Execute all root commands"
-    shopt -s dotglob
-    for (( i = 0; i < ${#rootexecs[@]}; i++ )); do
-        mess "Execute '${rootexecs[$i]}'"
-        eval ${rootexecs[$i]}
-    done
-    shopt -u dotglob
+if [ ! "$rootscript" == "" ]; then
+    mess "Prepare root (post-install) script"
+    echo $'
+    source ceal.sh
+    mess -t "ROOT executed script after installation
+    ' > root.sh
+    cat root.sh rootscript.sh > temp
+    mv temp root.sh
+    mess -t "Execute root script ($rootscript)"
+    su -c ./root.sh -s /bin/bash root
+    rm root.sh
 fi
 
 mess -t "Setup all passwords"
