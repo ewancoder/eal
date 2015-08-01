@@ -112,6 +112,9 @@ for i in ${user[@]}; do
 done
 
 if [ ! "$backup" == "" ]; then
+    if ! yaourt -Q rsync; then
+        yaourt -S rsync
+    fi
     mess -t "Restore system backup"
     shopt -s dotglob
     for (( i = 0; i < ${#backup[@]}; i++ )); do
