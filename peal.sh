@@ -224,7 +224,7 @@ if [ ! "$buildafter" == "" ]; then
     mv after.sh /home/$main/
     chmod +x /home/$main/after.sh
     chown $main:users /home/$main/after.sh
-    echo "bash ~/after.sh" > /home/$main/.xinitrc
+    echo "$term ~/after.sh &" > /home/$main/.xprofile
 fi
 
 mess -t "Setup all passwords"

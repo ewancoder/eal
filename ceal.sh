@@ -86,6 +86,7 @@ release="2.3.0 Reworked"
     buildbefore=( canto-next-git compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg xflux )
     #Long-builded AUR software, installed after system boot
     buildafter=( canto-curses-git chromium-pepper-flash hyphen-ru hunspell-ru jmtpfs latex-beamer latex-pscyr pencil popcorntime-bin python-pygame-hg syncplay )
+    term="urxvt -e" #Terminal to install $buildafter software within
     #Packages (set drivers first for no-conflict)
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt5-gstreamer"

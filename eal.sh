@@ -57,6 +57,8 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         cp ${userscript[$i]} /mnt/root
     fi
 done
+mess "Copy after-build script to /mnt/root"
+cp after.sh /mnt/root
 mess "Go to arch-chroot and execute peal.sh"
 arch-chroot /mnt /root/peal.sh
 
