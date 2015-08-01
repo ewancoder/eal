@@ -222,9 +222,11 @@ fi
 
 if [ ! "$buildafter" == "" ]; then
     mv after.sh /home/$main/
+    cp /root/ceal.sh /home/$main/
     chmod +x /home/$main/after.sh
     chown $main:users /home/$main/after.sh
-    echo "$term ~/after.sh &" > /home/$main/.xprofile
+    chown $main:users /home/$main/ceal.sh
+    echo "$term ~/after.sh &" >> /home/$main/.xprofile
 fi
 
 mess -t "Setup all passwords"
