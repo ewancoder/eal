@@ -83,7 +83,7 @@ release="2.3.0 Reworked"
         Tools
     )
     #Essential AUR software, installed before system boot
-    buildbefore=( compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg xflux canto-next-git )
+    buildbefore=( canto-next-git compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg xflux )
     #Long-builded AUR software, installed after system boot
     buildafter=( canto-curses-git chromium-pepper-flash hyphen-ru hunspell-ru jmtpfs latex-beamer latex-pscyr pencil popcorntime-bin python-pygame-hg syncplay )
     #Packages (set drivers first for no-conflict)

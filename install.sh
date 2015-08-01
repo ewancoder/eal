@@ -128,6 +128,18 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     fi
 done
 
+if [ ! "$buildafter" == "" ]; then
+    mess "Prepare AUR BUILD post-install script"
+    echo 'mess -t "Build AUR software"'                                     > after.sh
+    for (( i = 0; i < ${#buildafter[@]}; i++ )); do
+        echo "mess 'Build ${buildafter[$i]} ($((i+1))/${#buildafter[@]})'"  >> after.sh
+        echo "yaourt -S --noconfirm ${buildafter[$i]}"                      >> after.sh
+    done
+    echo "sed -i '/bash ~\/after.sh/d' ~/.xinitrc"                          >> after.sh
+    echo "rm ~/ceal.sh ~/after.sh"                                          >> after.sh
+    prepare after.sh eal/after.sh
+fi
+
 cd eal
 
 mess -t "Start installation"

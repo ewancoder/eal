@@ -1,4 +1,3 @@
-#!/bin/bash
 ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/
 rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/
 mkinitcpio -p linux
