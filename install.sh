@@ -130,7 +130,8 @@ done
 
 if [ ! "$buildafter" == "" ]; then
     mess "Prepare AUR BUILD post-install script"
-    echo 'mess -t "Build AUR software"'                                     > after.sh
+    echo 'source ceal.sh'                                                   > after.sh
+    echo 'mess -t "Build AUR software"'                                     >> after.sh
     for (( i = 0; i < ${#buildafter[@]}; i++ )); do
         echo "mess 'Build ${buildafter[$i]} ($((i+1))/${#buildafter[@]})'"  >> after.sh
         echo "yaourt -S --noconfirm ${buildafter[$i]}"                      >> after.sh
