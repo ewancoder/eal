@@ -89,10 +89,10 @@ release="2.3.0 Reworked"
     term="urxvt -e" #Terminal to install $buildafter software within
     #Packages (set drivers first for no-conflict)
     software=(
-        "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt5-gstreamer"
+        "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt5-gstreamer ttf-dejavu"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
         "cronie devilspie udevil feh fuse git gksu keychain libnotify mplayer openssh p7zip pygtk redshift rsync rxvt-unicode screen sshfs tig tilda transset-df unrar unclutter unzip urxvt-perls wpa_supplicant xclip xdotool xorg-server xorg-server-utils xorg-xinit zsh"
-        "faience-icon-theme ffmpegthumbnailer terminus-font ttf-dejavu tumbler"
+        "faience-icon-theme ffmpegthumbnailer terminus-font tumbler"
         "chromium deluge jre8-openjdk icedtea-web net-tools skype"
         "anki calligra-krita filelight geeqie gource gvim impressive kdegraphics-okular libreoffice-fresh hyphen hyphen-en hunspell hunspell-en mc scrot thunar vlc"
         "ctags mono pygmentize python python-matplotlib python-numpy python-pyserial python-requests python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
