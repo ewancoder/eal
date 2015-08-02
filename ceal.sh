@@ -1,25 +1,27 @@
 #!/bin/bash
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
-#Copyright (c) 2015 Ewancoder (Ewan Zyryanov) <ewancoder@gmail.com>
-version="2.2 Refreshing, 2014"
-release="2.2.0 Refreshing Indeed"
+#Copyright (c) 2014-2015 Ewancoder (Ewan Zyryanov) <ewancoder@gmail.com>
+version="2.3 Reworked, 2015"
+release="2.3.0 Reworked"
 
 #Common settings
     hostinstall=0 #Install from within already running distro
     iso=http://ftp.byfly.by/pub/archlinux/iso/`date +%Y.%m.01`/arch/x86_64/airootfs.sfs #Path to Arch linux ROOT (fs.sfs) image, need for $hostinstall=1
+
     auto=0 #Install automatically, pause only when error occurs. If $auto=0, the script will pause at the each step and let you continue by pressing [RETURN]
     verbose=1 #Show each executed command and values of used variables
     timeout=0  #When error occurred, wait N seconds and try again. Set this to 0 if you don't want script to repeat automatically: it will wait for your input
-    font=cyr-sun16 #Console font [maybe this is deprecated]
-    locale=( en_US.UTF-8 ru_RU.UTF-8 ) #Locales which you need. System locale will be the first
+
     hostname=ewanpc #Hostname of the PC
     timezone=Europe/Minsk #Your timezone in /usr/share/zoneinfo
+    locale=( en_US.UTF-8 ru_RU.UTF-8 ) #Locales which you need. System locale will be the first
     mirror=( Belarus Denmark Russia United France ) #List of repository countries in the order of importance
+    #font=cyr-sun16 #Console font [I don't need it]
 
 #Internet configuration
-    netctl=1 #Use netctl. Set this to 0 if you want to use dhcpcd
+    network=0 #1 - netctl, 2 - dhcpcd, 0 - do NOT setup
     profile=ethernet-static #netctl profile in /etc/netctl/examples
-    interface=enp2s0 #Network interface [see ip link]
+    interface=enp5s0 #Network interface [see ip link]
     ip=192.168.100.22 #Static IP address
     dns=192.168.100.1 #DNS to use (usually, your router address)
     essid=TTT #Name of access point for wireless connection
@@ -27,7 +29,7 @@ release="2.2.0 Refreshing Indeed"
 
 #Devices: place them in the order of mounting ('/' goes before '/home'), no slash in the end ('/home', not '/home/')
     description=( Root Home Backup Cloud ) #Just text info which will display during install
-    device=( /dev/Linux/ArchRoot /dev/Linux/ArchHome /dev/sda5 /dev/sdb5 ) #Devices which is to mount to corresponding mount points
+    device=( /dev/archlinux/root /dev/archlinux/home /dev/archlinux/backup /dev/archlinux/cloud ) #Devices which is to mount to corresponding mount points
     mount=( / /home /mnt/backup /mnt/cloud ) #Mount points starting from '/'
     type=( ext4 ext4 ext4 ext4 ) #Filesystem
     option=( rw,relatime,discard rw,relatime,discard rw,relatime rw,relatime,discard ) #Options (discard works only for SSD)
@@ -36,7 +38,7 @@ release="2.2.0 Refreshing Indeed"
 
 #Additional devices
     mbr=/dev/sdb #Grub MBR device (where to install bootloader)
-    windows=/dev/sdb1 #Copy fonts from windows system partition (C:\Windows\Fonts)
+    #windows=/dev/sdb1 #Copy fonts from windows system partition (C:\Windows\Fonts)
     #temp=/dev/sda10 #If you are installing from host-system ($hostinstall=1) and you have less than 1G free on '/', you will need additional partition to extract ROOT filesystem image
 
 #Users
@@ -46,65 +48,27 @@ release="2.2.0 Refreshing Indeed"
     group=fuse,uucp #Add user in these groups, separate by comma (,)
     main=${user[0]} #Main user of the system: used later as reference. I am setting it as 'ewancoder'
     sudoers="$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" #Sudoers additional entries
+    userscript=( ewancoder_script.sh ) #Script to execute as user after install
 
 #Git configuration
     gitname=$main #Git user name
     gitemail=$main@gmail.com #Git email
     gittool=vimdiff #Tool to use as diff
-    giteditor="gvim -f" #Default editor
+    giteditor="vim" #Default editor
 
-    gitrepo=( $main/dotfiles $main/etc $main/eal ) #All these repos will be cloned from github to corresponding folders
-    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles /home/$main/eal ) #Set corresponding folders without '/' at the end
-    gitrule=( $main:users '' $main:users ) #CHOWN rule for whole folder content ('root' as default)
-    gitbranch=( '' '' '' ) #Branch to checkout
+    gitrepo=( $main/dotfiles $main/etc ) #All these repos will be cloned from github to corresponding folders
+    gitfolder=( /home/$main/.dotfiles /etc/.dotfiles ) #Set corresponding folders without '/' at the end
+    gitrule=( $main:users '' ) #CHOWN rule for whole folder content ('root' as default)
+    gitbranch=( '' '' ) #Branch to checkout
     gitmodule=( ".oh-my-zsh .vim/bundle/vundle" ) #Sumbodules to pull (remove if you don't need any)
     gitlink=( /home/$main /etc ) #Where to link ALL content from the repo [DOTFILES automation]
 
 #Execute commands after install
-    #You need to restore your BACKUPS BEFORE symlinking DOTFILES
-    backupexecs=(
-        "rsync -a /mnt/backup/Arch/ /home/$main/"
+    #Restore backup [FROM] [TO]
+    backup=(
+        "/mnt/backup/Arch/ /Home/$main/"
     )
-    #Commands executed by corresponding user after installation
-    userexecs=(
-        "mess 'Make vim swap&backup dirs' \n
-        mkdir -p ~/.vim/{swap,backup} \n
-        mess 'Install minted (latex)' \n
-        mkdir -p ~/texmf/tex/latex/minted \n
-        curl -o ~/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty \n
-        mess 'Install vim plugins' \n
-        vim +BundleInstall +qall \n
-        mess 'Setup initial RPI ip address' \n
-        echo 192.168.100.110 > ~/.rpi \n
-        mess 'Setup vlc playback speed to 1.2' \n
-        mkdir /home/$main/.config/vlc \n
-        echo 'rate=1.2' > /home/$main/.config/vlc/vlcrc \n
-        mess 'Setup Qt style equal to GTK+' \n
-        echo \"[Qt]\\nstyle=GTK+\" > /home/$main/.config/Trolltech.conf"
-    )
-    #Commands executed by root after installation
-    rootexecs=(
-        "ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/"
-        "rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/"
-        "mkinitcpio -p linux"
-        "grub-mkconfig -o /boot/grub/grub.cfg"
-        "ln -fs /mnt/backup/Downloads /home/$main/"
-        "ln -fs /mnt/cloud/* /home/$main/"
-        "mkdir -p /home/$main/.config"
-        "mkdir -p /root/.config"
-        "ln -fs /home/$main/.config/mc /root/.config/"
-        "ln -fs /home/$main/.gitconfig /root/"
-        "ln -fs /home/$main/.mtoolsrc /root/"
-        "ln -fs /home/$main/.vim /root/"
-        "ln -fs /home/$main/.oh-my-zsh /root/"
-        "ln -fs /home/$main/.zshrc /root/"
-        "ln -fs /home/$main/.zsh_aliases /root/"
-        "ln -fs /usr/share/gxkb/flags/fr.png /usr/share/gxkb/flags/ca\(fr\).png"
-        "ln -fs /mnt/cloud/Mega/Backup/Arch/spell /home/$main/.vim/"
-        "ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/"
-        "mkdir -p /mnt/data /media"
-        "chown $main:users /mnt/{data,windows}"
-    )
+    rootscript=root_script.sh #Script executed after install
 
 #Software configuration
     #Titles shows during install
@@ -113,22 +77,25 @@ release="2.2.0 Refreshing Indeed"
         Audio
         Core
         Styling
-        Canto-curses dependency
         Web
         Office
         Coding
         Tools
     )
+    #Essential AUR software, installed before system boot
+    buildbefore=( canto-next-git compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg )
+    #Long-builded AUR software, installed after system boot
+    buildafter=( canto-curses-git chromium-pepper-flash hyphen-ru hunspell-ru jmtpfs latex-beamer latex-pscyr pencil popcorntime-bin python-pygame-hg syncplay pasystray-git )
+    term="urxvt -e" #Terminal to install $buildafter software within
     #Packages (set drivers first for no-conflict)
     software=(
         "lib32-nvidia-libgl mesa nvidia nvidia-libgl phonon-qt5-gstreamer"
         "alsa-plugins alsa-utils lib32-alsa-plugins lib32-libpulse pulseaudio pulseaudio-alsa"
-        "compton cronie cv devilspie udevil dmenu2 dunst-git feh fuse git gksu gxkb jmtpfs keychain libnotify mplayer openssh p7zip pygtk rsync rxvt-unicode screen slimlock-git sshfs the_silver_searcher tig tilda transset-df wmii-hg unrar unclutter unzip urxvt-perls wpa_supplicant xclip xflux xdotool xorg-server xorg-server-utils xorg-xinit zsh"
-        "faience-icon-theme ffmpegthumbnailer gtk-theme-espresso slim-archlinux-solarized-spiral terminus-font ttf-dejavu tumbler"
-        "canto-next-git"
-        "canto-curses-git chromium chromium-pepper-flash deluge dropbox jre8-openjdk icedtea-web net-tools skype"
-        "anki calligra-braindump calligra-flow calligra-krita filelight gcalcli geeqie gource gvim impressive kdegraphics-okular libreoffice-fresh libreoffice-en-US hyphen hyphen-en hyphen-ru hunspell hunspell-en hunspell-ru mc pencil popcorntime-bin scrot syncplay thunar vlc"
-        "arduino ctags latex-beamer latex-pscyr mono pygmentize python python-matplotlib python-numpy python-pygame-hg python-pyserial python-requests python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
+        "cronie devilspie udevil feh fuse git gksu keychain libnotify mplayer openssh p7zip pygtk redshift rsync rxvt-unicode screen sshfs tig tilda transset-df unrar unclutter unzip urxvt-perls wpa_supplicant xclip xdotool xorg-server xorg-server-utils xorg-xinit zsh"
+        "faience-icon-theme ffmpegthumbnailer terminus-font ttf-dejavu tumbler"
+        "chromium deluge jre8-openjdk icedtea-web net-tools skype"
+        "anki calligra-krita filelight geeqie gource gvim impressive kdegraphics-okular libreoffice-fresh hyphen hyphen-en hunspell hunspell-en mc scrot thunar vlc"
+        "ctags mono pygmentize python python-matplotlib python-numpy python-pyserial python-requests python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools thefuck virtualbox"
     )
     #Services to enable
