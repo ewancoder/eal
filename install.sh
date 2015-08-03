@@ -72,7 +72,7 @@ prepare() {
     done < $1
 }
 
-mess -t "Prepare installation script (add error handling)"
+mess -t "Prepare installation scripts (add error handling)"
 mess "Make temporary 'eal' directory where all installation files will be put"
 mkdir -p eal
 
