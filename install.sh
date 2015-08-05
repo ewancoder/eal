@@ -26,11 +26,17 @@ prepare() {
           -o "${p:0:11}" == "cd \`dirname" ]; then  
             echo $p                                                             >> $2
         else
+            cmd=`echo $p | sed "s/'/'\"'\"'/g"`
+            cmdmsg=`echo $cmd | sed 's/"/\\\\"/g'`
+            echo "cmd=\"$cmdmsg\""                                              >> $2
             if [ $verbose -eq 1 ]; then
-                str=`echo $p | sed "s/'/'\"'\"'/g"`
-                echo "mess -v '$str'"                                           >> $2
+                echo "mess -v '$cmd'"                                           >> $2
+                if [ $auto -eq 0 ]; then
+                    echo -e 'cmdmsg=`echo $cmd | sed "s/\"/\\\"/g"`'            >> $2
+                    echo -e 'read -e -p $'"'"'\\e[33m-> '"'"' -i "$cmdmsg" cmd' >> $2
+                fi
             fi
-            echo "until $p; do"                                                 >> $2
+            echo -e 'until eval $cmd; do'                                       >> $2
             echo -e '    ans=""'                                                >> $2
             echo -e '    mess -q "Error occured on step [$step]. Retry? (y/n)"' >> $2
             if [ $timeout -eq 0 ]; then
