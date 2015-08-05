@@ -10,7 +10,6 @@ mess -w "Before proceeding:\n\t1) Change constants in 'ceal.sh' configuration fi
 source ceal.sh
 
 prepare() {
-    inside=0
     rm -f $2
     while read -r p; do
         if [ "$p" == ""              \
@@ -29,21 +28,7 @@ prepare() {
         else
             if [ $verbose -eq 1 ]; then
                 str=`echo $p | sed "s/'/'\"'\"'/g"`
-                if [ "${p:0:7}" == "echo $'" ]; then
-                    inside=1
-                    echo $p                                                     >> $2
-                    continue
-                elif [ "${p:0:5}" == "' >> " ]; then
-                    inside=0
-                    echo $p                                                     >> $2
-                    continue
-                else
-                    if [ $inside -eq 1 ]; then
-                        echo "mess -v \\'$str\\'"                               >> $2
-                    else
-                        echo "mess -v '$str'"                                   >> $2
-                    fi
-                fi
+                echo "mess -v '$str'"                                           >> $2
             fi
             echo "until $p; do"                                                 >> $2
             echo -e '    ans=""'                                                >> $2
