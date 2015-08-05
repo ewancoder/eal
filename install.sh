@@ -57,6 +57,11 @@ prepare() {
             echo -e '        fi'                                                >> $2
             echo -e '    elif [ "$ans" == "EXIT" ]; then'                       >> $2
             echo -e '        exit'                                              >> $2
+            if [ $verbose -eq 1 ]; then
+                echo -e '    else'                                              >> $2
+                echo -e '        cmdmsg=`echo $cmd | sed "s/\"/\\\"/g"`'        >> $2
+                echo -e '        read -e -p $'"'"'\\e[33m-> '"'"' -i "$cmdmsg" cmd' >> $2
+            fi
             echo -e '    fi'                                                    >> $2
             echo -e 'done'                                                      >> $2
         fi
