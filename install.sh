@@ -30,14 +30,18 @@ prepare() {
             cmd=`echo $p | sed -r 's/(.)/\\\\\1/g'`
             echo "cmd=\$(echo $cmd)"                                            >> $2
 
-            parsed=`echo $p | sed -r 's/([^$])/\\\\\1/g'`
+            if [ $substitute -eq 1 ]; then
+                parsed=$(perl -pe 's/\$(?:{.*?}|\w+)(*SKIP)(*F)|(.)/\\$1/g' <<< "$p")
+            else
+                parsed=$cmd
+            fi
             echo "parsed=\$(echo $parsed)"                                      >> $2
 
             if [ $verbose -eq 1 ]; then
                 echo 'mess -v "$cmd"'                                           >> $2
                 if [ $auto -eq 0 ]; then
                     echo -e 'read -rep $'"'"'\\e[33m-> '"'"' -i "$parsed" parsed' >> $2
-                    echo -e 'echo $'"'"'\\\\e[0m'"'"''                          >> $2
+                    echo -e 'echo $'"'"'\\e[0m'"'"''                          >> $2
                 fi
             fi
             echo -e 'until eval "$parsed"; do'                                  >> $2
@@ -64,7 +68,7 @@ prepare() {
             if [ $verbose -eq 1 ]; then
                 echo -e '    else'                                              >> $2
                 echo -e '        read -rep $'"'"'\\e[33m-> '"'"' -i "$parsed" parsed' >> $2
-                echo -e 'echo $'"'"'\\\\e[0m'"'"''                              >> $2
+                echo -e '        echo $'"'"'\\e[0m'"'"''                        >> $2
             fi
             echo -e '    fi'                                                    >> $2
             echo -e 'done'                                                      >> $2
