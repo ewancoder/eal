@@ -1,8 +1,8 @@
 #!/bin/bash
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
 #Copyright (c) 2014-2015 Ewancoder (Ewan Zyryanov) <ewancoder@gmail.com>
-version="2.3 Reworked, 2015"
-release="2.3.0 Reworked"
+version="2.4 Interactive, 2015"
+release="2.4.0 Interactive"
 
 #Common settings
     hostinstall=0 #Install from within already running distro
@@ -67,7 +67,7 @@ release="2.3.0 Reworked"
 #Execute commands after install
     #Restore backup [FROM] [TO]
     backup=(
-        "/mnt/backup/Arch/ /Home/$main/"
+        "/mnt/backup/Arch/ /home/$main/"
     )
     rootscript=root_script.sh #Script executed after install
 
