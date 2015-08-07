@@ -10,7 +10,6 @@ mess -w "Before proceeding:\n\t1) Change constants in 'ceal.sh' configuration fi
 source ceal.sh
 
 prepare() {
-    inside=0
     rm -f $2
     while read -r p; do
         if [ "$p" == ""              \
@@ -27,25 +26,25 @@ prepare() {
           -o "${p:0:11}" == "cd \`dirname" ]; then  
             echo $p                                                             >> $2
         else
+
+            cmd=`echo $p | sed -r 's/(.)/\\\\\1/g'`
+            echo "cmd=\$(echo $cmd)"                                            >> $2
+
+            if [ $substitute -eq 1 ]; then
+                parsed=$(perl -pe 's/\$(?:{.*?}|\w+)(*SKIP)(*F)|(.)/\\$1/g' <<< "$p")
+            else
+                parsed=$cmd
+            fi
+            echo "parsed=\$(echo $parsed)"                                      >> $2
+
             if [ $verbose -eq 1 ]; then
-                str=`echo $p | sed "s/'/'\"'\"'/g"`
-                if [ "${p:0:7}" == "echo $'" ]; then
-                    inside=1
-                    echo $p                                                     >> $2
-                    continue
-                elif [ "${p:0:5}" == "' >> " ]; then
-                    inside=0
-                    echo $p                                                     >> $2
-                    continue
-                else
-                    if [ $inside -eq 1 ]; then
-                        echo "mess -v \\'$str\\'"                               >> $2
-                    else
-                        echo "mess -v '$str'"                                   >> $2
-                    fi
+                echo 'mess -v "$cmd"'                                           >> $2
+                if [ $auto -eq 0 ]; then
+                    echo -e 'read -rep $'"'"'\\e[33m-> '"'"' -i "$parsed" parsed' >> $2
+                    echo -e 'echo $'"'"'\\e[0m'"'"''                          >> $2
                 fi
             fi
-            echo "until $p; do"                                                 >> $2
+            echo -e 'until eval "$parsed"; do'                                  >> $2
             echo -e '    ans=""'                                                >> $2
             echo -e '    mess -q "Error occured on step [$step]. Retry? (y/n)"' >> $2
             if [ $timeout -eq 0 ]; then
@@ -66,6 +65,11 @@ prepare() {
             echo -e '        fi'                                                >> $2
             echo -e '    elif [ "$ans" == "EXIT" ]; then'                       >> $2
             echo -e '        exit'                                              >> $2
+            if [ $verbose -eq 1 ]; then
+                echo -e '    elif [ ! "$ans" == "" ] || [ $auto -eq 0 ]; then'  >> $2
+                echo -e '        read -rep $'"'"'\\e[33m-> '"'"' -i "$parsed" parsed' >> $2
+                echo -e '        echo $'"'"'\\e[0m'"'"''                        >> $2
+            fi
             echo -e '    fi'                                                    >> $2
             echo -e 'done'                                                      >> $2
         fi

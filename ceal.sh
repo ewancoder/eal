@@ -1,8 +1,8 @@
 #!/bin/bash
 #Effective & Easy (Ewancoder) Arch Linux (EAL) install script - useful tool for reinstalling your arch linux and setting up all the programs automatically
 #Copyright (c) 2014-2015 Ewancoder (Ewan Zyryanov) <ewancoder@gmail.com>
-version="2.3 Reworked, 2015"
-release="2.3.0 Reworked"
+version="2.4 Interactive, 2015"
+release="2.4.0 Interactive"
 
 #Common settings
     hostinstall=0 #Install from within already running distro
@@ -10,6 +10,7 @@ release="2.3.0 Reworked"
 
     auto=0 #Install automatically, pause only when error occurs. If $auto=0, the script will pause at the each step and let you continue by pressing [RETURN]
     verbose=1 #Show each executed command and values of used variables
+    substitute=1 #Give detailed command line with all variables already substituted, if it is 0 - show "command $with $variables"
     timeout=0  #When error occurred, wait N seconds and try again. Set this to 0 if you don't want script to repeat automatically: it will wait for your input
 
     hostname=ewanpc #Hostname of the PC
@@ -66,7 +67,7 @@ release="2.3.0 Reworked"
 #Execute commands after install
     #Restore backup [FROM] [TO]
     backup=(
-        "/mnt/backup/Arch/ /Home/$main/"
+        "/mnt/backup/Arch/ /home/$main/"
     )
     rootscript=root_script.sh #Script executed after install
 
@@ -166,10 +167,7 @@ mess(){
 
     #Print message
     if [ "$o" == "-v" ]; then
-        echo -en "$Style"
-        if [ $auto -eq 0 ]; then
-            read
-        fi
+        echo -en "$Style\n"
     elif [ "$o" == "-p" ]; then
         echo -en "$Style"
         read

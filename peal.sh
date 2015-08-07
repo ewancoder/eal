@@ -213,7 +213,7 @@ if [ ! "$sudoers" == "" ]; then
     echo -e "\n## Additional configuration" >> /etc/sudoers
     for i in "${sudoers[@]}"; do
         mess "Add '$i' entry"
-        echo $i >> /etc/sudoers
+        echo "$i" >> /etc/sudoers
     done
 fi
 
