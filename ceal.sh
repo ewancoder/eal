@@ -167,7 +167,7 @@ mess(){
 
     #Print message
     if [ "$o" == "-v" ]; then
-        echo -en "$Style"
+        echo -en "$Style\n"
     elif [ "$o" == "-p" ]; then
         echo -en "$Style"
         read

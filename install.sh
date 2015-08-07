@@ -66,7 +66,7 @@ prepare() {
             echo -e '    elif [ "$ans" == "EXIT" ]; then'                       >> $2
             echo -e '        exit'                                              >> $2
             if [ $verbose -eq 1 ]; then
-                echo -e '    elif [ ! "$ans" == "" ]; then'                     >> $2
+                echo -e '    elif [ ! "$ans" == "" ] || [ $auto -eq 0 ]; then'  >> $2
                 echo -e '        read -rep $'"'"'\\e[33m-> '"'"' -i "$parsed" parsed' >> $2
                 echo -e '        echo $'"'"'\\e[0m'"'"''                        >> $2
             fi
