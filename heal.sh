@@ -45,7 +45,9 @@ mount -o bind /dev/pts /arch/dev/pts
 cp -L /etc/resolv.conf /arch/etc
 
 mess -t "Chroot into live-cd environment and execute eal.sh (start regular installation)"
-mess "Copy {eal,ceal,peal}.sh scripts to /arch/root/"
-cp {eal,ceal,peal}.sh makepkg.patch /arch/root/
-mess "Chroot into /arch and execute /root/eal.sh"
-chroot /arch /root/eal.sh
+mess "Copy eal folder to /arch/eal"
+cp -r . /arch/eal
+mess "Chroot into /arch and execute /eal/eal.sh"
+chroot /arch /eal/eal.sh
+mess "Remove /eal folder"
+rm -rf /eal

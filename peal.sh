@@ -15,8 +15,8 @@ mess "Generate locales"
 locale-gen
 mess "Set up default locale (${locale[0]})"
 echo "LANG=${locale[0]}" > /etc/locale.conf
-mess "Set font as $font"
-setfont $font
+#mess "Set font as $font"
+#setfont $font
 
 mess -t "Prepare for software installation"
 mess "Apply patch to makepkg in order to return '--asroot' parameter"
@@ -43,14 +43,14 @@ mess "Make grub config"
 grub-mkconfig -o /boot/grub/grub.cfg
 
 mess -t "Setup network connection"
-if [ $netctl -eq 1 ]; then
+if [ $network -eq 1 ]; then
     mess "Copy $profile template"
     cp /etc/netctl/examples/$profile /etc/netctl/
     mess "Configure network"
     sed -i -e "s/eth0/$interface/" -e "s/wlan0/$interface/" -e "s/^Address=.*/Address='$ip\/24'/" -e "s/192.168.1.1/$dns/" -e "s/^ESSID=.*/ESSID='$essid'/" -e "s/^Key=.*/Key='$key'/" /etc/netctl/$profile
     mess "Enable netctl $profile"
     netctl enable $profile
-else
+elif [ $network -eq 2 ]; then
     mess "Enable dhcpcd"
     systemctl enable dhcpcd
 fi
@@ -59,6 +59,11 @@ mess -t "Install all software"
 for (( i = 0; i < ${#software[@]}; i++ )); do
     mess "Install ${softtitle[$i]} software ($((i+1))/${#software[@]})"
     yaourt -S --noconfirm ${software[$i]}
+done
+mess -t "Build AUR software"
+for (( i = 0; i < ${#buildbefore[@]}; i++ )); do
+    mess "Build ${buildbefore[$i]} ($((i+1))/${#buildbefore[@]})"
+    yaourt -S --noconfirm ${buildbefore[$i]}
 done
 mess "Reinstall pacman (remove makepkg patch)"
 pacman -S pacman --noconfirm
@@ -106,12 +111,15 @@ for i in ${user[@]}; do
     useradd -m -g users -s /bin/bash $i
 done
 
-if [ ! "$backupexecs" == "" ]; then
-    mess -t "Execute all BACKUP commands before messing with GIT"
+if [ ! "$backup" == "" ]; then
+    if ! yaourt -Q rsync; then
+        yaourt -S rsync
+    fi
+    mess -t "Restore system backup"
     shopt -s dotglob
-    for (( i = 0; i < ${#backupexecs[@]}; i++ )); do
-        mess "Execute '${backupexecs[$i]}'"
-        eval ${backupexecs[$i]}
+    for (( i = 0; i < ${#backup[@]}; i++ )); do
+        mess "Restore backup '${backup[$i]}'"
+        eval "rsync -a ${backup[$i]}"
     done
     shopt -u dotglob
 fi
@@ -178,42 +186,15 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     fi
     mess "Add user ${user[$i]} entry into /etc/sudoers"
     echo "${user[$i]} ALL=(ALL) ALL" >> /etc/sudoers
-    if ! [ "${gitname[$i]}" == "" -a "${userexecs[$i]}" == "" ]; then
+    if ! [ "${gitname[$i]}" == "" -a "${userscript[$i]}" == "" ]; then
         cd /home/${user[$i]}
-        mess "Prepare user-executed script for ${user[$i]} user"
-        echo $'
-        source ceal.sh
-        mess -t "User executed script for ${user[$i]} user"
-        ' > user.sh
-        if [ ! "${gitname[$i]}" == "" ]; then
-            mess "Add git configuration to user-executed script"
-            echo $'
-            mess "Configure git for ${user[$i]}"
-            mess "Configure git user.name as ${gitname[$i]}"
-            git config --global user.name ${gitname[$i]}
-            mess "Configure git user.email as ${gitemail[$i]}"
-            git config --global user.email ${gitemail[$i]}
-            mess "Configure git merge.tool as ${gittool[$i]}"
-            git config --global merge.tool ${gittool[$i]}
-            mess "Configure git core.editor as ${giteditor[$i]}"
-            git config --global core.editor ${giteditor[$i]}
-            mess "Adopt new push behaviour (simple)"
-            git config --global push.default simple
-            mess "Configure newlines instead of carriage returns"
-            git config --global core.autocrlf input
-            mess "Setup git to remember password for current session"
-            git config --global credential.helper cache
-            ' >> user.sh
-        fi
-        if [ ! "${userexecs[$i]}" == "" ]; then
-            mess "Add user-based execs to user-executed script"
-            echo -e ${userexecs[$i]} >> user.sh
-        fi
+        mess "Place user-defined script in home directory"
+        cp /root/${userscript[$i]} user.sh
         mess "Make executable (+x)"
         chmod +x user.sh
         mess "Copy ceal.sh there"
         cp /root/ceal.sh .
-        mess "Execute user-executed script by ${user[$i]} user"
+        mess "Execute user-defined script by ${user[$i]} user"
         mv .bash_profile .bash_profilecopy 2>/dev/null
         su -c ./user.sh -s /bin/bash ${user[$i]}
         mv .bash_profilecopy .bash_profile 2>/dev/null
@@ -232,18 +213,23 @@ if [ ! "$sudoers" == "" ]; then
     echo -e "\n## Additional configuration" >> /etc/sudoers
     for i in "${sudoers[@]}"; do
         mess "Add '$i' entry"
-        echo $i >> /etc/sudoers
+        echo "$i" >> /etc/sudoers
     done
 fi
 
-if [ ! "$rootexecs" == "" ]; then
-    mess -t "Execute all root commands"
-    shopt -s dotglob
-    for (( i = 0; i < ${#rootexecs[@]}; i++ )); do
-        mess "Execute '${rootexecs[$i]}'"
-        eval ${rootexecs[$i]}
-    done
-    shopt -u dotglob
+if [ ! "$rootscript" == "" ]; then
+    mess -t "Execute root script ($rootscript)"
+    chmod +x $rootscript
+    /bin/bash $rootscript
+fi
+
+if [ ! "$buildafter" == "" ]; then
+    mv after.sh /home/$main/
+    cp /root/ceal.sh /home/$main/
+    chmod +x /home/$main/after.sh
+    chown $main:users /home/$main/after.sh
+    chown $main:users /home/$main/ceal.sh
+    echo "$term ~/after.sh &" >> /home/$main/.xprofile
 fi
 
 mess -t "Setup all passwords"
