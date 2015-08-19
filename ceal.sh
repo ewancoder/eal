@@ -84,7 +84,7 @@ release="2.4.0 Interactive"
         Tools
     )
     #Essential AUR software, installed before system boot
-    buildbefore=( canto-next-git compton cv dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg )
+    buildbefore=( canto-next-git compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg )
     #Long-builded AUR software, installed after system boot
     buildafter=( canto-curses-git chromium-pepper-flash hyphen-ru hunspell-ru jmtpfs latex-beamer latex-pscyr pencil popcorntime-bin python-pygame-hg syncplay pasystray-git )
     term="urxvt -e" #Terminal to install $buildafter software within
