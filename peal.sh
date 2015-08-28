@@ -23,6 +23,15 @@ mess "Apply patch to makepkg in order to return '--asroot' parameter"
 patch /usr/bin/makepkg < /root/makepkg.patch
 rm /root/makepkg.patch
 mess "Install yaourt"
+git clone https://aur.archlinux.org/package-query.git
+cd package-query
+makepkg -si --noconfirm
+cd ..
+rm -rf package-query
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt
+makepkg -si --noconfirm
+cd ..
 curl -O aur.sh/aur.sh
 chmod +x aur.sh
 ./aur.sh -si --asroot --noconfirm package-query yaourt
