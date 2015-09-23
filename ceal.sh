@@ -95,7 +95,7 @@ release="2.4.0 Interactive"
         "cronie devilspie udevil feh fuse git gksu keychain libnotify mplayer openssh p7zip pygtk redshift rsync rxvt-unicode screen sshfs tig tilda transset-df unrar unclutter unzip urxvt-perls wpa_supplicant xclip xdotool xorg-server xorg-server-utils xorg-xinit zsh"
         "faience-icon-theme ffmpegthumbnailer terminus-font tumbler"
         "chromium deluge jre8-openjdk icedtea-web net-tools skype"
-        "anki calligra-krita filelight geeqie gource gvim impressive kdegraphics-okular libreoffice-fresh hyphen hyphen-en hunspell hunspell-en mc scrot thunar vlc"
+        "anki calligra-krita filelight geeqie gource vim impressive kdegraphics-okular libreoffice-fresh hyphen hyphen-en hunspell hunspell-en mc scrot thunar vlc"
         "ctags mono pygmentize python python-matplotlib python-numpy python-pyserial python-requests python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools thefuck virtualbox"
     )
