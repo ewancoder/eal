@@ -1,7 +1,6 @@
 ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/
 rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/
 mkinitcpio -p linux
-grub-mkconfig -o /boot/grub/grub.cfg
 ln -fs /mnt/backup/Downloads /home/$main/
 ln -fs /mnt/cloud/* /home/$main/
 mkdir -p /home/$main/.config
@@ -18,3 +17,4 @@ ln -fs /mnt/cloud/Mega/Backup/Arch/spell /home/$main/.vim/
 ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/
 mkdir -p /mnt/{data,windows} /media
 chown $main:users /mnt/{data,windows}
+grub-mkconfig -o /boot/grub/grub.cfg
