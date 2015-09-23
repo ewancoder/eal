@@ -33,10 +33,6 @@ git clone https://aur.archlinux.org/yaourt.git
 cd yaourt
 makepkg -si --noconfirm
 cd ..
-curl -O aur.sh/aur.sh
-chmod +x aur.sh
-./aur.sh -si --asroot --noconfirm package-query yaourt
-rm -r aur.sh package-query yaourt
 mess "Add multilib via sed"
 sed -i '/\[multilib\]/,+1s/#//' /etc/pacman.conf
 mess "Update packages including multilib"
