@@ -11,7 +11,7 @@ mess 'Install minted (latex)'
 mkdir -p ~/texmf/tex/latex/minted
 curl -o ~/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty
 mess 'Install vim plugins'
-vim +BundleInstall +qall
+vim +PluginInstall +qall
 mess 'Setup initial RPI ip address'
 echo 192.168.100.110 > ~/.rpi
 mess 'Setup vlc playback speed to 1.2'
