@@ -21,8 +21,8 @@ release="2.4.0 Interactive"
 
 #Internet configuration
     network=0 #1 - netctl, 2 - dhcpcd, 0 - do NOT setup
-    profile=ethernet-static #netctl profile in /etc/netctl/examples
     interface=enp5s0 #Network interface [see ip link]
+    profile=ethernet-static #netctl profile in /etc/netctl/examples
     ip=192.168.100.22 #Static IP address
     dns=192.168.100.1 #DNS to use (usually, your router address)
     essid=TTT #Name of access point for wireless connection
