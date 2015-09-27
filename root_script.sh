@@ -18,4 +18,5 @@ ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/
 mkdir -p /mnt/{data,windows} /media
 chown $main:users /mnt/{data,windows}
 ip link set $interface up
+yaourt -Rs os-prober --noconfirm
 grub-mkconfig -o /boot/grub/grub.cfg
