@@ -87,7 +87,7 @@ release="2.4.0 Interactive"
     #buildbefore=( canto-next-git compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral wmii-hg )
     #Long-builded AUR software, installed after system boot
     #buildafter=( canto-curses-git chromium-pepper-flash hyphen-ru hunspell-ru-aot jmtpfs latex-beamer latex-pscyr pencil popcorntime-bin python-pygame-hg syncplay pasystray-git )
-    buildbefore=( compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral hyphen-ru hunspell-ru-aot jmtpfs latex-beamer pencil popcorntime-bin syncplay pasystray-git xcape )
+    buildbefore=( compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral hyphen-ru hunspell-ru-aot jmtpfs latex-beamer pencil popcorntime-bin syncplay pasystray-git xcape oh-my-zsh-git )
     term="urxvt -e" #Terminal to install $buildafter software within
     #Packages (set drivers first for no-conflict)
     software=(
