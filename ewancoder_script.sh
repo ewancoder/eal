@@ -10,8 +10,6 @@ mkdir -p ~/.vim/{swap,backup}
 mess 'Install minted (latex)'
 mkdir -p ~/texmf/tex/latex/minted
 curl -o ~/texmf/tex/latex/minted/minted.sty https://raw.githubusercontent.com/gpoore/minted/master/source/minted.sty
-mess 'Install vim plugins'
-vim -E +PluginInstall +qall
 mess 'Setup initial RPI ip address'
 echo 192.168.100.110 > ~/.rpi
 mess 'Setup vlc playback speed to 1.2'
@@ -19,3 +17,6 @@ mkdir ~/.config/vlc
 echo 'rate=1.2' > ~/.config/vlc/vlcrc
 mess 'Setup Qt style equal to GTK+'
 echo -e "[Qt]\nstyle=GTK+" > ~/.config/Trolltech.conf
+mess 'Install vim plugins'
+#vim -E +PluginInstall +qall
+vim +PluginInstall +qall
