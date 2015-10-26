@@ -1,5 +1,6 @@
 #!/bin/bash
 source ceal.sh
+source myceal.sh
 mess -t "Installing needed software"
 if which unsquashfs > /dev/null && which curl > /dev/null; then
     mess "Both squashfs-tools and curl are installed, skipping..."
@@ -26,18 +27,16 @@ if ! [ -f root-image.fs.sfs -o -f /sfs/squashfs-root/airootfs.img ]; then
     mess "Download root live-cd image"
     curl -o root-image.fs.sfs $iso
 fi
-if [ ! -f /sfs/squashfs-root/airootfs.img ]; then
-    mess "Unsquash root live-cd image to /sfs/squashfs-root/root-image.fs"
-    unsquashfs -d /sfs/squashfs-root root-image.fs.sfs
-else
-    mess "Root live-cd image already exists at /sfs/squashfs-root/root-image.fs"
-fi
 
 mess -t "Prepare chroot-environment"
-mess "Make /arch folder"
-mkdir -p /arch
+if [ ! -f /arch/usr/bin/bash ]; then
+    mess "Unsquash root live-cd image to /arch"
+    rm -rf /arch
+    unsquashfs -d /arch root-image.fs.sfs
+else
+    mess "Root filesystem already exists at /arch"
+fi
 mess "Mount all needed things to /arch"
-mount -o loop /sfs/squashfs-root/airootfs.img /arch
 mount -t proc none /arch/proc
 mount -t sysfs none /arch/sys
 mount -o bind /dev /arch/dev

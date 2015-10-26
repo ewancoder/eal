@@ -1,3 +1,12 @@
+mess "Configure git for $main"
+mess "Configure git user.name as $main"
+git config --global user.name $main
+mess "Configure git user.email as $main@gmail.com"
+git config --global user.email $main@gmail.com
+mess "Configure git merge.tool as vimdiff"
+git config --global merge.tool vimdiff
+mess "Configure git core.editor as vim"
+git config --global core.editor vim
 mess "Adopt new push behaviour (simple)"
 git config --global push.default simple
 mess "Configure newlines instead of carriage returns"

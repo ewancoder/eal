@@ -1,5 +1,9 @@
-Ewancoder Arch Linux install script
-===================================
+Effective & Easy (Ewancoder) Arch Linux install script
+======================================================
+
+*Useful tool for reinstalling your arch linux and setting up all the programs automatically*
+
+Copyright 2014-2015 Ewancoder (Ewan Zyryanov) <ewancoder@gmail.com>
 
 ![splash](https://raw.githubusercontent.com/ewancoder/eal/master/splash.png)
 

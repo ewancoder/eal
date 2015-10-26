@@ -1,3 +1,5 @@
+echo -e "\n## Additional configuration" >> /etc/sudoers
+echo "$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
 ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/
 rsync -a /mnt/cloud/Mega/Backup/Arch/$main /var/spool/cron/
 mkinitcpio -p linux

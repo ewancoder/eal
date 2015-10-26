@@ -1,5 +1,6 @@
 #!/bin/bash
 source /root/ceal.sh
+source /root/myceal.sh
 mess -t "Setup hostname & timezone"
 mess "Set hostname ($hostname)"
 echo $hostname > /etc/hostname
@@ -67,9 +68,9 @@ for (( i = 0; i < ${#software[@]}; i++ )); do
     yaourt -S --noconfirm ${software[$i]}
 done
 mess -t "Build AUR software"
-for (( i = 0; i < ${#buildbefore[@]}; i++ )); do
-    mess "Build ${buildbefore[$i]} ($((i+1))/${#buildbefore[@]})"
-    yaourt -S --noconfirm ${buildbefore[$i]}
+for (( i = 0; i < ${#build[@]}; i++ )); do
+    mess "Build ${build[$i]} ($((i+1))/${#build[@]})"
+    yaourt -S --noconfirm ${build[$i]}
 done
 mess "Reinstall pacman (remove makepkg patch)"
 pacman -S pacman --noconfirm
@@ -198,14 +199,14 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         cp /root/${userscript[$i]} user.sh
         mess "Make executable (+x)"
         chmod +x user.sh
-        mess "Copy ceal.sh there"
-        cp /root/ceal.sh .
+        mess "Copy ceal.sh (& myceal.sh) there"
+        cp /root/{my,}ceal.sh .
         mess "Execute user-defined script by ${user[$i]} user"
         mv .bash_profile .bash_profilecopy 2>/dev/null
         su -c ./user.sh -s /bin/bash ${user[$i]}
         mv .bash_profilecopy .bash_profile 2>/dev/null
-        mess "Remove user.sh & ceal.sh scripts from home directory"
-        rm {user,ceal}.sh
+        mess "Remove user.sh & ceal.sh (& myceal.sh) scripts from home directory"
+        rm {user,ceal,myceal}.sh
         cd
     fi
     if [ ! "${shell[$i]}" == "" ]; then
@@ -214,29 +215,20 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
     fi
 done
 
-if [ ! "$sudoers" == "" ]; then
-    mess -t "Add additional entries into /etc/sudoers"
-    echo -e "\n## Additional configuration" >> /etc/sudoers
-    for i in "${sudoers[@]}"; do
-        mess "Add '$i' entry"
-        echo "$i" >> /etc/sudoers
-    done
-fi
-
 if [ ! "$rootscript" == "" ]; then
     mess -t "Execute root script ($rootscript)"
     chmod +x $rootscript
     /bin/bash $rootscript
 fi
 
-if [ ! "$buildafter" == "" ]; then
-    mv after.sh /home/$main/
-    cp /root/ceal.sh /home/$main/
-    chmod +x /home/$main/after.sh
-    chown $main:users /home/$main/after.sh
-    chown $main:users /home/$main/ceal.sh
-    echo "$term ~/after.sh &" >> /home/$main/.xprofile
-fi
+#if [ ! "$buildafter" == "" ]; then
+#    mv after.sh /home/$main/
+#    cp /root/ceal.sh /home/$main/
+#    chmod +x /home/$main/after.sh
+#    chown $main:users /home/$main/after.sh
+#    chown $main:users /home/$main/ceal.sh
+#    echo "$term ~/after.sh &" >> /home/$main/.xprofile
+#fi
 
 mess -t "Setup all passwords"
 mess -p "Setup ROOT password"
@@ -248,6 +240,6 @@ done
 
 mess -t "Finish installation"
 mess "Remove all scripts"
-rm /root/{ceal,peal}.sh
+rm /root/{ceal,myceal,peal}.sh
 mess "Exit chroot (installed system -> live-cd)"
 exit
