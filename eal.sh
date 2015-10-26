@@ -1,6 +1,7 @@
 #!/bin/bash
 cd `dirname "$BASH_SOURCE"`
 source ceal.sh
+source myceal.sh
 mess -t "Mount all partitions and create fstab"
 mess "Create local fstab file (prepare)"
 echo "# /etc/fstab: static file system information" > fstab
@@ -44,9 +45,9 @@ mess "Move previously created fstab to /mnt/etc/fstab"
 mv fstab /mnt/etc/fstab
 
 mess -t "Chroot to system"
-mess "Copy {ceal,peal}.sh to /mnt/root"
+mess "Copy {ceal,myceal,peal}.sh to /mnt/root"
 mkdir -p /mnt/root
-cp {ceal,peal}.sh /mnt/root/
+cp {ceal,myceal,peal}.sh /mnt/root/
 cp makepkg.patch /mnt/root/
 mess "Copy root and user scripts to /mnt/root"
 if [ ! "$rootscript" == "" ]; then
@@ -57,8 +58,8 @@ for (( i = 0; i < ${#user[@]}; i++ )); do
         cp ${userscript[$i]} /mnt/root
     fi
 done
-mess "Copy after-build script to /mnt/root"
-cp after.sh /mnt/root
+#mess "Copy after-build script to /mnt/root"
+#cp after.sh /mnt/root
 mess "Go to arch-chroot and execute peal.sh"
 arch-chroot /mnt /root/peal.sh
 

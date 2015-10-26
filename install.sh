@@ -1,13 +1,14 @@
 #!/bin/bash
 source ceal.sh
+source myceal.sh
 if [ ! `id -u` -eq 0 ]; then
     mess -w "You have to be ROOT to run this script. Exiting."
     exit
 fi
 clear
-mess -t "Effective & Easy (Ewancoder) Arch Linux installation script\nVersion $version\nRelease $release"
-mess -w "Before proceeding:\n\t1) Change constants in 'ceal.sh' configuration file\n\t2) Format your partitions as needed (fdisk + mkfs.ext4 + mkswap)"
-source ceal.sh
+mess -t "$title\nVersion $version\nRelease $release"
+mess -w "Before proceeding:\n\t1) Edit 'myceal.sh' configuration file\n\t2) Format your partitions as required (fdisk + mkfs.ext4 + mkswap)"
+source myceal.sh
 
 prepare() {
     rm -f $2
@@ -80,8 +81,8 @@ mess -t "Prepare installation scripts (add error handling)"
 mess "Make temporary 'eal' directory where all installation files will be put"
 mkdir -p eal
 
-mess "Copy ceal.sh and makepkg.patch"
-cp ceal.sh makepkg.patch eal/
+mess "Copy ceal.sh, myceal.sh and makepkg.patch"
+cp ceal.sh myceal.sh makepkg.patch eal/
 
 mess "Prepare eal.sh"
 prepare eal.sh eal/eal.sh
@@ -94,6 +95,7 @@ if [ ! "$rootscript" == "" ]; then
     mess "Prepare root (post-install) script"
     echo $'
     source ceal.sh
+    source myceal.sh
     mess -t "ROOT executed script after installation"
     ' > root.sh
     cat root.sh $rootscript > temp && mv temp $rootscript
@@ -103,47 +105,31 @@ fi
 
 mess "Prepare user-executed scripts"
 for (( i = 0; i < ${#user[@]}; i++ )); do
-    if ! [ "${gitname[$i]}" == "" -a "${userscript[$i]}" == "" ]; then
+    if [ ! "${userscript[$i]}" == "" ]; then
         mess "Prepare script for user ${user[$i]}"
-        echo $'
+        echo $"
         source ceal.sh
-        mess -t "User executed script for ${user[$i]} user"
-        ' > user.sh
-        if [ ! "${gitname[$i]}" == "" ]; then
-            mess "Add git configuration to user-executed script"
-            echo $'
-            mess "Configure git for ${user[$i]}"
-            mess "Configure git user.name as ${gitname[$i]}"
-            git config --global user.name ${gitname[$i]}
-            mess "Configure git user.email as ${gitemail[$i]}"
-            git config --global user.email ${gitemail[$i]}
-            mess "Configure git merge.tool as ${gittool[$i]}"
-            git config --global merge.tool ${gittool[$i]}
-            mess "Configure git core.editor as ${giteditor[$i]}"
-            git config --global core.editor ${giteditor[$i]}
-            ' >> user.sh
-        fi
-        if [ ! "${userscript[$i]}" == "" ]; then
-            mess "Assemble user-defined script (${userscript[$i]})"
-            cat user.sh ${userscript[$i]} > temp && mv temp ${userscript[$i]}
-            rm user.sh
-            prepare ${userscript[$i]} eal/${userscript[$i]}
-        fi
+        source myceal.sh
+        mess -t 'User script ${user[$i]}'
+        " > user.sh
+        cat user.sh ${userscript[$i]} > temp && mv temp ${userscript[$i]}
+        rm user.sh
+        prepare ${userscript[$i]} eal/${userscript[$i]}
     fi
 done
 
-if [ ! "$buildafter" == "" ]; then
-    mess "Prepare AUR BUILD post-install script"
-    echo 'source ceal.sh'                                                   > after.sh
-    echo 'mess -t "Build AUR software"'                                     >> after.sh
-    for (( i = 0; i < ${#buildafter[@]}; i++ )); do
-        echo "mess 'Build ${buildafter[$i]} ($((i+1))/${#buildafter[@]})'"  >> after.sh
-        echo "yaourt -S --noconfirm ${buildafter[$i]}"                      >> after.sh
-    done
-    echo "sed -i '/$term ~\/after.sh &/d' ~/.xprofile"                      >> after.sh
-    echo "rm ~/ceal.sh ~/after.sh"                                          >> after.sh
-    prepare after.sh eal/after.sh
-fi
+#if [ ! "$buildafter" == "" ]; then
+#    mess "Prepare AUR BUILD post-install script"
+#    echo 'source ceal.sh'                                                   > after.sh
+#    echo 'mess -t "Build AUR software"'                                     >> after.sh
+#    for (( i = 0; i < ${#buildafter[@]}; i++ )); do
+#        echo "mess 'Build ${buildafter[$i]} ($((i+1))/${#buildafter[@]})'"  >> after.sh
+#        echo "yaourt -S --noconfirm ${buildafter[$i]}"                      >> after.sh
+#    done
+#    echo "sed -i '/$term ~\/after.sh &/d' ~/.xprofile"                      >> after.sh
+#    echo "rm ~/ceal.sh ~/after.sh"                                          >> after.sh
+#    prepare after.sh eal/after.sh
+#fi
 
 cd eal
 
