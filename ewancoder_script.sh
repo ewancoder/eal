@@ -14,6 +14,8 @@ git config --global core.autocrlf input
 mess "Setup git to remember password for current session"
 git config --global credential.helper cache
 
+mess 'Link ewancoder oh-my-zsh theme'
+ln -s $HOME/.dotfiles/.ewancoder.zsh-theme $HOME/.oh-my-zsh/themes/ewancoder.zsh-theme
 mess 'Make vim swap&backup dirs'
 mkdir -p ~/.vim/{swap,backup}
 mess 'Install minted (latex)'
