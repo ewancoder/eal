@@ -1,3 +1,5 @@
+cp -r /mnt/cloud/Dropbox/Mega/Backup/Fonts /usr/share/fonts/
+fc-cache fv
 echo -e "\n## Additional configuration" >> /etc/sudoers
 echo "$main ALL=(ALL) NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
 ln -fs /mnt/cloud/Mega/Backup/ewancoder.zsh-theme /home/$main/.oh-my-zsh/themes/
@@ -19,7 +21,7 @@ ln -fs /mnt/cloud/Mega/Backup/Arch/spell /home/$main/.vim/
 ln -fs /mnt/cloud/Mega/Backup/Arch/Popcorn-Time /home/$main/.config/
 mkdir -p /mnt/{data,windows} /media
 chown $main:users /mnt/{data,windows}
-ip link set $interface up
-pacman -U /mnt/cloud/Dropbox/ArchPackages/*.xz --noconfirm
+#ip link set $interface up
+pacman -U /mnt/cloud/Dropbox/Mega/Backup/ArchPackages/*.xz --noconfirm
 yaourt -Rs os-prober --noconfirm
 grub-mkconfig -o /boot/grub/grub.cfg

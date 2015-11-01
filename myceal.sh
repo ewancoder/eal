@@ -9,6 +9,11 @@
     locale=( en_US.UTF-8 ru_RU.UTF-8 )
     mirror=( Belarus Denmark Russia United France ) # DEFAULT.
 
+# Network
+    network=1
+    ip=192.168.100.22
+    dns=192.168.100.1
+
 # Devices
     description=( Root Backup Cloud )
     device=( /dev/sdb6 /dev/sda5 /dev/sdb5 )
@@ -60,5 +65,5 @@
         "ctags mono pygmentize python python-matplotlib python-numpy python-pyserial python-requests python-scipy python-sphinx python2-pygments texlive-core texlive-humanities texlive-langcyrillic texlive-latexextra texlive-pictures texlive-science wine"
         "dosfstools encfs gparted ntfs-3g smartmontools thefuck virtualbox"
     )
-    service=( cronie deluged systemd-networkd systemd-timesyncd )
-    build=( compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral hyphen-ru hunspell-ru-aot jmtpfs latex-beamer pencil popcorntime-bin slack-desktop syncplay pasystray-git xcape )
+    service=( cronie deluged systemd-timesyncd )
+    build=( compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral hyphen-ru hunspell-ru-aot jmtpfs latex-beamer pasystray-git pencil popcorntime-bin slack-desktop syncplay ttf-ms-fonts xcape )

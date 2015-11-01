@@ -81,7 +81,7 @@ release="2.5.0 User-centered"
 
     # Network interface to use. See `ip link` output for the list of available
     # interfaces.
-    interface=$(ip link | grep -o enp.s.)
+    interface=$(ip link | grep -o 'en[ps].\{1,2\}[fs].\{1,2\}')
 
     # Static IP address configuration.
     ip=192.168.100.22
