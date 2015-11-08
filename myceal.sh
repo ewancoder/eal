@@ -1,9 +1,8 @@
 # General
     hostinstall=1
-    iso="http://ftp.byfly.by/pub/archlinux/iso/$(date +%Y.%m.01)/arch/x86_64/airootfs.sfs" # DEFAULT.
     auto=0
     verbose=1
-    timeout=10
+    timeout=0
     hostname=ewanpc
     timezone=Europe/Minsk # DEFAULT.
     locale=( en_US.UTF-8 ru_RU.UTF-8 )
@@ -15,14 +14,14 @@
     dns=192.168.100.1
 
 # Devices
-    description=( Root Backup Cloud )
-    device=( /dev/sdb6 /dev/sda5 /dev/sdb5 )
-    mount=( / /mnt/backup /mnt/cloud )
-    type=( ext4 ext4 ext4 )
-    option=( rw,relatime,discard rw,relatime rw,relatime,discard )
-    dump=( 0 0 0 )
-    pass=( 1 2 2 )
-    mbr=/dev/sdb
+    description=( Root Backup Cloud Gaming Virtual Home )
+    device=( /dev/Linux/ArchPC /dev/Linux/Backup /dev/Linux/Cloud /dev/Linux/Gaming /dev/Linux/Virtual /dev/Linux/Home )
+    mount=( / /mnt/backup /mnt/cloud /mnt/gaming /mnt/virtual /home )
+    type=( ext4 ext4 ext4 ext4 ext4 ext4 )
+    option=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime,discard )
+    dump=( 0 0 0 0 0 0 )
+    pass=( 1 2 2 2 2 2 )
+    mbr=/dev/sda
 
 # Users
     user=ewancoder
