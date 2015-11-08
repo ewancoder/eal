@@ -21,11 +21,11 @@ mess -t "Prepare Arch linux ROOTFS"
 mkdir -p /sfs
 if [ ! "$temp" == "" ]; then
     mess "Mount $temp temporary partition for unsquashing live-cd (must have 1G+ free space)"
-    mount $temp /sfs
+    mount "$temp" /sfs
 fi
-if ! [ -f root-image.fs.sfs -o -f /sfs/squashfs-root/airootfs.img ]; then
+if [ ! -f root-image.fs.sfs ] && [ ! -f /sfs/squashfs-root/airootfs.img ]; then
     mess "Download root live-cd image"
-    curl -o root-image.fs.sfs $iso
+    curl -o root-image.fs.sfs "$iso"
 fi
 
 mess -t "Prepare chroot-environment"
