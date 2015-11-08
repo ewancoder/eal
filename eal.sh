@@ -1,5 +1,5 @@
 #!/bin/bash
-cd `dirname "$BASH_SOURCE"`
+cd "$(dirname "$BASH_SOURCE")" || exit
 source ceal.sh
 source myceal.sh
 mess -t "Mount all partitions and create fstab"
@@ -8,12 +8,12 @@ echo "# /etc/fstab: static file system information" > fstab
 for (( i = 0; i < ${#device[@]}; i++ )); do
     if [ ! "${type[$i]}" == "swap" ]; then
         mess "Create folder /mnt${mount[$i]}"
-        mkdir -p /mnt${mount[$i]}
+        mkdir -p "/mnt${mount[$i]}"
         mess "Mount ${device[$i]} to /mnt${mount[$i]}"
-        mount ${device[$i]} /mnt${mount[$i]}
+        mount "${device[$i]}" "/mnt${mount[$i]}"
     else
         mess "Swapon ${device[$i]}"
-        swapon ${device[$i]}
+        swapon "${device[$i]}"
     fi
     mess "Add ${device[$i]} in fstab mounted to ${mount[$i]}"
     echo -e "\n# ${description[$i]} partition\n${device[$i]}\t${mount[$i]}\t${type[$i]}\t${option[$i]}\t${dump[$i]}\t${pass[$i]}" >> fstab
@@ -22,7 +22,7 @@ done
 mess -t "Form mirrorlist & update pacman"
 for i in "${mirror[@]}"; do
     mess "Place $i in mirrorlist"
-    grep -i -A 1 --no-group-separator $i /etc/pacman.d/mirrorlist >> mirrorlist
+    grep -i -A 1 --no-group-separator "$i" /etc/pacman.d/mirrorlist >> mirrorlist
 done
 mess "Move new mirrorlist to /etc/pacman.d/mirrorlist"
 mv mirrorlist /etc/pacman.d/mirrorlist
