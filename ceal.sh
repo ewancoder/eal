@@ -6,6 +6,8 @@
 # If there's no "myceal.sh" file, copy and change the content of this file.
 
 temp=""
+windows=""
+gitbranch=""
 
 title="Effective & Easy (Ewancoder) Arch Linux installation script"
 version="2.5 User-centered, 2015"
