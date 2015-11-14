@@ -1,5 +1,5 @@
 #!/bin/bash
-cd "$(dirname "$BASH_SOURCE")" || exit
+cd "$(dirname "$BASH_SOURCE")" || mess -t "Can't CD into $(dirname "$BASH_SOURCE")"
 source ceal.sh
 source myceal.sh
 mess -t "Mount all partitions and create fstab"
