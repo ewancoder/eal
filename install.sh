@@ -153,7 +153,7 @@ done
 #    prepare after.sh eal/after.sh
 #fi
 
-cd eal || exit
+cd eal || mess -w "Can't CD into 'eal' folder"
 
 mess -t "Start installation"
 mess "Make all scripts executable"

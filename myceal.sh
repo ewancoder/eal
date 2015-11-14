@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # General
     hostinstall=1
     auto=0
