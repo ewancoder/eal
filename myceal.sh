@@ -20,7 +20,7 @@
     device=( /dev/Linux/ArchPC /dev/Linux/Backup /dev/Linux/Cloud /dev/Linux/Gaming /dev/Linux/Virtual /dev/Linux/Home )
     mount=( / /mnt/backup /mnt/cloud /mnt/gaming /mnt/virtual /home )
     type=( ext4 ext4 ext4 ext4 ext4 ext4 )
-    option=( rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime,discard rw,relatime,discard )
+    option=( "rw,relatime,discard" "rw,relatime,discard" "rw,relatime,discard" "rw,relatime,discard" "rw,relatime,discard" "rw,relatime,discard" )
     dump=( 0 0 0 0 0 0 )
     pass=( 1 2 2 2 2 2 )
     mbr=/dev/sda
