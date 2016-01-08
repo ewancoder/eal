@@ -220,12 +220,12 @@ release="2.5.0 User-centered"
 # Do NOT touch this section. It is only for output styling purposes.
 
 # Color constants.
-    Green=`tput setaf 2`
-    Yellow=`tput setaf 3`
-    Red=`tput setaf 1`
-    Blue=`tput setaf 6`
-    Bold=`tput bold`
-    Def=`tput sgr0`
+    Green=$(tput setaf 2)
+    Yellow=$(tput setaf 3)
+    Red=$(tput setaf 1)
+    Blue=$(tput setaf 6)
+    Bold=$(tput bold)
+    Def=$(tput sgr0)
 
 # Message function - neat output.
 mess(){
@@ -263,11 +263,11 @@ mess(){
             ;;
         "-v")
             Style="$Blue-> $m$Def"
-            echo $m | grep -oP '(?<!\[)\$[{(]?[^"\s\/\047.\\]+[})]?' | uniq > vars
-            if [ ! "`cat vars`" == "" ]; then
+            echo "$m" | grep -oP '(?<!\[)\$[{(]?[^"\s\/\047.\\]+[})]?' | uniq > vars
+            if [ ! "$(cat vars)" == "" ]; then
                 while read -r p; do
-                    value=`eval echo $p`
-                    Style=`echo -e "$Style\n\t$Green$p = $value$Def"`
+                    value=$(eval echo "$p")
+                    Style=$(echo -e "$Style\n\t$Green$p = $value$Def")
                 done < vars
             fi
             rm vars
@@ -283,11 +283,12 @@ mess(){
         echo -en "$Style\n"
     elif [ "$o" == "-p" ]; then
         echo -en "$Style"
-        read
+        read -r
     else
         echo -e "$Style"
-        if [ "$o" == "-w" -o "$o" == "-p" ] || [ "$o" == "" -a $auto -eq 0 ]; then
-            read -p $Bold$Yellow"Continue [ENTER]"$Def
+        if ([ "$o" == "-w" ] || [ "$o" == "-p" ]) ||
+            ([ "$o" == "" ] && [ $auto -eq 0 ]); then
+            read -rp "$Bold${Yellow}Continue [ENTER]$Def"
         fi
     fi
 }
