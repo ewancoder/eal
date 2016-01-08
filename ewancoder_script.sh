@@ -1,8 +1,8 @@
 mess "Configure git for $main"
 mess "Configure git user.name as $main"
-git config --global user.name $main
+git config --global user.name "$main"
 mess "Configure git user.email as $main@gmail.com"
-git config --global user.email $main@gmail.com
+git config --global user.email "$main@gmail.com"
 mess "Configure git merge.tool as vimdiff"
 git config --global merge.tool vimdiff
 mess "Configure git core.editor as vim"
@@ -15,7 +15,7 @@ mess "Setup git to remember password for current session"
 git config --global credential.helper cache
 
 mess 'Link ewancoder oh-my-zsh theme'
-ln -s $HOME/.dotfiles/.ewancoder.zsh-theme $HOME/.oh-my-zsh/themes/ewancoder.zsh-theme
+ln -s "$HOME/.dotfiles/.ewancoder.zsh-theme" "$HOME/.oh-my-zsh/themes/ewancoder.zsh-theme"
 mess 'Make vim swap&backup dirs'
 mkdir -p ~/.vim/{swap,backup}
 mess 'Install minted (latex)'
