@@ -65,4 +65,4 @@
         "dosfstools encfs gparted ntfs-3g smartmontools thefuck virtualbox"
     )
     service=( cronie systemd-timesyncd )
-    build=( compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral hyphen-ru hunspell-ru-aot jmtpfs latex-beamer pasystray-git pencil popcorntime-bin slack-desktop syncplay ttf-ms-fonts xcape )
+    build=( compton progress dmenu2 dropbox dunst-git gtk-theme-espresso gcalcli gxkb slimlock-git slim-archlinux-solarized-spiral hyphen-ru hunspell-ru-aot jmtpfs latex-beamer pasystray-git pencil slack-desktop syncplay ttf-ms-fonts xcape )
