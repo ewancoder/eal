@@ -34,7 +34,7 @@
     gitrepo=( $main/dotfiles $main/etc )
     gitfolder=( /home/$main/.dotfiles /etc/.dotfiles )
     gitrule=( $main:users '' )
-    gitmodule=( ".vim/bundle/vundle" )
+    gitmodule=( ".vim/bundle/vundle" ".oh-my-zsh" )
     gitlink=( /home/$main /etc )
 
 # Restore backup
